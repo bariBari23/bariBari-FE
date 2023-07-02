@@ -1,12 +1,16 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { GlobalStyle } from './styles/GlobalStyle';
+import Login from './page/Login';
 
 export default function App() {
     return (
         <>
             <GlobalStyle />
-            <>바리바리가 최고</>
-            <button>얍</button>
+
+            <Routes>
+                <Route path="/login" element={<Login />} />
+            </Routes>
         </>
     );
 }
