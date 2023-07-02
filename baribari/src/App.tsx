@@ -1,7 +1,12 @@
 import './App.css';
+import { GlobalStyle } from './styles/GlobalStyle';
 
-function App() {
-    return <>바리바리가 최고</>;
+export default function App() {
+    return (
+        <>
+            <GlobalStyle />
+            <>바리바리가 최고</>
+            <button>얍</button>
+        </>
+    );
 }
-
-export default App;
