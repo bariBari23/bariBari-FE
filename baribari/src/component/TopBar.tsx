@@ -11,11 +11,10 @@ export default function TopBar(){
 
 const Container = styled.div`
     height: 32px;
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin: 48px 8px 8px 16px;
+    margin: 48px 8px 16px 16px;
 
     position: fixed;
     top: 0;
@@ -30,8 +29,7 @@ const IconBox = styled.div`
 
 const TitleBox = styled.div`
     display: flex;
-    width: 100%;
-    color: black;
+    color: ${props => props.theme.black};
     font-size: 22px;
     font-weight: 700;
 `

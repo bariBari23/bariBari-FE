@@ -43,7 +43,6 @@ export default function App() {
 const Container = styled.div`
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
-    align-items: center;
     justify-content: center;
 @media ${props => props.theme.tablet}{
     
@@ -54,7 +53,7 @@ const InsideContainer = styled.div`
     display: flex;
     width: calc(100vw - 32px);
     height: 100vh;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     margin: 8px 0;
 `
