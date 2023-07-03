@@ -14,19 +14,18 @@ export default function App({}) {
         setScreenSize();
     });
     return (
-        <>
+        <Container>
             <GlobalStyle />
-            <Container>바리바리가 최고</Container>
-            <button>얍</button>
-        </>
+        </Container>
     );
 }
 
 
 const Container = styled.div`
-background-color: black;
+    height: calc(var(--vh, 1vh) * 100);
+    background-color: black;
 
 @media ${props => props.theme.tablet}{
-    background-color: orange;
+    
 }
 `
