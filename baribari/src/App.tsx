@@ -54,4 +54,7 @@ const InsideContainer = styled.div`
     display: flex;
     width: calc(100vw - 32px);
     height: 100vh;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
 `
