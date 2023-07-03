@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function FoodDetailBox({isSelected}: {isSelected: boolean}){
+export default function ReviewBox({isSelected}: {isSelected: boolean}){
     return(
         <Container isSelected = {isSelected}>
             <MainBox>

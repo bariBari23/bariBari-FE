@@ -10,11 +10,13 @@ export default function TopBar(){
 }
 
 const Container = styled.div`
+    width: 100%;
     height: 32px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin: 48px 8px 16px 16px;
+    padding: 48px 8px 16px 16px;
+    background-color: white;
 
     position: fixed;
     top: 0;
