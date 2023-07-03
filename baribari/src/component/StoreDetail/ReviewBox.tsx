@@ -5,7 +5,7 @@ export default function ReviewBox({isSelected}: {isSelected: boolean}){
         <Container isSelected = {isSelected}>
             <MainBox>
                 <TitleBox>
-                    <div style = {{marginRight: 'auto'}}>명절 반찬 박스 세트</div>
+                    <div style = {{marginRight: 'auto'}}>리뷰리뷰리뷰</div>
                     <div style = {{marginRight: '0'}}>18,000원</div>    
                 </TitleBox>
                 <StoreBox>

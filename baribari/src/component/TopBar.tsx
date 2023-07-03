@@ -10,7 +10,7 @@ export default function TopBar(){
 }
 
 const Container = styled.div`
-    width: 100%;
+    width: calc(100vw - 32px);
     height: 32px;
     display: flex;
     flex-direction: row;
@@ -19,8 +19,8 @@ const Container = styled.div`
     background-color: white;
 
     position: fixed;
+    margin: auto;
     top: 0;
-    left: 0;
     z-index: 10000;
 `
 const IconBox = styled.div`

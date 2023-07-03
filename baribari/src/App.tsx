@@ -43,7 +43,9 @@ export default function App() {
 const Container = styled.div`
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
+    max-width: 600px;
     justify-content: center;
+    margin: auto;
 @media ${props => props.theme.tablet}{
     
 }
