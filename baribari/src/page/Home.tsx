@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { ReactComponent as Logo } from '../assets/logo.svg';
-import { BellIcon, OrderIcon, RPointerIcon, SearchIcon } from '../component/IconTest';
+import { BellIcon, OrderIcon, RPointerIcon, SearchIcon } from '../component/Icon';
 import Navigator from '../component/Navigator';
 import ContentContainer from '../component/ContentContainer';
 import RandomTab from '../component/RandomTab';

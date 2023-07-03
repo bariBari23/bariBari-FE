@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { DPointerIcon, UPointerIcon } from './IconTest';
+import { DPointerIcon, UPointerIcon } from './Icon';
 
 export default function DropDown() {
     const [viewOpen, setViewOpen] = useState(false);

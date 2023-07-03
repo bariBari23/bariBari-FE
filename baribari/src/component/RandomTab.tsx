@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { LocaIcon } from './IconTest';
+import { LocaIcon } from './Icon';
 import FoodPic1 from '../assets/FoodPic1.svg';
 import FoodPic2 from '../assets/FoodPic2.svg';
 
