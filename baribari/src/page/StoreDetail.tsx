@@ -12,7 +12,7 @@ export default function StoreDetail(){
     }
     return(
         <Container>
-            <TopBar/>
+            <TopBar page={'반찬박스 이름'}/>
             <InsideBox>
                 <FoodImgBox/>
                 <DetailNav>

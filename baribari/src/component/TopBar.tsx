@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import {LeftArrowIcon} from '../component/Icon';
-export default function TopBar(){
+export default function TopBar({page} : {page: String}){
     return(
         <Container>
             <IconBox><LeftArrowIcon/></IconBox>
-            <TitleBox>타이틀</TitleBox>
+            <TitleBox>{page}</TitleBox>
         </Container>
     );
 }
