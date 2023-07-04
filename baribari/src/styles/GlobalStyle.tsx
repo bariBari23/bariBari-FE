@@ -11,6 +11,9 @@ export const GlobalStyle = createGlobalStyle`
 
   
   body {
+    width: 24.375rem;
+    height: 56.3125rem;
+    margin: 0 16px;
     font-family: 'Pretendard-Regular';
     line-height: 1.5;
   }

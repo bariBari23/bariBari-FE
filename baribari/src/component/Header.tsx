@@ -12,16 +12,25 @@ const Header = ({
     return (
         <HeaderContainer>
             <LeftArrow />
-            {showPageName && <p>{pageTitle}</p>}
-            {/* 검색창도 넣을 수 있게 구현 예정 */}
-            {showSearchBar}
+            {/* 검색창도 넣을 수 있게 구현 예정  showSearchBar && <SearchBar/>로*/}
+            {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar}
         </HeaderContainer>
     );
 };
 
 const HeaderContainer = styled.div`
     width: 100%;
-    height: 5.75rem;
+    padding: 48px 8px 8px 8px;
+    display: flex;
+`;
+
+const PageTitle = styled.div`
+    color: var(--grey-subtext, #504e5f);
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px;
+    margin-left: 8px;
 `;
 
 export default Header;
