@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
-import { ReactComponent as LeftArrow } from '../assets/left-arrow.svg';
+import { LeftArrowIcon } from '../component/Icon';
+import SearchBar from './SearchBar';
 const Header = ({
     showPageName,
     pageTitle,
@@ -11,17 +12,18 @@ const Header = ({
 }) => {
     return (
         <HeaderContainer>
-            <LeftArrow />
+            <LeftArrowIcon />
             {/* 검색창도 넣을 수 있게 구현 예정  showSearchBar && <SearchBar/>로*/}
-            {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar}
+            {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar && <SearchBar />}
         </HeaderContainer>
     );
 };
 
 const HeaderContainer = styled.div`
-    width: 100%;
     padding: 48px 8px 8px 8px;
     display: flex;
+    align-items: center;
+    gap: 4px;
 `;
 
 const PageTitle = styled.div`

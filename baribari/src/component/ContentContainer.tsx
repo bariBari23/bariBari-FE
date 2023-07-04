@@ -62,7 +62,12 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-left: 8px;
+    @media (max-width: 408px) {
+        justify-content: center; /* 웹뷰 가로 사이즈가 408px 이하일 때 카드 배열을 가운데 정렬 */
+    }
+    @media (min-width: 590px) {
+        gap: 20px;
+    }
 `;
 
 const DosirakCard = styled.div`
@@ -70,7 +75,11 @@ const DosirakCard = styled.div`
     flex-direction: column;
     align-items: flex-start;
     display: flex;
-    padding: 8px 8px 8px 8px;
+    padding: 8px 8px 8px 0px;
+
+    @media (max-width: 408px) {
+        width: 100%;
+    }
 `;
 
 const DosirakImg = styled.div`
@@ -79,6 +88,10 @@ const DosirakImg = styled.div`
     border-radius: 4px;
     background-color: lightgrey;
     margin-bottom: 12px;
+
+    @media (max-width: 408px) {
+        width: 100%;
+    }
 `;
 
 const DosirakStoreName = styled.div`
@@ -88,6 +101,7 @@ const DosirakStoreName = styled.div`
     font-weight: 600;
     line-height: normal;
 `;
+
 const DosirakName = styled.div`
     color: var(--black, #212121);
     font-size: 14px;

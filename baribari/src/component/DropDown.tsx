@@ -38,11 +38,10 @@ export default function DropDown() {
 const DropDownContainer = styled.div`
     position: relative;
     margin: 20px 0px 16px 0px;
+    padding-right: 16px;
 `;
 
-// css 나중에 수정하기..
 const DropDownButton = styled.button`
-    margin-left: 16px;
     width: 112px;
     display: flex;
     padding: 0 0 0 0;
@@ -63,7 +62,6 @@ const DropDownButton = styled.button`
 
 const DropDownList = styled.div`
     width: 112px;
-    margin-left: 16px;
     display: flex;
     position: absolute;
     flex-direction: column;
