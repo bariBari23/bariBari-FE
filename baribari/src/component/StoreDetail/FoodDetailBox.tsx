@@ -83,6 +83,7 @@ const IconHeart = styled.div`
 `
 const SubBox = styled.div`
     display: flex;
+    min-height: 320px;
     background-color: white;
     margin-top: 14px;
     padding-top: 20px;

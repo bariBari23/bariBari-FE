@@ -41,6 +41,7 @@ const InsideBox = styled.div`
     flex-direction: column;
     margin-top: 88px;
     justify-content: flex-start;
+    align-items: center;
     background-color: #F9F9F9;
 `
 const FoodImgBox = styled.div`
@@ -72,7 +73,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 64px);
-    max-width: 432px;
+    max-width: 464px;
     border-radius: 12px;
     background: #FF7455;
     color: #FFF;
