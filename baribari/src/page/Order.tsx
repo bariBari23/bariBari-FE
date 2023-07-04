@@ -75,16 +75,20 @@ const CheckBox = styled.input`
 `
 const AddBtn = styled.div`
     display: flex;
-    padding: 18px 40px;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
+    height: 64px;
+    width: calc(100% - 48px);
     border-radius: 12px;
     background: #FF7455;
     color: #FFF;
     font-size: 24px;
     font-family: Pretendard;
     font-weight: 700;
-    line-height: 28px;
     border: none;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    left: 24px;
+    bottom: 8px;
+    z-index: 10000;
   `

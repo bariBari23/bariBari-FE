@@ -10,7 +10,7 @@ export default function StoreDetailBox({isSelected}: {isSelected: boolean}){
                 </TitleBox>
                 <CallBtn style = {{marginRight: '12px'}}>연락하기</CallBtn>
             </MainBox>
-            <SubBox>
+            <SubBox style = {{paddingLeft: '16px', paddingRight: '16px'}}>
                 <InfoBox>
                     <div style={{display: 'flex', paddingBottom: '16px'}}> <div style = {{width: '70px', color: '#949494', fontWeight: '400'}}>가게 위치</div> <div style = {{paddingLeft: '12px', color: '#212121', fontWeight: '500'}}>서울특별시 은평구 어쩌구 무슨로</div> </div>
                     <div style={{display: 'flex', paddingBottom: '16px'}}> <div style = {{width: '70px', color: '#949494', fontWeight: '400'}}>연락처</div> <div style = {{paddingLeft: '12px', color: '#212121', fontWeight: '500'}}>서울특별시 은평구 어쩌구 무슨로</div> </div>
