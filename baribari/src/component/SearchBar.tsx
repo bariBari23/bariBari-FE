@@ -21,7 +21,7 @@ const SearchTab = styled.div`
     color: #949494;
 `;
 const SearchInput = styled.textarea`
-    color: var(--grey-4, #949494);
+    color: #504e5f;
     font-size: 16px;
     font-family: Pretendard-Regular;
     font-style: normal;
@@ -32,4 +32,7 @@ const SearchInput = styled.textarea`
     resize: none;
     height: 32px;
     outline: none;
+    &::placeholder {
+        color: #949494;
+    }
 `;
