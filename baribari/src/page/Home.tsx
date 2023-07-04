@@ -8,7 +8,7 @@ import DropDown from '../component/DropDown';
 
 export default function Home() {
     return (
-        <div>
+        <Container>
             <HeaderHome>
                 <Logo />
                 <RightSideHeader>
@@ -16,8 +16,9 @@ export default function Home() {
                     <OrderIcon />
                 </RightSideHeader>
             </HeaderHome>
+
+            <RandomTab />
             <Wrapper>
-                <RandomTab />
                 <InquiryTab>
                     <div>
                         <InquiryTabTitle>바리바리에 입점 문의하기</InquiryTabTitle>
@@ -35,12 +36,15 @@ export default function Home() {
                 <ContentContainer />
                 <Navigator />
             </Wrapper>
-        </div>
+        </Container>
     );
 }
 
+const Container = styled.div`
+    width: 390px;
+`;
+
 const Wrapper = styled.div`
-    width: 24.375rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,7 +64,7 @@ const RightSideHeader = styled.div`
 
 const InquiryTab = styled.div`
     display: flex;
-    width: 357px;
+    width: 326px;
     padding: 16px;
     justify-content: space-between;
     align-items: center;
@@ -85,8 +89,7 @@ const InquiryTabSub = styled.div`
 `;
 
 const SearchTab = styled.button`
-    width: 358px;
-    height: 28px;
+    height: 45px;
     display: flex;
     padding: 8px 16px;
     justify-content: space-between;
@@ -97,5 +100,6 @@ const SearchTab = styled.button`
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
+    font-family: Pretendard-Regular;
     line-height: 28px;
 `;
