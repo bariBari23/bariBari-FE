@@ -20,11 +20,11 @@ export default function Order(){
                 </InfoBox>
                 <InfoBox style={{height: '201px', paddingTop: '20px'}}>
                     <div style={{fontSize: '18px', fontWeight: '700'}}>픽업 시간</div>
-                    <PhoneInput placeholder='휴대폰 번호를 입력해주세요'></PhoneInput>
+                    <CheckBox></CheckBox>
                 </InfoBox>
             
                 <ReviewBox isSelected = {active==="리뷰"}/>
-                <AddBtn>장바구니에 넣기</AddBtn>
+                <AddBtn>19,000원 결제하기</AddBtn>
             </InsideBox>
         </Container>
     );
@@ -63,6 +63,16 @@ const PhoneInput = styled.input`
     font-size: 16px;
     font-weight: 600;
 `
+const CheckBox = styled.input`
+    display: flex;
+    height: 140px;
+    margin-top: 20px;
+    padding-bottom: 1px;
+    border: none;
+    color: #767676;
+    font-size: 16px;
+    font-weight: 600;
+`
 const AddBtn = styled.div`
     display: flex;
     padding: 18px 40px;
@@ -74,7 +84,6 @@ const AddBtn = styled.div`
     color: #FFF;
     font-size: 24px;
     font-family: Pretendard;
-    font-style: normal;
     font-weight: 700;
     line-height: 28px;
     border: none;
