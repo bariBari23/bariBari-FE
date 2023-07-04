@@ -76,7 +76,7 @@ const CheckBox = styled.input`
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 48px);
+    width: calc(100% - 64px);
     border-radius: 12px;
     background: #FF7455;
     color: #FFF;
@@ -88,7 +88,7 @@ const AddBtn = styled.div`
     justify-content: center;
 
     position: fixed;
-    left: 24px;
-    bottom: 8px;
+    left: 32px;
+    bottom: 16px;
     z-index: 10000;
-  `
+`

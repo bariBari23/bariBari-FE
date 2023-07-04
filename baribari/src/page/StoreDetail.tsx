@@ -84,6 +84,6 @@ const AddBtn = styled.div`
 
     position: fixed;
     left: 32px;
-    bottom: 8px;
+    bottom: 16px;
     z-index: 10000;
   `
