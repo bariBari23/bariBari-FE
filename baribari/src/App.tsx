@@ -5,12 +5,12 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
-// import Join from './page/Join';
+import Join from './page/Join';
 import Login from './page/Login';
-// import Order from './page/Order';
-// import OrderList from './page/OrderList';
+import Order from './page/Order';
+import OrderList from './page/OrderList';
 import Search from './page/Search';
-// import StoreDetail from './page/StoreDetail';
+import StoreDetail from './page/StoreDetail';
 
 export default function App() {
     function setScreenSize() {
