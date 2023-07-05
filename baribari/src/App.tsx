@@ -26,12 +26,12 @@ export default function App() {
             <InsideContainer>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    {/* <Route path="/join" element={<Join />}/> */}
+                    <Route path="/join" element={<Join />} />
                     <Route path="/login" element={<Login />} />
-                    {/* <Route path="/order" element={<Order />}/> */}
-                    {/* <Route path="/orderlist" element={<OrderList />}/> */}
+                    <Route path="/order" element={<Order />} />
+                    <Route path="/orderlist" element={<OrderList />} />
                     <Route path="/search" element={<Search />} />
-                    {/* <Route path="/detail" element={<StoreDetail />}/> */}
+                    <Route path="/detail" element={<StoreDetail />} />
                 </Routes>
             </InsideContainer>
         </Container>
