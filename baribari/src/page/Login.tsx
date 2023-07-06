@@ -1,8 +1,10 @@
 import { styled } from 'styled-components';
 import { ReactComponent as LogoBig } from '../assets/logoBig.svg';
+import { ReactComponent as ValidIcon } from '../assets/check.svg';
 import { ReactComponent as VerticalLine } from '../assets/verticalLine.svg';
-import { ReactComponent as HorizontalLine } from '../assets/horizontalLine.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import Header from '../component/Header';
 
@@ -11,15 +13,29 @@ interface LoginData {
     password: string;
 }
 
+const validationSchema = yup.object({
+    email: yup.string().required('이메일을 입력해주세요!').email('@를 포함한 유효한 이메일 주소를 작성해주세요.'),
+    password: yup
+        .string()
+        .required('비밀번호를 입력해주세요!')
+        .min(6, '비밀번호는 6글자 이상이여야 합니다.')
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, '비밀번호는 영어 대소문자와 숫자를 포함해야 합니다.'),
+});
+
 export default function LogIn() {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginData>();
-    const onSubmit: SubmitHandler<LoginData> = (data) => {
+        getValues,
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
+
+    const onSubmit = (data: LoginData) => {
         console.log(data);
     };
+
     return (
         <div>
             <Header showPageName={false} pageTitle="" showSearchBar={false} />
@@ -32,32 +48,20 @@ export default function LogIn() {
                             type="text"
                             placeholder="이메일을 입력해주세요."
                             aria-invalid={!!errors.email}
-                            {...register('email', {
-                                required: true,
-                                pattern: /@/,
-                            })}
+                            {...register('email')}
+                            className={`form-control ${errors.email ? 'is-invalid' : ''} ${
+                                !errors.email && getValues('email') ? 'is-valid' : ''
+                            }`}
                         />
-                        {errors.email && errors.email?.type === 'required' && (
-                            <ErrorMessage>이메일을 입력해주세요!</ErrorMessage>
-                        )}
-                        {errors.email && errors.email?.type === 'pattern' && (
-                            <ErrorMessage>@를 포함해 유효한 이메일 주소를 적어주세요.</ErrorMessage>
-                        )}
+                        <ErrorMessage>{errors.email?.message}</ErrorMessage>
                         <Input
                             id="password"
                             type="password"
                             placeholder="비밀번호를 입력해주세요"
-                            {...register('password', {
-                                required: '비밀번호를 입력해주세요!',
-                                minLength: {
-                                    value: 8,
-                                    message: '비밀번호는 최소 8글자의 영어 대소문자와 숫자를 포함해야 합니다.',
-                                },
-                                pattern: {
-                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                                    message: '비밀번호는 최소 8글자의 영어 대소문자와 숫자를 포함해야 합니다.',
-                                },
-                            })}
+                            {...register('password')}
+                            className={`form-control ${errors.password ? 'is-invalid' : ''} ${
+                                !errors.password && getValues('password') ? <ValidIcon /> && 'is-valid' : ''
+                            }`}
                         />
                         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                     </InputWrapper>
@@ -86,8 +90,6 @@ export default function LogIn() {
 }
 
 const Wrapper = styled.div`
-    width: 24.375rem;
-    height: 56.3125rem;
     padding: 0px 16px;
     margin-top: 93px;
 `;
@@ -131,6 +133,16 @@ const Input = styled.input`
     &::placeholder {
         color: #aaa;
     }
+    &.is-invalid {
+        border-color: red;
+        box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.3);
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    &.is-valid {
+        border-color: blue;
+        box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.3);
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 `;
 
 const ErrorMessage = styled.span`
@@ -149,7 +161,7 @@ const SubmitButton = styled.button`
     background: #ff7455;
     color: #fff;
     font-size: 18px;
-    font-family: Pretendard;
+    font-family: Pretendard-Regular;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
@@ -162,7 +174,7 @@ const OptionWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--grey-subtext, #504e5f);
+    color: #504e5f;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
