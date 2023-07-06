@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { OrderListIcon, HomeIcon, MyPageIcon } from './Icon';
+import { OrderListIcon, HomeIcon, MyPageIcon } from './IconFin';
 
 export default function Navigator() {
     const [currentPage, setCurrentPage] = useState('home');
@@ -29,8 +29,8 @@ export default function Navigator() {
 
 const NavContainer = styled.div`
     display: flex;
-    width: 390px;
-    justify-content: center;
+    width: 100%;
+    justify-content: space-between;
     align-items: flex-end;
     gap: 16px;
 `;

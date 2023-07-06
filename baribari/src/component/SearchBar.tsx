@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { SearchIcon } from './Icon';
+import { SearchIcon } from './IconFin';
 
 export default function SearchBar() {
     return (

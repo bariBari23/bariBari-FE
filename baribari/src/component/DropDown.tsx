@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { DPointerIcon, UPointerIcon } from './Icon';
+import { DPointerIcon, UPointerIcon } from './IconFin';
 import { ReactComponent as HorizontalLine } from '../assets/horizontalLine2.svg';
 
 export default function DropDown() {
@@ -43,6 +43,7 @@ const DropDownContainer = styled.div`
 
 const DropDownButton = styled.button`
     width: 112px;
+    height: 36px;
     display: flex;
     padding: 0 0 0 0;
     align-items: center;
@@ -57,7 +58,7 @@ const DropDownButton = styled.button`
     color: #767676;
     line-height: normal;
     font-family: Pretendard-Regular;
-    gap: 0px;
+    gap: 8px;
 `;
 
 const DropDownList = styled.div`

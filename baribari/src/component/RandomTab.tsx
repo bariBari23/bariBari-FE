@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { LocaIcon } from './Icon';
+import { LocaIcon } from './IconFin';
 import FoodPic1 from '../assets/FoodPic1.svg';
 import FoodPic2 from '../assets/FoodPic2.svg';
 
@@ -51,7 +51,7 @@ export default function RandomTabs() {
 
 const Container = styled.div`
     display: flex;
-    width: 380px;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
 `;
