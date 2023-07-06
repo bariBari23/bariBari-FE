@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import icon from '../assets/css_sprites.png';
+import icon from '../assets/css_sprites_final.png';
 
 // bell 아이콘
 export const BellIcon = styled.div`
