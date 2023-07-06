@@ -76,7 +76,7 @@ const DosirakCard = styled.div`
     align-items: flex-start;
     display: flex;
     padding: 8px 8px 8px 0px;
-
+    // 카드 폭을 100%로 맞춰보는 건 어떨까!
     @media (max-width: 408px) {
         width: 100%;
     }
