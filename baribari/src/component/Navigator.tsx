@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import { OrderListIcon, HomeIcon, MyPageIcon } from './Icon';
+import { OrderListIcon, HomeIcon, MyPageIcon } from './IconFin';
 
 export default function Navigator() {
     const [currentPage, setCurrentPage] = useState('home');

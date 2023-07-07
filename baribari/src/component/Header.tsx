@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { LeftArrowIcon } from '../component/Icon';
+import { LeftArrowIcon } from './IconFin';
 import SearchBar from './SearchBar';
 const Header = ({
     showPageName,

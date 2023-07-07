@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { SearchIcon } from './Icon';
+import { SearchIcon } from './IconFin';
 
 export default function SearchBar() {
     return (
@@ -16,12 +16,14 @@ const SearchTab = styled.div`
     display: flex;
     padding: 8px 16px;
     justify-content: space-between;
+    align-items: center;
     border-radius: 8px;
     background-color: #efefef;
     color: #949494;
 `;
 const SearchInput = styled.textarea`
     color: #504e5f;
+    width: 465px;
     font-size: 16px;
     font-family: Pretendard-Regular;
     font-style: normal;
