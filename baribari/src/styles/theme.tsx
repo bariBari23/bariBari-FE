@@ -6,6 +6,7 @@ const size = {
 const theme = {
     orange: '#FF7455',
     lightorange: '#FFF1EE',
+    black: '#212121',
 
     // 브레이크 포인트
     mobile: `(max-width: ${size.tablet})`,
