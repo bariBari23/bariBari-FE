@@ -47,7 +47,6 @@ const Container = styled.div`
     justify-content: center;
     margin: auto;
 @media ${props => props.theme.tablet}{
-    
 }
 `
 

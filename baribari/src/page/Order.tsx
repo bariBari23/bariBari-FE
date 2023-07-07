@@ -21,13 +21,13 @@ export default function Order(){
                 <InfoBox style={{height: '201px', padding: '24px 16px 24px 16px'}}>
                     <div style={{fontSize: '18px', fontWeight: '700', lineHeight: '28px', marginBottom: '20px'}}>픽업 시간</div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{width: '147px', display: 'flex', flexDirection: 'column'}}>
+                        <div style={{width: '50%', display: 'flex', flexDirection: 'column'}}>
                             <div style={{display: 'flex', paddingBottom: '20px'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>8:00 ~ 9:00</TimeBox></div>
                             <div style={{display: 'flex', paddingBottom: '20px'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>9:00 ~ 10:00</TimeBox></div>
                             <div style={{display: 'flex', paddingBottom: '20px'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>10:00 ~ 11:00</TimeBox></div>
                             <div style={{display: 'flex'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>11:00 ~ 12:00</TimeBox></div>
                         </div>
-                        <div style={{width: '147px', display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                        <div style={{width: '50%', display: 'flex', flexDirection: 'column'}}>
                             <div style={{display: 'flex', paddingBottom: '20px'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>12:00 ~ 13:00</TimeBox></div>
                             <div style={{display: 'flex', paddingBottom: '20px'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>13:00 ~ 14:00</TimeBox></div>
                             <div style={{display: 'flex'}}><CheckBox type = 'radio' name='time' value = '8'/><TimeBox>14:00 ~ 15:00</TimeBox></div>
@@ -43,9 +43,6 @@ export default function Order(){
                 </div>
                 </InfoBox>
                 <InfoBox style={{paddingBottom: '30px'}}>
-                    <ListBox>
-
-                    </ListBox>
                 </InfoBox>
                 <AddBtn>19,000원 결제하기</AddBtn>
             </InsideBox>
