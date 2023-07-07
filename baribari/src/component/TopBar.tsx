@@ -10,7 +10,6 @@ export default function TopBar({page} : {page: String}){
 }
 
 const Container = styled.div`
-    width: calc(100vw - 32px);
     height: 32px;
     display: flex;
     flex-direction: row;
