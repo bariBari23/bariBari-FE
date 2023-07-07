@@ -8,8 +8,6 @@ import Home from './page/Home';
 import Join from './page/Join';
 import Login from './page/Login';
 import Order from './page/Order';
-import OrderList from './page/OrderList';
-import Search from './page/Search';
 import StoreDetail from './page/StoreDetail';
 import UploadReview from './page/UploadReview';
 
@@ -33,7 +31,6 @@ export default function App() {
                     <Route path="/orderlist" element={<OrderList />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/detail" element={<StoreDetail />} />
-                    <Route path="/uploadReview" element={<UploadReview />} />
                 </Routes>
             </InsideContainer>
         </Container>
