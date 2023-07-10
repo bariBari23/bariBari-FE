@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import { ReactComponent as LogoBig } from '../assets/logoBig.svg';
-import { ReactComponent as ValidIcon } from '../assets/check.svg';
 import { ReactComponent as VerticalLine } from '../assets/verticalLine.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -60,7 +59,7 @@ export default function LogIn() {
                             placeholder="비밀번호를 입력해주세요"
                             {...register('password')}
                             className={`form-control ${errors.password ? 'is-invalid' : ''} ${
-                                !errors.password && getValues('password') ? <ValidIcon /> && 'is-valid' : ''
+                                !errors.password && getValues('password') ? '' && 'is-valid' : ''
                             }`}
                         />
                         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
