@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Header from '../component/Header';
+import { useNavigate } from 'react-router';
 
 interface JoinData {
     name: string;
@@ -26,14 +27,22 @@ export default function Join() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
         getValues,
     } = useForm<JoinData>({
         resolver: yupResolver(validationSchema),
     });
 
+    const navigate = useNavigate();
+
     const onSubmit: SubmitHandler<JoinData> = (data) => {
-        console.log(data);
+        if (isValid) {
+            console.log(data);
+            // 페이지명 수정 예정
+            // navigate('/next-page');
+        } else {
+            alert('유효한 정보를 입력했는지 다시 확인해주세요!');
+        }
     };
 
     return (
