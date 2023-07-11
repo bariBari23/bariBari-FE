@@ -112,6 +112,7 @@ export const EmptyHeartBigIcon = styled.div`
     background-image: url(${icon});
     background-position: -142px -10px;
 `;
+
 //빈 하트 아이콘 (12*12)
 export const EmptyHeartSmallIcon = styled.div`
     width: 12px;

@@ -1,47 +1,68 @@
 import { styled } from 'styled-components';
-import { ReactComponent as Logo } from '../assets/logo.svg';
+import { ReactComponent as LogoBig } from '../assets/logoBig.svg';
 import { ReactComponent as VerticalLine } from '../assets/verticalLine.svg';
-import { ReactComponent as HorizontalLine } from '../assets/horizontalLine.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import Header from '../component/Header';
 
 interface LoginData {
-    username: string;
+    email: string;
     password: string;
 }
+
+const validationSchema = yup.object({
+    email: yup.string().required('이메일을 입력해주세요!').email('@를 포함한 유효한 이메일 주소를 작성해주세요.'),
+    password: yup
+        .string()
+        .required('비밀번호를 입력해주세요!')
+        .min(6, '비밀번호는 6글자 이상이여야 합니다.')
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, '비밀번호는 영어 대소문자와 숫자를 포함해야 합니다.'),
+});
 
 export default function LogIn() {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginData>();
-    const onSubmit: SubmitHandler<LoginData> = (data) => {
+        getValues,
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
+
+    const onSubmit = (data: LoginData) => {
         console.log(data);
     };
+
     return (
         <div>
             <Header showPageName={false} pageTitle="" showSearchBar={false} />
             <Wrapper>
-                <Logo />
+                <LogoBig />
                 <SubTitle>자취생을 위한 건강한 식사 방법</SubTitle>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <InputWrapper>
                         <Input
-                            id="username"
                             type="text"
-                            placeholder="아이디를 입력해주세요"
-                            {...register('username', { required: true })}
+                            placeholder="이메일을 입력해주세요."
+                            aria-invalid={!!errors.email}
+                            {...register('email')}
+                            className={`form-control ${errors.email ? 'is-invalid' : ''} ${
+                                !errors.email && getValues('email') ? 'is-valid' : ''
+                            }`}
                         />
-                        {errors.username && <ErrorMessage>아이디 입력</ErrorMessage>}
+                        <ErrorMessage>{errors.email?.message}</ErrorMessage>
                         <Input
                             id="password"
                             type="password"
                             placeholder="비밀번호를 입력해주세요"
-                            {...register('password', { required: true })}
+                            {...register('password')}
+                            className={`form-control ${errors.password ? 'is-invalid' : ''} ${
+                                !errors.password && getValues('password') ? '' && 'is-valid' : ''
+                            }`}
                         />
-                        {errors.password && <ErrorMessage>비밀번호 입력</ErrorMessage>}
+                        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                     </InputWrapper>
                     <SubmitButton type="submit">로그인</SubmitButton>
                 </Form>
@@ -52,7 +73,8 @@ export default function LogIn() {
                     <VerticalLine />
                     <p>비밀번호 찾기</p>
                 </OptionWrapper>
-                <GoogleLoginWrapper>
+                {/* sns 로그인은 mvp 단계에서 구현 보류 */}
+                {/* <GoogleLoginWrapper>
                     <GoogleLoginText>
                         <HorizontalLine />
                         <p>SNS 계정으로 로그인</p>
@@ -60,15 +82,13 @@ export default function LogIn() {
                     </GoogleLoginText>
 
                     <GoogleLoginButton />
-                </GoogleLoginWrapper>
+                </GoogleLoginWrapper> */}
             </Wrapper>
         </div>
     );
 }
 
 const Wrapper = styled.div`
-    width: 24.375rem;
-    height: 56.3125rem;
     padding: 0px 16px;
     margin-top: 93px;
 `;
@@ -102,12 +122,26 @@ const Input = styled.input`
     border-radius: 8px;
     border: 0.75px solid #aaa;
     background: #fff;
-    color: #aaa;
+    color: #504e5f;
     font-size: 16px;
-
+    font-family: 'Pretendard-Regular';
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
+    outline: none;
+    &::placeholder {
+        color: #aaa;
+    }
+    &.is-invalid {
+        border-color: red;
+        box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.3);
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    &.is-valid {
+        border-color: blue;
+        box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.3);
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 `;
 
 const ErrorMessage = styled.span`
@@ -126,7 +160,7 @@ const SubmitButton = styled.button`
     background: #ff7455;
     color: #fff;
     font-size: 18px;
-    font-family: Pretendard;
+    font-family: Pretendard-Regular;
     font-style: normal;
     font-weight: 700;
     line-height: 28px;
@@ -139,7 +173,7 @@ const OptionWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--grey-subtext, #504e5f);
+    color: #504e5f;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
