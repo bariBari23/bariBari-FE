@@ -1,59 +1,69 @@
 import { styled } from 'styled-components';
+import { FilledHeartIcon } from './IconFin';
 
 export default function ContentContainer() {
     return (
         <Container>
-            <DosirakCard>
-                <DosirakImg></DosirakImg>
-                <DosirakStoreName>유미네 반찬가게</DosirakStoreName>
-                <DosirakName>계란말이 쏙쏙 반찬 박스</DosirakName>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <NameWrapper>
+                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                    <FilledHeartIcon />
+                </NameWrapper>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
-                    <DosirakTag>계란말이</DosirakTag>
-                    <DosirakTag>감자채볶음</DosirakTag>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
                 </TagWrapper>
                 <Price>7,000원</Price>
-            </DosirakCard>
-            <DosirakCard>
-                <DosirakImg></DosirakImg>
-                <DosirakStoreName>유미네 반찬가게</DosirakStoreName>
-                <DosirakName>계란말이 쏙쏙 반찬 박스</DosirakName>
+            </FoodCard>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
-                    <DosirakTag>계란말이</DosirakTag>
-                    <DosirakTag>감자채볶음</DosirakTag>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
                 </TagWrapper>
                 <Price>7,000원</Price>
-            </DosirakCard>
-            <DosirakCard>
-                <DosirakImg></DosirakImg>
-                <DosirakStoreName>유미네 반찬가게</DosirakStoreName>
-                <DosirakName>계란말이 쏙쏙 반찬 박스</DosirakName>
+            </FoodCard>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <NameWrapper>
+                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                    <FilledHeartIcon />
+                </NameWrapper>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
-                    <DosirakTag>계란말이</DosirakTag>
-                    <DosirakTag>감자채볶음</DosirakTag>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
                 </TagWrapper>
                 <Price>7,000원</Price>
-            </DosirakCard>
-            <DosirakCard>
-                <DosirakImg></DosirakImg>
-                <DosirakStoreName>유미네 반찬가게</DosirakStoreName>
-                <DosirakName>계란말이 쏙쏙 반찬 박스</DosirakName>
+            </FoodCard>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
-                    <DosirakTag>계란말이</DosirakTag>
-                    <DosirakTag>감자채볶음</DosirakTag>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
                 </TagWrapper>
                 <Price>7,000원</Price>
-            </DosirakCard>
-            <DosirakCard>
-                <DosirakImg></DosirakImg>
-                <DosirakStoreName>유미네 반찬가게</DosirakStoreName>
-                <DosirakName>계란말이 쏙쏙 반찬 박스</DosirakName>
+            </FoodCard>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <NameWrapper>
+                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                    <FilledHeartIcon />
+                </NameWrapper>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
-                    <DosirakTag>계란말이</DosirakTag>
-                    <DosirakTag>감자채볶음</DosirakTag>
-                    <DosirakTag>멸치볶음</DosirakTag>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
+                    <FoodTag>멸치볶음</FoodTag>
                 </TagWrapper>
                 <Price>7,000원</Price>
-            </DosirakCard>
+            </FoodCard>
         </Container>
     );
 }
@@ -70,7 +80,14 @@ const Container = styled.div`
     }
 `;
 
-const DosirakCard = styled.div`
+const NameWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const FoodCard = styled.div`
     height: 305px;
     flex-direction: column;
     align-items: flex-start;
@@ -82,7 +99,7 @@ const DosirakCard = styled.div`
     }
 `;
 
-const DosirakImg = styled.div`
+const FoodImg = styled.div`
     width: 172px;
     height: 206px;
     border-radius: 4px;
@@ -94,7 +111,7 @@ const DosirakImg = styled.div`
     }
 `;
 
-const DosirakStoreName = styled.div`
+const FoodStoreName = styled.div`
     color: var(--orange-100, #ff7455);
     font-size: 12px;
     font-style: normal;
@@ -102,7 +119,7 @@ const DosirakStoreName = styled.div`
     line-height: normal;
 `;
 
-const DosirakName = styled.div`
+const FoodName = styled.div`
     color: var(--black, #212121);
     font-size: 14px;
     font-style: normal;
@@ -115,7 +132,7 @@ const TagWrapper = styled.div`
     margin: 4px 0px;
 `;
 
-const DosirakTag = styled.div`
+const FoodTag = styled.div`
     width: auto;
     height: 10px;
     padding: 4px 8px;
