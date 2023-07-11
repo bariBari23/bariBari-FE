@@ -5,7 +5,6 @@ import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
-import Join from './page/Join';
 import Login from './page/Login';
 import Order from './page/Order';
 import StoreDetail from './page/StoreDetail';
@@ -25,11 +24,8 @@ export default function App() {
             <InsideContainer>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/join" element={<Join />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/order" element={<Order />} />
-                    <Route path="/orderlist" element={<OrderList />} />
-                    <Route path="/search" element={<Search />} />
                     <Route path="/detail" element={<StoreDetail />} />
                 </Routes>
             </InsideContainer>
