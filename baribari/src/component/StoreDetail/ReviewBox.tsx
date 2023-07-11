@@ -1,30 +1,32 @@
 import styled from 'styled-components';
+import { ReactComponent as Star } from '../../asset/star.svg';
 
 export default function ReviewBox({ isSelected }: { isSelected: boolean }) {
     return (
         <Container isSelected={isSelected}>
-            <MainBox>
-                <TitleBox>
-                    <div style={{ marginRight: 'auto' }}>리뷰리뷰리뷰</div>
-                    <div style={{ marginRight: '0' }}>18,000원</div>
-                </TitleBox>
-                <StoreBox>
-                    <StoreImageBox />
-                    <StoreNameBox>
-                        <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
-                            반찬가게 이름 철산래미안점
-                        </div>
-                        <div style={{ fontSize: '12px', fontWeight: '400' }}>별점 4.4</div>
-                    </StoreNameBox>
-                    <IconHeart>♥︎</IconHeart>
-                </StoreBox>
-            </MainBox>
-            <SubBox>
-                <RawFoodBox>
-                    <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>시금치 나물</div>
-                    <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>60g</div>
-                </RawFoodBox>
-            </SubBox>
+            <ScoreBox>
+                <div style={{paddingRight: '18px', fontSize: '24px', fontStyle: 'normal', fontWeight: '700', lineHeight: '32px'}}>4.4</div>
+                <div><Star/></div>
+            </ScoreBox>
+            <ReviewCard>
+                <CircleProfile/>
+                <SubReviewCard>
+                    <div style={{width: '100%', marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <div style={{display: 'flex', fontSize: '18px', fontStyle: 'normal', fontWeight: '700'}}>닉네임</div>
+                        <div style={{display: 'flex', fontSize: '12px', fontStyle: 'normal', fontWeight: '600', color: '#AAA'}}>2022.08.12</div>
+                    </div>
+                    <div style={{marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'center'}}>
+                        <div style={{display: 'flex', fontSize: '16px', fontStyle: 'normal', fontWeight: '600', lineHeight: '28px'}}>명철 반찬세트</div>
+                        <Star style={{display: 'flex', width: '102px'}}/>
+                    </div>
+                    <div style = {{display: 'flex', flexDirection: 'row'}}>
+                        <EvaluationTile>맛있어요</EvaluationTile>
+                        <EvaluationTile>양은 충분했어요</EvaluationTile>
+                        <EvaluationTile style={{marginRight: '0px'}}>포장이 깔끔해요</EvaluationTile>
+                    </div>
+                </SubReviewCard>
+
+            </ReviewCard>
         </Container>
     );
 }
@@ -34,66 +36,47 @@ const Container = styled.div<{ isSelected: boolean }>`
     height: 100%;
     display: ${(props) => (props.isSelected === true ? 'flex' : 'none')};
     flex-direction: column;
+    padding-bottom: 40px;
 `;
-const MainBox = styled.div`
+
+const ScoreBox = styled.div`
+    padding: 20px 12px;
+    margin-bottom: 14px;
     display: flex;
-    flex-direction: column;
-    margin-bottom: 12px;
-    padding-top: 12px;
-    background-color: white;
-    width: 100%;
-    height: 130px;
-`;
-const TitleBox = styled.div`
+
+`
+const ReviewCard = styled.div`
     display: flex;
-    height: 28px;
     flex-direction: row;
-    margin: 0 12px 0 12px;
-    justify-content: space-between;
-    font-size: 24px;
-    font-weight: 700;
-`;
-const StoreBox = styled.div`
-    display: flex;
-    height: 70px;
-    margin: 24px 12px 8px 12px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-`;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0px 16px;
+    margin-bottom: 20px;
+`
 
-const StoreImageBox = styled.div`
-    width: 52px;
-    height: 52px;
-    margin: 8px 16px 8px 12px;
+const CircleProfile = styled.div`
+    width: 44px;
+    height: 44px;
     background-color: grey;
-    border-radius: 8px;
-`;
+    border-radius: 100%;
+`
 
-const StoreNameBox = styled.div`
+const SubReviewCard = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 8px auto auto 0;
-`;
+    padding-top: 8px;
+    align-items: flex-start;
+    gap: 14px;
+`
 
-const IconHeart = styled.div`
+const EvaluationTile = styled.div`
     display: flex;
-    align-items: center;
-    margin-right: 12px;
-    font-size: 24px;
-`;
-const SubBox = styled.div`
-    display: flex;
-    background-color: white;
-    margin-top: 14px;
-    padding-top: 20px;
-`;
-
-const RawFoodBox = styled.div`
-    display: flex;
-    width: 100%;
-    height: 52px;
-    margin: 0 16px 0 16px;
-    align-items: center;
-    border-bottom: solid 1px #efefef;
-    color: #504e5f;
-`;
+    padding: 4px 12px;
+    border: solid 1px #FF7455;
+    border-radius: 8px;
+    color: #FF7455;
+    margin-right: 8px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+`

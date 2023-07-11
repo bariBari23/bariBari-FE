@@ -67,7 +67,7 @@ export default function UploadReview() {
                 <SubText>주문하신 반찬에 별점을 남겨주세요.</SubText>
                 <ScoreBox>
                     <ScoreStar>
-                        <Star />
+                        <Star style={{width: '160px', height: '26px'}} />
                     </ScoreStar>
                     <ScoreText>보통</ScoreText>
                 </ScoreBox>
