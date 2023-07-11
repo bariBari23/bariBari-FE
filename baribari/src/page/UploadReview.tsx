@@ -67,7 +67,7 @@ export default function UploadReview() {
                 <SubText>주문하신 반찬에 별점을 남겨주세요.</SubText>
                 <ScoreBox>
                     <ScoreStar>
-                        <Star style={{width: '160px', height: '26px'}} />
+                        <Star style={{ width: '160px', height: '26px' }} />
                     </ScoreStar>
                     <ScoreText>보통</ScoreText>
                 </ScoreBox>
@@ -198,7 +198,7 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 64px);
+    width: calc(100% - 32px);
     max-width: 464px;
     border-radius: 12px;
     background: #ff7455;

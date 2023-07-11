@@ -8,7 +8,7 @@ import Order from './page/Order';
 import StoreDetail from './page/StoreDetail';
 import UploadReview from './page/UploadReview';
 import MyPage from './page/MyPage';
-import SignUp3 from './page/MyPage';
+import SignUp3 from './page/SignUp3';
 
 export default function App() {
     function setScreenSize() {

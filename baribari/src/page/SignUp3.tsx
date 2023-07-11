@@ -1,15 +1,23 @@
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
-import FoodDetailBox from '../component/StoreDetail/FoodDetailBox';
-import { useState, useEffect } from 'react';
-import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
-import ReviewBox from '../component/StoreDetail/ReviewBox';
+import { SearchIcon } from '../component/Icon';
 
 export default function SignUp3() {
     return (
         <Container>
             <TopBar page={'위치 설정'} />
-            <InsideBox></InsideBox>
+            <InsideBox>
+                <SearchTab>
+                    집 주소를 설정하면, 주변 가게를 알려드려요.
+                    <SearchIcon />
+                </SearchTab>
+                <MapBox />
+                <AddBtn>다음</AddBtn>
+                <AgreeBox>
+                    <div style={{ paddingBottom: '16px' }}></div>
+                    <TextBox>전체 동의</TextBox>
+                </AgreeBox>
+            </InsideBox>
         </Container>
     );
 }
@@ -26,37 +34,75 @@ const InsideBox = styled.div`
     margin-top: 88px;
     justify-content: flex-start;
     align-items: center;
-    background-color: #f9f9f9;
 `;
-const FoodImgBox = styled.div`
+const SearchTab = styled.button`
+    height: 45px;
+    width: calc(100% - 32px);
     display: flex;
-    width: 100%;
-    height: 240px;
-    background-color: #efefef;
-`;
-const DetailNav = styled.div`
-    display: flex;
-    width: 100%;
-    height: 48px;
-    background-color: #f9f9f9;
+    margin: 16px 16px 20px 16px;
+    margin-top: 
+    padding: 8px 16px;
     justify-content: space-between;
-`;
-const InformBtn = styled.button<{ isSelected: boolean }>`
-    width: 33.33%;
-    background: none;
-    display: flex;
-    border: none;
     align-items: center;
-    justify-content: center;
-    color: ${(props: { isSelected: boolean }) => (props.isSelected === true ? '#FF7455' : '#AAAAAA')};
+    border-radius: 8px;
+    border: none;
+    background-color: #efefef;
+    color: #949494;
     font-size: 16px;
-    font-weight: ${(props: { isSelected: boolean }) => (props.isSelected === true ? '700' : '500')};
-    border-bottom: ${(props: { isSelected: boolean }) => (props.isSelected === true ? 'solid 2px #FF7455' : 'none')};
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
 `;
+const MapBox = styled.div`
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+`;
+
+const AgreeBox = styled.div`
+    margin: 28px 16px;
+`;
+
+const TextBox = styled.div`
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    margin-right: auto;
+`;
+
+const CheckBox = styled.input`
+    appearance: none;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    border: solid 2px #767676;
+    position: relative;
+    padding-right: 12px;
+
+    &:checked {
+        background-color: #ff7455;
+        border-color: #ff7455;
+    }
+
+    &:checked::before {
+        content: '';
+        position: absolute;
+        margin: auto;
+        border: solid white;
+        left: 4px;
+        top: 1px;
+        border-width: 0 2px 2px 0;
+        height: 6px;
+        width: 4px;
+        transform: rotate(45deg);
+    }
+`;
+
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 64px);
+    width: calc(100% - 32px);
     max-width: 464px;
     border-radius: 12px;
     background: #ff7455;
