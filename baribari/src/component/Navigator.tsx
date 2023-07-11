@@ -1,14 +1,20 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { OrderListIcon, HomeIcon, MyPageIcon } from './IconFin';
+import { useNavigate } from 'react-router';
 
 export default function Navigator() {
     const [currentPage, setCurrentPage] = useState('home');
+    const navigate = useNavigate();
 
     const handlePageChange = (page: string) => {
         setCurrentPage(page);
+        if (page === 'home') {
+            navigate('/');
+        } else {
+            navigate(`/${page}`);
+        }
     };
-
     return (
         <NavContainer>
             <NavCard active={currentPage === 'order'} onClick={() => handlePageChange('order')}>
@@ -45,5 +51,5 @@ const NavCard = styled.nav<{ active: boolean }>`
     color: ${({ active }) => (active ? '#FF7455' : '#AAAAAA')};
     filter: ${({ active }) =>
         active ? '#FF7455' : 'invert(57%) sepia(0%) saturate(0%) hue-rotate(264deg) brightness(103%) contrast(88%)'};
-    pointer: cursor;
+    cursor: pointer;
 `;

@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import { LeftArrowIcon } from './IconFin';
 import SearchBar from './SearchBar';
+import { useNavigate } from 'react-router-dom';
+
 const Header = ({
     showPageName,
     pageTitle,
@@ -10,10 +12,15 @@ const Header = ({
     pageTitle: string;
     showSearchBar: boolean;
 }) => {
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1); // 이전 페이지로 이동
+    };
+
     return (
         <HeaderContainer>
-            <LeftArrowIcon />
-            {/* 검색창도 넣을 수 있게 구현 예정  showSearchBar && <SearchBar/>로*/}
+            <LeftArrowIcon onClick={handleGoBack} />
             {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar && <SearchBar />}
         </HeaderContainer>
     );
