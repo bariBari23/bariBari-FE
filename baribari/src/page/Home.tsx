@@ -6,15 +6,24 @@ import ContentContainer from '../component/ContentContainer';
 import RandomTab from '../component/RandomTab';
 import DropDown from '../component/DropDown';
 import HeartList from '../component/HeartList';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Home() {
+    const navigate = useNavigate();
+
+    const handleCartClick = () => {
+        navigate('/cart'); // 장바구니 페이지로 이동
+    };
+
     return (
         <div>
             <HeaderHome>
-                <Logo />
+                <Link to="/" style={{ textDecoration: 'none', width: '100%' }}>
+                    <Logo />
+                </Link>
                 <RightSideHeader>
                     <BellIcon />
-                    <OrderIcon />
+                    <OrderIcon onClick={handleCartClick} />
                 </RightSideHeader>
             </HeaderHome>
 
@@ -27,10 +36,12 @@ export default function Home() {
                     </div>
                     <RPointerBigIcon />
                 </InquiryTab>
-                <SearchTab>
-                    <p>반찬 이름을 검색해보세요</p>
-                    <SearchIcon />
-                </SearchTab>
+                <Link to="/search" style={{ textDecoration: 'none', width: '100%' }}>
+                    <SearchTab>
+                        <span>반찬 이름을 검색해보세요</span>
+                        <SearchIcon />
+                    </SearchTab>
+                </Link>
             </WrapperTab>
             <WrapperList>
                 <Container>

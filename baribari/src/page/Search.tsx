@@ -3,6 +3,7 @@ import ContentContainer from '../component/ContentContainer';
 import DropDown from '../component/DropDown';
 import Header from '../component/Header';
 import HeartList from '../component/HeartList';
+import Navigator from '../component/Navigator';
 
 export default function Search() {
     return (
@@ -13,9 +14,9 @@ export default function Search() {
                     <HeartList />
                     <DropDown />
                 </Container>
-
                 <ContentContainer />
             </Wrapper>
+            <Navigator />
         </div>
     );
 }

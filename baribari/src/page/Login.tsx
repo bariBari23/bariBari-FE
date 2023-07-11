@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import Header from '../component/Header';
+import { useNavigate } from 'react-router';
 
 interface LoginData {
     email: string;
@@ -35,6 +36,11 @@ export default function LogIn() {
         console.log(data);
     };
 
+    const navigate = useNavigate();
+    const handleRegisterClick = () => {
+        navigate('/join');
+    };
+
     return (
         <div>
             <Header showPageName={false} pageTitle="" showSearchBar={false} />
@@ -59,19 +65,19 @@ export default function LogIn() {
                             placeholder="비밀번호를 입력해주세요"
                             {...register('password')}
                             className={`form-control ${errors.password ? 'is-invalid' : ''} ${
-                                !errors.password && getValues('password') ? '' && 'is-valid' : ''
+                                !errors.password && getValues('password') ? 'is-valid' : ''
                             }`}
                         />
-                        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+                        <ErrorMessage>{errors.password?.message}</ErrorMessage>
                     </InputWrapper>
                     <SubmitButton type="submit">로그인</SubmitButton>
                 </Form>
                 <OptionWrapper>
-                    <p>회원가입</p>
+                    <span onClick={handleRegisterClick}>회원가입</span>
                     <VerticalLine />
-                    <p>아이디 찾기</p>
+                    <span>아이디 찾기</span>
                     <VerticalLine />
-                    <p>비밀번호 찾기</p>
+                    <span>비밀번호 찾기</span>
                 </OptionWrapper>
                 {/* sns 로그인은 mvp 단계에서 구현 보류 */}
                 {/* <GoogleLoginWrapper>
@@ -179,35 +185,36 @@ const OptionWrapper = styled.div`
     font-weight: 600;
     line-height: 128.065%;
     margin-top: 18px;
+    cursor: pointer;
 `;
 
-const GoogleLoginWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-`;
-const GoogleLoginText = styled.div`
-    margin-top: 66px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 21px;
-    color: var(--grey-3, #aaa);
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 128.065%;
-`;
+// const GoogleLoginWrapper = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     gap: 14px;
+// `;
+// const GoogleLoginText = styled.div`
+//     margin-top: 66px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     gap: 21px;
+//     color: var(--grey-3, #aaa);
+//     font-size: 12px;
+//     font-style: normal;
+//     font-weight: 500;
+//     line-height: 128.065%;
+// `;
 
-const GoogleLoginButton = styled.button`
-    display: flex;
-    padding: 8px 13px;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    border-radius: 12px;
-    background: var(--grey-1, #f9f9f9);
-    height: 40px;
-`;
+// const GoogleLoginButton = styled.button`
+//     display: flex;
+//     padding: 8px 13px;
+//     justify-content: center;
+//     align-items: center;
+//     gap: 4px;
+//     border-radius: 12px;
+//     background: var(--grey-1, #f9f9f9);
+//     height: 40px;
+// `;
