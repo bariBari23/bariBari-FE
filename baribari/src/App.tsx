@@ -7,11 +7,13 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Join from './page/Join';
 import Login from './page/Login';
-// import Order from './page/Order';
+import Order from './page/Order';
 import OrderList from './page/OrderList';
 import Search from './page/Search';
-// import StoreDetail from './page/StoreDetail';
-// import UploadReview from './page/UploadReview';
+import Cart from './page/Cart';
+import Fav from './page/Fav';
+import StoreDetail from './page/StoreDetail';
+import UploadReview from './page/UploadReview';
 
 export default function App() {
     function setScreenSize() {
@@ -29,11 +31,13 @@ export default function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/join" element={<Join />} />
                     <Route path="/login" element={<Login />} />
-                    {/* <Route path="/order" element={<Order />} /> */}
+                    <Route path="/order" element={<Order />} />
                     <Route path="/orderlist" element={<OrderList />} />
                     <Route path="/search" element={<Search />} />
-                    {/* <Route path="/detail" element={<StoreDetail />} />
-                    <Route path="/uploadReview" element={<UploadReview />} /> */}
+                    <Route path="/detail" element={<StoreDetail />} />
+                    <Route path="/uploadReview" element={<UploadReview />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/fav" element={<Fav />} />
                 </Routes>
             </InsideContainer>
         </Container>
@@ -43,7 +47,7 @@ export default function App() {
 const Container = styled.div`
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
-    max-width: 500px;
+    max-width: 600px;
     justify-content: center;
     margin: auto;
     @media ${(props) => props.theme.tablet} {
