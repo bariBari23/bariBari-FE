@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { SearchIcon } from '../component/Icon';
+import { ReactComponent as Check } from '../asset/checkbox.svg';
+import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
 
 export default function SignUp3() {
     return (
@@ -14,8 +16,40 @@ export default function SignUp3() {
                 <MapBox />
                 <AddBtn>다음</AddBtn>
                 <AgreeBox>
-                    <div style={{ paddingBottom: '16px' }}></div>
-                    <TextBox>전체 동의</TextBox>
+                    <AllAgree>
+                        <BigTextBox>전체 동의</BigTextBox>
+                        <Check type="button" values="all" style={{ marginRight: '0', padding: '4px' }} />
+                    </AllAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>서비스 이용약관</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <Check
+                            type="button"
+                            values="service"
+                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                        />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 수집 및 이용동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <Check
+                            type="button"
+                            values="usage"
+                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                        />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 제 3자 제공동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <Check
+                            type="button"
+                            values="third"
+                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                        />
+                    </SubAgree>
                 </AgreeBox>
             </InsideBox>
         </Container>
@@ -34,6 +68,7 @@ const InsideBox = styled.div`
     margin-top: 88px;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 80px;
 `;
 const SearchTab = styled.button`
     height: 45px;
@@ -61,13 +96,36 @@ const MapBox = styled.div`
 
 const AgreeBox = styled.div`
     margin: 28px 16px;
+    width: calc(100% - 32px);
 `;
 
-const TextBox = styled.div`
+const AllAgree = styled.div`
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: solid 1px #ececec;
+`;
+
+const SubAgree = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+`;
+
+const BigTextBox = styled.div`
     font-size: 20px;
     font-weight: 700;
     line-height: 32px;
     margin-right: auto;
+`;
+
+const TextBox = styled.div`
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    padding-right: 12px;
 `;
 
 const CheckBox = styled.input`
