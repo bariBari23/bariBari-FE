@@ -29,16 +29,6 @@ export default function ContentContainer() {
             </FoodCard>
             <FoodCard>
                 <FoodImg></FoodImg>
-                <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
-            <FoodCard>
-                <FoodImg></FoodImg>
                 <NameWrapper>
                     <FoodStoreName>유미네 반찬가게</FoodStoreName>
                     <FilledHeartIcon />
@@ -53,6 +43,19 @@ export default function ContentContainer() {
             <FoodCard>
                 <FoodImg></FoodImg>
                 <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
+                <TagWrapper>
+                    <FoodTag>계란말이</FoodTag>
+                    <FoodTag>감자채볶음</FoodTag>
+                </TagWrapper>
+                <Price>7,000원</Price>
+            </FoodCard>
+            <FoodCard>
+                <FoodImg></FoodImg>
+                <NameWrapper>
+                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
+                    <FilledHeartIcon />
+                </NameWrapper>
                 <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
                 <TagWrapper>
                     <FoodTag>계란말이</FoodTag>
@@ -90,7 +93,7 @@ const FoodCard = styled.div`
     align-items: flex-start;
     display: flex;
     padding: 8px 8px 8px 0px;
-
+    // 카드 폭을 100%로 맞춰보는 건 어떨까!
     @media (max-width: 408px) {
         width: 100%;
     }
