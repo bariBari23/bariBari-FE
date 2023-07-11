@@ -8,6 +8,7 @@ import Order from './page/Order';
 import StoreDetail from './page/StoreDetail';
 import UploadReview from './page/UploadReview';
 import MyPage from './page/MyPage';
+import SignUp3 from './page/MyPage';
 
 export default function App() {
     function setScreenSize() {
@@ -26,6 +27,7 @@ export default function App() {
                     <Route path="/detail" element={<StoreDetail />} />
                     <Route path="/uploadReview" element={<UploadReview />} />
                     <Route path="/myPage" element={<MyPage />} />
+                    <Route path="/signUp3" element={<SignUp3 />} />
                 </Routes>
             </InsideContainer>
         </Container>
