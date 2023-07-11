@@ -11,6 +11,7 @@ import Order from './page/Order';
 import OrderList from './page/OrderList';
 import Search from './page/Search';
 import StoreDetail from './page/StoreDetail';
+import UploadReview from './page/UploadReview';
 
 export default function App() {
     function setScreenSize() {
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path="/orderlist" element={<OrderList />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/detail" element={<StoreDetail />} />
+                    <Route path="/uploadReview" element={<UploadReview />} />
                 </Routes>
             </InsideContainer>
         </Container>
@@ -41,7 +43,7 @@ export default function App() {
 const Container = styled.div`
     display: flex;
     height: calc(var(--vh, 1vh) * 100);
-    max-width: 600px;
+    max-width: 500px;
     justify-content: center;
     margin: auto;
     @media ${(props) => props.theme.tablet} {
