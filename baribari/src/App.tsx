@@ -7,11 +7,11 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Join from './page/Join';
 import Login from './page/Login';
-import Order from './page/Order';
+// import Order from './page/Order';
 import OrderList from './page/OrderList';
 import Search from './page/Search';
-import StoreDetail from './page/StoreDetail';
-import UploadReview from './page/UploadReview';
+// import StoreDetail from './page/StoreDetail';
+// import UploadReview from './page/UploadReview';
 
 export default function App() {
     function setScreenSize() {
@@ -29,11 +29,11 @@ export default function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/join" element={<Join />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/order" element={<Order />} />
+                    {/* <Route path="/order" element={<Order />} /> */}
                     <Route path="/orderlist" element={<OrderList />} />
                     <Route path="/search" element={<Search />} />
-                    <Route path="/detail" element={<StoreDetail />} />
-                    <Route path="/uploadReview" element={<UploadReview />} />
+                    {/* <Route path="/detail" element={<StoreDetail />} />
+                    <Route path="/uploadReview" element={<UploadReview />} /> */}
                 </Routes>
             </InsideContainer>
         </Container>
