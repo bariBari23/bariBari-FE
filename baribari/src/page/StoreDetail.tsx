@@ -63,10 +63,10 @@ const InformBtn = styled.button<{isSelected: boolean}>`
     border: none;
     align-items: center;
     justify-content: center;
-    color: ${(props) => (props.isSelected === true ? '#FF7455' : '#AAAAAA')};
+    color: ${(props: { isSelected: boolean; }) => (props.isSelected === true ? '#FF7455' : '#AAAAAA')};
     font-size: 16px;
-    font-weight: ${(props) => (props.isSelected === true ? '700' : '500')};
-    border-bottom: ${(props) => (props.isSelected === true ? 'solid 2px #FF7455' : 'none')};
+    font-weight: ${(props: { isSelected: boolean; }) => (props.isSelected === true ? '700' : '500')};
+    border-bottom: ${(props: { isSelected: boolean; }) => (props.isSelected === true ? 'solid 2px #FF7455' : 'none')};
 `
 const AddBtn = styled.div`
     display: flex;
