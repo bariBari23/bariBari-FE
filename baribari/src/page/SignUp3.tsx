@@ -1,3 +1,4 @@
+import { useReducer } from 'react';
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { SearchIcon } from '../component/Icon';
@@ -5,6 +6,26 @@ import { ReactComponent as Check } from '../asset/checkbox.svg';
 import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
 
 export default function SignUp3() {
+    const [state, dispatch] = useReducer(
+        (state: { [x: string]: boolean }, action: { type: string }) => {
+            switch (action.type) {
+                case 'all':
+                    return { all: !state.all, service: !state.all, usage: !state.all, third: !state.all };
+                case 'service':
+                case 'usage':
+                case 'third':
+                    return { ...state, [action.type]: !state[action.type] };
+                default:
+                    return state;
+            }
+        },
+        {
+            all: false,
+            service: false,
+            usage: false,
+            third: false,
+        },
+    );
     return (
         <Container>
             <TopBar page={'위치 설정'} />
@@ -18,7 +39,16 @@ export default function SignUp3() {
                 <AgreeBox>
                     <AllAgree>
                         <BigTextBox>전체 동의</BigTextBox>
-                        <Check type="button" values="all" style={{ marginRight: '0', padding: '4px' }} />
+                        <Check
+                            type="button"
+                            onClick={() => dispatch({ type: 'all' })}
+                            style={{
+                                margin: '4px',
+                                fill: state.third ? '#ff7455' : 'white',
+                                stroke: state.usage ? 'none' : '#767676',
+                                strokeWidth: state.usage ? 'none' : '1',
+                            }}
+                        />
                     </AllAgree>
                     <SubAgree>
                         <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
@@ -26,8 +56,15 @@ export default function SignUp3() {
                         <RPointerIcon style={{ marginRight: 'auto' }} />
                         <Check
                             type="button"
-                            values="service"
-                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                            onClick={() => dispatch({ type: 'service' })}
+                            style={{
+                                margin: '3px',
+                                width: '18px',
+                                height: '18px',
+                                fill: state.service ? '#ff7455' : 'white',
+                                stroke: state.usage ? 'none' : '#767676',
+                                strokeWidth: state.usage ? 'none' : '1',
+                            }}
                         />
                     </SubAgree>
                     <SubAgree>
@@ -36,8 +73,15 @@ export default function SignUp3() {
                         <RPointerIcon style={{ marginRight: 'auto' }} />
                         <Check
                             type="button"
-                            values="usage"
-                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                            onClick={() => dispatch({ type: 'usage' })}
+                            style={{
+                                margin: '3px',
+                                width: '18px',
+                                height: '18px',
+                                fill: state.usage ? '#ff7455' : 'white',
+                                stroke: state.usage ? 'none' : '#767676',
+                                strokeWidth: state.usage ? 'none' : '1',
+                            }}
                         />
                     </SubAgree>
                     <SubAgree>
@@ -46,8 +90,15 @@ export default function SignUp3() {
                         <RPointerIcon style={{ marginRight: 'auto' }} />
                         <Check
                             type="button"
-                            values="third"
-                            style={{ marginRight: '0', padding: '3px', width: '18px', height: '18px' }}
+                            onClick={() => dispatch({ type: 'third' })}
+                            style={{
+                                margin: '3px',
+                                width: '18px',
+                                height: '18px',
+                                fill: state.third ? '#ff7455' : 'white',
+                                stroke: state.usage ? 'none' : '#767676',
+                                strokeWidth: state.usage ? 'none' : '1',
+                            }}
                         />
                     </SubAgree>
                 </AgreeBox>
