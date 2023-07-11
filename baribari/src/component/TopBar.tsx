@@ -13,6 +13,7 @@ export default function TopBar({ page }: { page: String }) {
 
 const Container = styled.div`
     height: 32px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
