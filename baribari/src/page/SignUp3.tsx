@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { SearchIcon } from '../component/Icon';
-import { ReactComponent as Check } from '../asset/checkbox.svg';
+import CheckIcon from '../component/SignUp3/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
 
 export default function SignUp3() {
@@ -39,67 +39,25 @@ export default function SignUp3() {
                 <AgreeBox>
                     <AllAgree>
                         <BigTextBox>전체 동의</BigTextBox>
-                        <Check
-                            type="button"
-                            onClick={() => dispatch({ type: 'all' })}
-                            style={{
-                                margin: '4px',
-                                fill: state.third ? '#ff7455' : 'white',
-                                stroke: state.usage ? 'none' : '#767676',
-                                strokeWidth: state.usage ? 'none' : '1',
-                            }}
-                        />
+                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={true} />
                     </AllAgree>
                     <SubAgree>
                         <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
                         <TextBox>서비스 이용약관</TextBox>
                         <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <Check
-                            type="button"
-                            onClick={() => dispatch({ type: 'service' })}
-                            style={{
-                                margin: '3px',
-                                width: '18px',
-                                height: '18px',
-                                fill: state.service ? '#ff7455' : 'white',
-                                stroke: state.usage ? 'none' : '#767676',
-                                strokeWidth: state.usage ? 'none' : '1',
-                            }}
-                        />
+                        <CheckIcon onClick={() => dispatch({ type: 'service' })} active={state.service} isAll={false} />
                     </SubAgree>
                     <SubAgree>
                         <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
                         <TextBox>개인정보 수집 및 이용동의</TextBox>
                         <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <Check
-                            type="button"
-                            onClick={() => dispatch({ type: 'usage' })}
-                            style={{
-                                margin: '3px',
-                                width: '18px',
-                                height: '18px',
-                                fill: state.usage ? '#ff7455' : 'white',
-                                stroke: state.usage ? 'none' : '#767676',
-                                strokeWidth: state.usage ? 'none' : '1',
-                            }}
-                        />
+                        <CheckIcon onClick={() => dispatch({ type: 'usage' })} active={state.usage} isAll={false} />
                     </SubAgree>
                     <SubAgree>
                         <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
                         <TextBox>개인정보 제 3자 제공동의</TextBox>
                         <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <Check
-                            type="button"
-                            onClick={() => dispatch({ type: 'third' })}
-                            style={{
-                                margin: '3px',
-                                width: '18px',
-                                height: '18px',
-                                fill: state.third ? '#ff7455' : 'white',
-                                stroke: state.usage ? 'none' : '#767676',
-                                strokeWidth: state.usage ? 'none' : '1',
-                            }}
-                        />
+                        <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
                     </SubAgree>
                 </AgreeBox>
             </InsideBox>
@@ -177,35 +135,6 @@ const TextBox = styled.div`
     font-weight: 400;
     line-height: 20px;
     padding-right: 12px;
-`;
-
-const CheckBox = styled.input`
-    appearance: none;
-    display: flex;
-    width: 18px;
-    height: 18px;
-    border-radius: 2px;
-    border: solid 2px #767676;
-    position: relative;
-    padding-right: 12px;
-
-    &:checked {
-        background-color: #ff7455;
-        border-color: #ff7455;
-    }
-
-    &:checked::before {
-        content: '';
-        position: absolute;
-        margin: auto;
-        border: solid white;
-        left: 4px;
-        top: 1px;
-        border-width: 0 2px 2px 0;
-        height: 6px;
-        width: 4px;
-        transform: rotate(45deg);
-    }
 `;
 
 const AddBtn = styled.div`
