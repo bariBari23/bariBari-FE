@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
-import FoodDetailBox from '../component/StoreDetail/FoodDetailBox';
-import { useState, useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import CheckIcon from '../component/SignUp3/CheckIcon';
-import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
-import ReviewBox from '../component/StoreDetail/ReviewBox';
 
 const timeSlots = [
     '8:00 ~ 9:00',
@@ -43,16 +40,15 @@ export default function Order() {
     );
     return (
         <Container>
+            <AddBtn>19,000원 결제하기</AddBtn>
             <TopBar page={'결제하기'} />
             <InsideBox>
                 <InfoBox>
-                    <div style={{ fontSize: '18px', fontWeight: '700' }}>주문자 정보</div>
+                    <TitleText>주문자 정보</TitleText>
                     <PhoneInput placeholder="휴대폰 번호를 입력해주세요"></PhoneInput>
                 </InfoBox>
                 <InfoBox style={{ height: '201px', padding: '24px 16px 24px 16px' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', lineHeight: '28px', marginBottom: '20px' }}>
-                        픽업 시간
-                    </div>
+                    <TitleText>픽업 시간</TitleText>
                     <div
                         style={{
                             display: 'flex',
@@ -60,6 +56,8 @@ export default function Order() {
                             flexWrap: 'wrap',
                             height: '192px',
                             alignItems: 'space-between',
+                            paddingTop: '20px',
+                            alignContent: 'space-between',
                         }}
                     >
                         {timeSlots.map((slot) => (
@@ -67,7 +65,6 @@ export default function Order() {
                                 style={{
                                     display: 'flex',
                                     paddingBottom: '20px',
-                                    paddingRight: '20%',
                                     alignItems: 'center',
                                 }}
                             >
@@ -87,10 +84,17 @@ export default function Order() {
                     </div>
                 </InfoBox>
                 <InfoBox style={{ padding: '28px 16px', gap: '20px' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', lineHeight: '28px' }}>결제 수단</div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <TitleText>결제 수단</TitleText>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                        }}
+                    >
                         {paymentMethods.map((method) => (
-                            <div style={{ display: 'flex', paddingRight: '20%', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <CheckIcon
                                     active={state.pay === method}
                                     onClick={() =>
@@ -106,8 +110,35 @@ export default function Order() {
                         ))}
                     </div>
                 </InfoBox>
-                <InfoBox style={{ padding: '24px 16px', gap: '24px' }}></InfoBox>
-                <AddBtn>19,000원 결제하기</AddBtn>
+                <InfoBox style={{ padding: '24px 16px', paddingBottom: '120px', gap: '24px', marginBottom: '0' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <SmallText style={{ marginRight: '20px' }}>반찬 박스 이름</SmallText>
+                        <SmallText style={{ marginRight: 'auto' }}>1개</SmallText>
+                        <SmallText style={{ marginRight: '0' }}>19,000원</SmallText>
+                    </div>
+                    <div
+                        style={{
+                            paddingTop: '16px',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            borderTop: 'solid 1px #EFEFEF',
+                        }}
+                    >
+                        <TitleText style={{ marginRight: 'auto' }}>결제 금액</TitleText>
+                        <div
+                            style={{
+                                fontSize: '24px',
+                                fontWeight: '700',
+                                fontStyle: 'normal',
+                                lineHeight: '32px',
+                                marginRight: '0',
+                                color: '#FF7455',
+                            }}
+                        >
+                            19,000원
+                        </div>
+                    </div>
+                </InfoBox>
             </InsideBox>
         </Container>
     );
@@ -134,6 +165,13 @@ const InfoBox = styled.div`
     margin-bottom: 14px;
     flex-direction: column;
 `;
+
+const TitleText = styled.div`
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 21px;
+`;
 const PhoneInput = styled.input`
     display: flex;
     height: 44px;
@@ -145,40 +183,21 @@ const PhoneInput = styled.input`
     font-size: 16px;
     font-weight: 600;
 `;
-const CheckBox = styled.input`
-    appearance: none;
-    display: flex;
-    width: 18px;
-    height: 18px;
-    border-radius: 2px;
-    border: solid 2px #767676;
-    position: relative;
-    padding-right: 12px;
 
-    &:checked {
-        background-color: #ff7455;
-        border-color: #ff7455;
-    }
-
-    &:checked::before {
-        content: '';
-        position: absolute;
-        margin: auto;
-        border: solid white;
-        left: 4px;
-        top: 1px;
-        border-width: 0 2px 2px 0;
-        height: 6px;
-        width: 4px;
-        transform: rotate(45deg);
-    }
-`;
 const TimeBox = styled.div`
     display: flex;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
     padding-left: 12px;
+`;
+
+const SmallText = styled.div`
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #212121;
 `;
 
 const AddBtn = styled.div`
