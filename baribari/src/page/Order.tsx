@@ -122,6 +122,7 @@ export default function Order() {
                             display: 'flex',
                             flexDirection: 'row',
                             borderTop: 'solid 1px #EFEFEF',
+                            alignItems: 'center',
                         }}
                     >
                         <TitleText style={{ marginRight: 'auto' }}>결제 금액</TitleText>
