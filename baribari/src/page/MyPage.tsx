@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import TopBar from '../component/TopBar';
+import Header from '../component/Header';
 import { ReactComponent as Pencil } from '../asset/pencil.svg';
 import { RPointerIcon } from '../component/Icon';
 
 export default function MyPage() {
     return (
         <Container>
-            <TopBar page={'마이페이지'} />
+            <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={true} />
             <InsideBox>
                 <ProfileBox>
                     <ProfileImage />
@@ -38,15 +38,14 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0 12px;
 `;
 const InsideBox = styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     margin-top: 126px;
     justify-content: flex-start;
     align-items: center;
+    padding: 0 12px;
 `;
 
 const ProfileBox = styled.div`

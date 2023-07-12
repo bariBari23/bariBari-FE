@@ -1,12 +1,23 @@
 import styled from 'styled-components';
-import { LeftArrowIcon } from '../component/Icon';
-export default function TopBar({ page }: { page: String }) {
+import { LeftArrowIcon } from './Icon';
+import SearchBar from './SearchBar';
+// showPageName 없어도 될 것 같은 생각..!
+
+export default function Header({
+    showPageName,
+    pageTitle,
+    showSearchBar,
+}: {
+    showPageName: boolean;
+    pageTitle: String;
+    showSearchBar: boolean;
+}) {
     return (
         <Container>
             <IconBox>
                 <LeftArrowIcon />
             </IconBox>
-            <TitleBox>{page}</TitleBox>
+            {showPageName ? <TitleBox>{pageTitle}</TitleBox> : showSearchBar && <SearchBar />}
         </Container>
     );
 }

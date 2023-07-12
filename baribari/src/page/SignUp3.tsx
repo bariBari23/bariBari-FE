@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import styled from 'styled-components';
-import TopBar from '../component/TopBar';
+import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
@@ -28,7 +28,7 @@ export default function SignUp3() {
     );
     return (
         <Container>
-            <TopBar page={'위치 설정'} />
+            <Header showPageName={true} pageTitle={'위치 설정'} showSearchBar={true} />
             <InsideBox>
                 <SearchTab>
                     집 주소를 설정하면, 주변 가게를 알려드려요.

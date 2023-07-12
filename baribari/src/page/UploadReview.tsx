@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TopBar from '../component/TopBar';
+import Header from '../component/Header';
 import { useState, useEffect } from 'react';
 import { ReactComponent as Star } from '../asset/star.svg';
 import Photo from '../asset/photo.png';
@@ -36,7 +36,7 @@ export default function UploadReview() {
 
     return (
         <Container>
-            <TopBar page={'리뷰 쓰기'} />
+            <Header showPageName={true} pageTitle={'리뷰 쓰기'} showSearchBar={true} />
             <InsideBox>
                 <StoreBox>
                     <StoreImageBox />
@@ -132,14 +132,13 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0 16px;
 `;
 const InsideBox = styled.div`
-    width: 100%;
     display: flex;
     flex-direction: column;
     margin-top: 88px;
     justify-content: flex-start;
+    padding: 0 16px 110px 16px;
     padding-bottom: 110px;
 `;
 

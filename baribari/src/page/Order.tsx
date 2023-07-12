@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TopBar from '../component/TopBar';
+import Header from '../component/Header';
 import { useReducer } from 'react';
 import CheckIcon from '../component/CheckIcon';
 
@@ -41,7 +41,7 @@ export default function Order() {
     return (
         <Container>
             <AddBtn>19,000원 결제하기</AddBtn>
-            <TopBar page={'결제하기'} />
+            <Header showPageName={true} pageTitle={'주문하기'} showSearchBar={true} />
             <InsideBox>
                 <InfoBox>
                     <TitleText>주문자 정보</TitleText>

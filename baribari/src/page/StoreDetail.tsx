@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import TopBar from '../component/TopBar';
+import Header from '../component/Header';
 import FoodDetailBox from '../component/StoreDetail/FoodDetailBox';
 import { useState, useEffect } from 'react';
 import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
@@ -12,7 +12,7 @@ export default function StoreDetail() {
     };
     return (
         <Container>
-            <TopBar page={'반찬박스 이름'} />
+            <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={true} />
             <InsideBox>
                 <FoodImgBox />
                 <DetailNav>
