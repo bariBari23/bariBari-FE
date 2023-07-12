@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { useState, useEffect } from 'react';
 import { ReactComponent as Star } from '../asset/star.svg';
+import Photo from '../asset/photo.png';
 
 type SelectedValue = {
     quantity: string;
@@ -12,9 +13,18 @@ type SelectedValue = {
 
 export default function UploadReview() {
     const [selectedValue, setSelectedValue] = useState<SelectedValue>({ quantity: '', flavor: '', wrap: '' });
+    const [image, setImage] = useState('');
     const handleSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedValue({ ...selectedValue, [e.target.name]: e.target.value });
     };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const imageUrl = URL.createObjectURL(e.target.files[0]);
+            setImage(imageUrl);
+        }
+    };
+
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {
         return (
             <CheckBox isSelected={selectedValue[name] === value}>
@@ -107,6 +117,11 @@ export default function UploadReview() {
                         깔끔해요
                     </ClickBox>
                 </div>
+                <SubText>주문하신 반찬은 어떠셨나요?</SubText>
+                <TextReviewBox placeholder="후기를 입력해주세요."></TextReviewBox>
+                <UploadPhoto htmlFor="upload" image={image}>
+                    <input type="file" id="upload" onChange={handleFileChange} style={{ display: 'none' }} />
+                </UploadPhoto>
             </InsideBox>
             <AddBtn>리뷰 등록하기</AddBtn>
         </Container>
@@ -117,7 +132,7 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-left: ;
+    padding: 0 16px;
 `;
 const InsideBox = styled.div`
     width: 100%;
@@ -125,6 +140,7 @@ const InsideBox = styled.div`
     flex-direction: column;
     margin-top: 88px;
     justify-content: flex-start;
+    padding-bottom: 110px;
 `;
 
 const StoreBox = styled.div`
@@ -195,6 +211,33 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
     font-weight: 600;
     line-height: 28px;
 `;
+
+const TextReviewBox = styled.textarea`
+    display: flex;
+    height: 153px;
+    padding: 8px 16px;
+    margin-bottom: 28px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: none;
+    color: #212121;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 28px;
+    &::placeholder {
+        color: #aaa;
+    }
+`;
+
+const UploadPhoto = styled.label<{ image: string }>`
+    display: inline-block;
+    width: 62px;
+    height: 62px;
+    border-radius: 12px;
+    background-image: url(${(props) => props.image || Photo});
+    background-size: cover;
+`;
+
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
@@ -211,7 +254,6 @@ const AddBtn = styled.div`
     justify-content: center;
 
     position: fixed;
-    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
 `;

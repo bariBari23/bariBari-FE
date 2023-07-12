@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { useReducer } from 'react';
-import CheckIcon from '../component/SignUp3/CheckIcon';
+import CheckIcon from '../component/CheckIcon';
 
 const timeSlots = [
     '8:00 ~ 9:00',

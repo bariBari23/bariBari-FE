@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import { SearchIcon } from '../component/Icon';
-import CheckIcon from '../component/SignUp3/CheckIcon';
+import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
 
 export default function SignUp3() {
