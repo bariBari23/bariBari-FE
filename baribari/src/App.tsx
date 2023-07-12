@@ -14,6 +14,8 @@ import Cart from './page/Cart';
 import Fav from './page/Fav';
 import StoreDetail from './page/StoreDetail';
 import UploadReview from './page/UploadReview';
+import MyPage from './page/MyPage';
+import SignUp3 from './page/SignUp3';
 
 export default function App() {
     function setScreenSize() {
@@ -38,6 +40,8 @@ export default function App() {
                     <Route path="/uploadReview" element={<UploadReview />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/fav" element={<Fav />} />
+                    <Route path="/myPage" element={<MyPage />} />
+                    <Route path="/signUp3" element={<SignUp3 />} />
                 </Routes>
             </InsideContainer>
         </Container>
@@ -56,7 +60,7 @@ const Container = styled.div`
 
 const InsideContainer = styled.div`
     display: flex;
-    width: calc(100vw - 32px);
+    width: 100%;
     height: 100vh;
     align-items: flex-start;
     justify-content: flex-start;
