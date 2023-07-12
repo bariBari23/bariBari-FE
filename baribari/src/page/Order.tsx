@@ -1,15 +1,46 @@
 import styled from 'styled-components';
 import TopBar from '../component/TopBar';
 import FoodDetailBox from '../component/StoreDetail/FoodDetailBox';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
+import CheckIcon from '../component/SignUp3/CheckIcon';
 import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
 import ReviewBox from '../component/StoreDetail/ReviewBox';
 
+const timeSlots = [
+    '8:00 ~ 9:00',
+    '9:00 ~ 10:00',
+    '10:00 ~ 11:00',
+    '11:00 ~ 12:00',
+    '12:00 ~ 13:00',
+    '13:00 ~ 14:00',
+    '14:00 ~ 15:00',
+];
+const paymentMethods = ['무통장 입금', '현장 결제'];
+
+type State = {
+    time: string;
+    pay: string;
+};
+
+type Action = { type: 'SET_TIME'; time: string } | { type: 'SET_PAY'; pay: string };
+
 export default function Order() {
-    const [active, setActive] = useState('반찬 상세');
-    const changeDetailBox = (value: string) => {
-        setActive(value);
-    };
+    const [state, dispatch] = useReducer(
+        (state: State, action: Action) => {
+            switch (action.type) {
+                case 'SET_TIME':
+                    return { ...state, time: action.time };
+                case 'SET_PAY':
+                    return { ...state, pay: action.pay };
+                default:
+                    throw new Error();
+            }
+        },
+        {
+            time: '',
+            pay: '',
+        },
+    );
     return (
         <Container>
             <TopBar page={'결제하기'} />
@@ -22,61 +53,60 @@ export default function Order() {
                     <div style={{ fontSize: '18px', fontWeight: '700', lineHeight: '28px', marginBottom: '20px' }}>
                         픽업 시간
                     </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            flexWrap: 'wrap',
+                            height: '192px',
+                            alignItems: 'space-between',
+                        }}
+                    >
+                        {timeSlots.map((slot) => (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    paddingBottom: '20px',
+                                    paddingRight: '20%',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <CheckIcon
+                                    active={state.time === slot}
+                                    onClick={() =>
+                                        dispatch({
+                                            type: 'SET_TIME',
+                                            time: slot,
+                                        })
+                                    }
+                                    isAll={false}
+                                />
+                                <TimeBox>{slot}</TimeBox>
+                            </div>
+                        ))}
+                    </div>
+                </InfoBox>
+                <InfoBox style={{ padding: '28px 16px', gap: '20px' }}>
+                    <div style={{ fontSize: '18px', fontWeight: '700', lineHeight: '28px' }}>결제 수단</div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div style={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ display: 'flex', paddingBottom: '20px' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>8:00 ~ 9:00</TimeBox>
+                        {paymentMethods.map((method) => (
+                            <div style={{ display: 'flex', paddingRight: '20%', alignItems: 'center' }}>
+                                <CheckIcon
+                                    active={state.pay === method}
+                                    onClick={() =>
+                                        dispatch({
+                                            type: 'SET_PAY',
+                                            pay: method,
+                                        })
+                                    }
+                                    isAll={false}
+                                />
+                                <TimeBox style={{ lineHeight: '28px', width: '95px' }}>{method}</TimeBox>
                             </div>
-                            <div style={{ display: 'flex', paddingBottom: '20px' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>9:00 ~ 10:00</TimeBox>
-                            </div>
-                            <div style={{ display: 'flex', paddingBottom: '20px' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>10:00 ~ 11:00</TimeBox>
-                            </div>
-                            <div style={{ display: 'flex' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>11:00 ~ 12:00</TimeBox>
-                            </div>
-                        </div>
-                        <div style={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
-                            <div style={{ display: 'flex', paddingBottom: '20px' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>12:00 ~ 13:00</TimeBox>
-                            </div>
-                            <div style={{ display: 'flex', paddingBottom: '20px' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>13:00 ~ 14:00</TimeBox>
-                            </div>
-                            <div style={{ display: 'flex' }}>
-                                <CheckBox type="radio" name="time" value="8" />
-                                <TimeBox>14:00 ~ 15:00</TimeBox>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </InfoBox>
-                <InfoBox style={{ height: '92px', padding: '24px 16px 24px 16px' }}>
-                    <div style={{ fontSize: '18px', fontWeight: '700', lineHeight: '28px', marginBottom: '20px' }}>
-                        결제 수단
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <div style={{ display: 'flex' }}>
-                            <CheckBox type="radio" name="pay" value="8" />
-                            <TimeBox>카카오페이</TimeBox>
-                        </div>
-                        <div style={{ display: 'flex' }}>
-                            <CheckBox type="radio" name="pay" value="8" />
-                            <TimeBox>무통장 입금</TimeBox>
-                        </div>
-                        <div style={{ display: 'flex' }}>
-                            <CheckBox type="radio" name="pay" value="8" />
-                            <TimeBox>현장 결제</TimeBox>
-                        </div>
-                    </div>
-                </InfoBox>
-                <InfoBox style={{ paddingBottom: '30px' }}></InfoBox>
+                <InfoBox style={{ padding: '24px 16px', gap: '24px' }}></InfoBox>
                 <AddBtn>19,000원 결제하기</AddBtn>
             </InsideBox>
         </Container>
