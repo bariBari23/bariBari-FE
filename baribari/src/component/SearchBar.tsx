@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { SearchIcon } from './Icon'; //이거 나중에 멀지하면서 IconFin으로 바꿔야 함
+import { SearchIcon } from './IconFin';
 
 export default function SearchBar() {
     return (

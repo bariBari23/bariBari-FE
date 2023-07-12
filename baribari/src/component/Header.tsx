@@ -1,50 +1,45 @@
-import styled from 'styled-components';
-import { LeftArrowIcon } from './Icon';
+import { styled } from 'styled-components';
+import { LeftArrowIcon } from './IconFin';
 import SearchBar from './SearchBar';
-// showPageName 없어도 될 것 같은 생각..!
+import { useNavigate } from 'react-router-dom';
 
-export default function Header({
+const Header = ({
     showPageName,
     pageTitle,
     showSearchBar,
 }: {
     showPageName: boolean;
-    pageTitle: String;
+    pageTitle: string;
     showSearchBar: boolean;
-}) {
+}) => {
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1); // 이전 페이지로 이동
+    };
+
     return (
-        <Container>
-            <IconBox>
-                <LeftArrowIcon />
-            </IconBox>
-            {showPageName ? <TitleBox>{pageTitle}</TitleBox> : showSearchBar && <SearchBar />}
-        </Container>
+        <HeaderContainer>
+            <LeftArrowIcon onClick={handleGoBack} />
+            {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar && <SearchBar />}
+        </HeaderContainer>
     );
-}
+};
 
-const Container = styled.div`
-    height: 32px;
-    width: 100%;
+const HeaderContainer = styled.div`
+    padding: 48px 8px 8px 8px;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 48px 8px 16px 8px;
-    background-color: white;
-
-    position: fixed;
-    margin: auto;
-    top: 0;
-    z-index: 10000;
-`;
-const IconBox = styled.div`
-    display: flex;
-    width: 32px;
-    padding-right: 8px;
+    align-items: center;
+    gap: 4px;
 `;
 
-const TitleBox = styled.div`
-    display: flex;
-    color: ${(props) => props.theme.black};
+const PageTitle = styled.div`
+    color: var(--grey-subtext, #504e5f);
     font-size: 22px;
+    font-style: normal;
     font-weight: 700;
+    line-height: 32px;
+    margin-left: 8px;
 `;
+
+export default Header;
