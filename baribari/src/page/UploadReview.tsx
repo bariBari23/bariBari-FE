@@ -233,7 +233,7 @@ const UploadPhoto = styled.label<{ image: string }>`
     display: inline-block;
     width: 62px;
     height: 62px;
-    border-radius: 12px;
+    border-radius: ${({ image }) => (image ? '12px' : '0')};
     background-image: url(${(props) => props.image || Photo});
     background-size: cover;
 `;
