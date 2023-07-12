@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as Heart } from '../../asset/heart.svg';
 
 export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
     return (
@@ -16,7 +17,7 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
                         </div>
                         <div style={{ fontSize: '12px', fontWeight: '400' }}>별점 4.4</div>
                     </StoreNameBox>
-                    <IconHeart>♥︎</IconHeart>
+                    <Heart />
                 </StoreBox>
             </MainBox>
             <SubBox>
@@ -38,15 +39,14 @@ const Container = styled.div<{ isSelected: boolean }>`
 const MainBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 12px;
-    padding-top: 12px;
+    padding: 20px 0 20px 0;
     background-color: white;
     width: 100%;
-    height: 130px;
+    height: 138px;
 `;
 const TitleBox = styled.div`
     display: flex;
-    height: 28px;
+    line-height: 32px;
     flex-direction: row;
     margin: 0 12px 0 12px;
     justify-content: space-between;
@@ -56,7 +56,8 @@ const TitleBox = styled.div`
 const StoreBox = styled.div`
     display: flex;
     height: 70px;
-    margin: 24px 12px 8px 12px;
+    margin: 24px 12px 0 12px;
+    padding: 8px 12px 8px 8px;
     background-color: #f9f9f9;
     border-radius: 8px;
 `;
