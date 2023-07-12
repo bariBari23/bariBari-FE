@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReviewCard from './ReviewCard';
-import { ReactComponent as Star } from '../../asset/star.svg';
+import { ReactComponent as Star } from '../../assets/star.svg';
 
 export default function ReviewBox({ isSelected }: { isSelected: boolean }) {
     return (

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
 import CheckIcon from '../component/CheckIcon';
-import { ReactComponent as RPointerIcon } from '../asset/rpointerIcon.svg';
+import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
 
 export default function SignUp3() {
     const [state, dispatch] = useReducer(

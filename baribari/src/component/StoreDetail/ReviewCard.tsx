@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Star } from '../../asset/star.svg';
+import { ReactComponent as Star } from '../../assets/star.svg';
 
 export default function ReviewCard() {
     const textRef = useRef<HTMLTextAreaElement | null>(null);

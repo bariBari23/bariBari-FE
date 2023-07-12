@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { useState, useEffect } from 'react';
-import { ReactComponent as Star } from '../asset/star.svg';
-import Photo from '../asset/photo.png';
+import { ReactComponent as Star } from '../assets/star.svg';
+import Photo from '../assets/photo.png';
 
 type SelectedValue = {
     quantity: string;

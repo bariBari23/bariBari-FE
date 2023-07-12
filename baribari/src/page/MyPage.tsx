@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
-import { ReactComponent as Pencil } from '../asset/pencil.svg';
+import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { RPointerIcon } from '../component/Icon';
 
 export default function MyPage() {

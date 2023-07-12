@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Heart } from '../../asset/heart.svg';
+import { ReactComponent as Heart } from '../../assets/heart.svg';
 
 export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
     return (
