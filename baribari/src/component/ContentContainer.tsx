@@ -1,10 +1,17 @@
 import { styled } from 'styled-components';
 import { FilledHeartIcon } from './IconFin';
+import { useNavigate } from 'react-router-dom';
 
 export default function ContentContainer() {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate('/detail'); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
+    };
+    
     return (
         <Container>
-            <FoodCard>
+            <FoodCard onClick={handleCardClick}>
                 <FoodImg></FoodImg>
                 <NameWrapper>
                     <FoodStoreName>유미네 반찬가게</FoodStoreName>
@@ -17,7 +24,7 @@ export default function ContentContainer() {
                 </TagWrapper>
                 <Price>7,000원</Price>
             </FoodCard>
-            <FoodCard>
+            <FoodCard onClick={handleCardClick}>
                 <FoodImg></FoodImg>
                 <FoodStoreName>유미네 반찬가게</FoodStoreName>
                 <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
@@ -27,7 +34,7 @@ export default function ContentContainer() {
                 </TagWrapper>
                 <Price>7,000원</Price>
             </FoodCard>
-            <FoodCard>
+            <FoodCard onClick={handleCardClick}>
                 <FoodImg></FoodImg>
                 <NameWrapper>
                     <FoodStoreName>유미네 반찬가게</FoodStoreName>
@@ -40,7 +47,7 @@ export default function ContentContainer() {
                 </TagWrapper>
                 <Price>7,000원</Price>
             </FoodCard>
-            <FoodCard>
+            <FoodCard onClick={handleCardClick}>
                 <FoodImg></FoodImg>
                 <FoodStoreName>유미네 반찬가게</FoodStoreName>
                 <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
@@ -50,7 +57,7 @@ export default function ContentContainer() {
                 </TagWrapper>
                 <Price>7,000원</Price>
             </FoodCard>
-            <FoodCard>
+            <FoodCard onClick={handleCardClick}>
                 <FoodImg></FoodImg>
                 <NameWrapper>
                     <FoodStoreName>유미네 반찬가게</FoodStoreName>

@@ -3,6 +3,7 @@ import Header from '../component/Header';
 import { useState, useEffect } from 'react';
 import { ReactComponent as Star } from '../assets/star.svg';
 import Photo from '../assets/photo.png';
+import { useNavigate } from 'react-router-dom';
 
 type SelectedValue = {
     quantity: string;
@@ -34,9 +35,15 @@ export default function UploadReview() {
         );
     }
 
+    const navigate = useNavigate();
+
+    const onSubmitReview = () => {
+        navigate('/orderlist');
+    };
+
     return (
         <Container>
-            <Header showPageName={true} pageTitle={'리뷰 쓰기'} showSearchBar={true} />
+            <Header showPageName={true} pageTitle={'리뷰 쓰기'} showSearchBar={false} />
             <InsideBox>
                 <StoreBox>
                     <StoreImageBox />
@@ -123,7 +130,7 @@ export default function UploadReview() {
                     <input type="file" id="upload" onChange={handleFileChange} style={{ display: 'none' }} />
                 </UploadPhoto>
             </InsideBox>
-            <AddBtn>리뷰 등록하기</AddBtn>
+            <AddBtn onClick={onSubmitReview}>리뷰 등록하기</AddBtn>
         </Container>
     );
 }
@@ -226,6 +233,7 @@ const TextReviewBox = styled.textarea`
     &::placeholder {
         color: #aaa;
     }
+    resize: none;
 `;
 
 const UploadPhoto = styled.label<{ image: string }>`

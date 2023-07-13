@@ -37,9 +37,9 @@ export default function Join() {
 
     const onSubmit: SubmitHandler<JoinData> = (data) => {
         if (isValid) {
+            //굳이 isValid 체크를 안해줘도 될 것 같긴 한데..?
             console.log(data);
-            // 페이지명 수정 예정
-            // navigate('/next-page');
+            navigate('/signUp3');
         } else {
             alert('유효한 정보를 입력했는지 다시 확인해주세요!');
         }

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header from '../component/Header';
 import { useReducer } from 'react';
 import CheckIcon from '../component/CheckIcon';
+import { useNavigate } from 'react-router-dom';
 
 const timeSlots = [
     '8:00 ~ 9:00',
@@ -22,6 +23,12 @@ type State = {
 type Action = { type: 'SET_TIME'; time: string } | { type: 'SET_PAY'; pay: string };
 
 export default function Order() {
+    const navigate = useNavigate();
+
+    const handleOrderClick = () => {
+        navigate('/orderlist');
+    };
+
     const [state, dispatch] = useReducer(
         (state: State, action: Action) => {
             switch (action.type) {
@@ -40,8 +47,8 @@ export default function Order() {
     );
     return (
         <Container>
-            <AddBtn>19,000원 결제하기</AddBtn>
-            <Header showPageName={true} pageTitle={'주문하기'} showSearchBar={true} />
+            <AddBtn onClick={handleOrderClick}>19,000원 결제하기</AddBtn>
+            <Header showPageName={true} pageTitle={'주문하기'} showSearchBar={false} />
             <InsideBox>
                 <InfoBox>
                     <TitleText>주문자 정보</TitleText>

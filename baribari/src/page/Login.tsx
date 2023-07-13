@@ -33,7 +33,8 @@ export default function LogIn() {
     });
 
     const onSubmit = (data: LoginData) => {
-        console.log(data);
+        alert('로그인 성공!'); //임시로 해놓음
+        navigate('/');
     };
 
     const navigate = useNavigate();

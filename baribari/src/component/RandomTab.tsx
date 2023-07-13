@@ -76,7 +76,7 @@ const Highlight = styled.span`
     color: #ff7455;
 `;
 
-const SubHeader = styled.p`
+const SubHeader = styled.div`
     color: #989898;
     font-size: 14px;
     font-style: normal;

@@ -4,6 +4,7 @@ import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp3() {
     const [state, dispatch] = useReducer(
@@ -26,16 +27,24 @@ export default function SignUp3() {
             third: false,
         },
     );
+
+    const navigate = useNavigate();
+
+    const onSubmit = () => {
+        // navigate('/signUp4') 나중에 수정 예정
+        alert('나중에 signUp4로 루트 수정 예정');
+        navigate('/login');
+    };
     return (
         <Container>
-            <Header showPageName={true} pageTitle={'위치 설정'} showSearchBar={true} />
+            <Header showPageName={true} pageTitle={'위치 설정'} showSearchBar={false} />
             <InsideBox>
                 <SearchTab>
                     집 주소를 설정하면, 주변 가게를 알려드려요.
                     <SearchIcon />
                 </SearchTab>
                 <MapBox />
-                <AddBtn>다음</AddBtn>
+                <AddBtn onClick={onSubmit}>다음</AddBtn>
                 <AgreeBox>
                     <AllAgree>
                         <BigTextBox>전체 동의</BigTextBox>
