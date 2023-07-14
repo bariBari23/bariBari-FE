@@ -12,7 +12,7 @@ export default function OrderList() {
     };
 
     return (
-        <div>
+        <div style={{ marginTop: '90px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
             <Wrapper>
                 <OrderStatus>
@@ -88,7 +88,7 @@ export default function OrderList() {
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 10px 0px;
+    margin: 10px 16px;
 `;
 
 const OrderStatus = styled.div`
