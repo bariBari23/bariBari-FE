@@ -43,8 +43,7 @@ export default function LogIn() {
     };
 
     return (
-        <div>
-            <Header showPageName={false} pageTitle="" showSearchBar={false} />
+        <div style={{ width: '100vw' }}>
             <Wrapper>
                 <LogoBig />
                 <SubTitle>자취생을 위한 건강한 식사 방법</SubTitle>
@@ -97,7 +96,7 @@ export default function LogIn() {
 
 const Wrapper = styled.div`
     padding: 0px 16px;
-    margin-top: 93px;
+    margin-top: 141px;
 `;
 const SubTitle = styled.p`
     color: #504e5f;
@@ -158,7 +157,7 @@ const ErrorMessage = styled.span`
 
 const SubmitButton = styled.button`
     display: flex;
-    width: 366px;
+    width: 100%;
     padding: 18px 40px;
     justify-content: center;
     align-items: flex-start;
