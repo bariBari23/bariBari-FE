@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { LeftArrowIcon } from './IconFin';
+import { LeftArrowIcon } from './Icon';
 import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,27 +19,40 @@ const Header = ({
     };
 
     return (
-        <HeaderContainer>
-            <LeftArrowIcon onClick={handleGoBack} />
-            {showPageName ? <PageTitle>{pageTitle}</PageTitle> : showSearchBar && <SearchBar />}
-        </HeaderContainer>
+        <Container>
+            <IconBox>
+                <LeftArrowIcon />
+            </IconBox>
+            {showPageName ? <TitleBox>{pageTitle}</TitleBox> : showSearchBar && <SearchBar />}
+        </Container>
     );
 };
 
-const HeaderContainer = styled.div`
-    padding: 48px 8px 8px 8px;
+const Container = styled.div`
+    height: 32px;
+    width: 100%;
     display: flex;
-    align-items: center;
-    gap: 4px;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 48px 8px 16px 8px;
+    background-color: white;
+
+    position: fixed;
+    margin: auto;
+    top: 0;
+    z-index: 10000;
+`;
+const IconBox = styled.div`
+    display: flex;
+    width: 32px;
+    padding-right: 8px;
 `;
 
-const PageTitle = styled.div`
-    color: var(--grey-subtext, #504e5f);
+const TitleBox = styled.div`
+    display: flex;
+    color: ${(props) => props.theme.black};
     font-size: 22px;
-    font-style: normal;
     font-weight: 700;
-    line-height: 32px;
-    margin-left: 8px;
 `;
 
 export default Header;
