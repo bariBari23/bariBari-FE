@@ -18,7 +18,7 @@ export default function Home() {
     return (
         <div>
             <HeaderHome>
-                <Link to="/" style={{ textDecoration: 'none', width: '100%' }}>
+                <Link to="/" style={{ textDecoration: 'none' }}>
                     <Logo />
                 </Link>
                 <RightSideHeader>
@@ -36,7 +36,7 @@ export default function Home() {
                     </div>
                     <RPointerBigIcon />
                 </InquiryTab>
-                <Link to="/search" style={{ textDecoration: 'none', width: '100%' }}>
+                <Link to="/search" style={{ textDecoration: 'none', width: 'calc(100% - 32px)' }}>
                     <SearchTab>
                         <span>반찬 이름을 검색해보세요</span>
                         <SearchIcon />
@@ -68,14 +68,14 @@ const WrapperTab = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 0px 16px;
 `;
 
 const WrapperList = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding-left: 16px;
+    align-items: space-between;
+    padding: 0 16px;
     margin-top: 5px;
 `;
 
@@ -101,7 +101,8 @@ const RightSideHeader = styled.div`
 
 const InquiryTab = styled.div`
     display: flex;
-    width: 100%;
+    width: calc(100% - 64px);
+    margin: 0 16px;
     padding: 16px;
     justify-content: space-between;
     align-items: center;

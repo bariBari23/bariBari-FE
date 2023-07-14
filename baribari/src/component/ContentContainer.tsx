@@ -8,7 +8,7 @@ export default function ContentContainer() {
     const handleCardClick = () => {
         navigate('/detail'); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
     };
-    
+
     return (
         <Container>
             <FoodCard onClick={handleCardClick}>

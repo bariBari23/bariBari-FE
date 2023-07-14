@@ -51,16 +51,16 @@ export default function RandomTabs() {
 
 const Container = styled.div`
     display: flex;
-    width: 100%;
     justify-content: space-between;
     align-items: center;
+    padding: 0 18px;
+    margin-bottom: 20px;
 `;
 
 const Text = styled.div`
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 0px 0px 0px 18px;
 `;
 
 const Header = styled.h2`

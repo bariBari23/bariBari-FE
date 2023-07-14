@@ -38,18 +38,17 @@ export default function DropDown() {
 const DropDownContainer = styled.div`
     position: relative;
     margin: 20px 0px 16px 0px;
-    padding-right: 16px;
 `;
 
 const DropDownButton = styled.button`
     width: 112px;
     height: 36px;
     display: flex;
-    padding: 0 0 0 0;
+    padding: 0;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    border: 1px solid #767676;
+    border: none;
     background: #f9f9f9;
     text-align: center;
     font-size: 14px;
