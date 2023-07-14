@@ -178,7 +178,7 @@ const SubmitButton = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 568px;
+    max-width: 564px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;

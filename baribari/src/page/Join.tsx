@@ -46,7 +46,7 @@ export default function Join() {
     };
 
     return (
-        <div>
+        <div style={{ padding: '110px 16px 0px 16px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="회원가입" showSearchBar={false} />
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <InputWrapper>
@@ -95,7 +95,7 @@ export default function Join() {
                     />
                     {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
                 </InputWrapper>
-                <SubmitButton type="submit">가입하기</SubmitButton>
+                <SubmitButton type="submit">다음</SubmitButton>
             </Form>
         </div>
     );
@@ -106,20 +106,16 @@ const Form = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 16px;
-    margin-top: 16px;
 `;
 
 const InputWrapper = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%;
 `;
 
 const Input = styled.input`
     height: 28px;
-    width: 358px;
     padding: 8px 16px;
     border-radius: 8px;
     border: 0.75px solid #aaa;
@@ -161,22 +157,21 @@ const ErrorMessage = styled.span`
 
 const SubmitButton = styled.button`
     display: flex;
-    width: 392px;
-    padding: 18px 40px;
-    justify-content: center;
-    gap: 10px;
+    height: 64px;
+    width: calc(100% - 32px);
+    max-width: 564px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
-    font-size: 18px;
-    font-family: Pretendard-Regular;
-    font-style: normal;
+    font-size: 24px;
+    font-family: Pretendard;
     font-weight: 700;
-    line-height: 28px;
     border: none;
-    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
     position: fixed;
+    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
 `;
