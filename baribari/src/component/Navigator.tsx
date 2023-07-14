@@ -36,9 +36,16 @@ export default function Navigator() {
 const NavContainer = styled.div`
     display: flex;
     width: 100%;
+    height: 44px;
+    padding: 16px 0 24px 0;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     gap: 16px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 200000;
 `;
 const NavCard = styled.nav<{ $isactive: boolean }>`
     display: flex;
