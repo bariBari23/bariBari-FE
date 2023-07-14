@@ -1,8 +1,16 @@
 import { styled } from 'styled-components';
 import Header from '../component/Header';
 import Navigator from '../component/Navigator';
+import { useNavigate } from 'react-router-dom';
 
 export default function OrderList() {
+    const navigate = useNavigate();
+
+    const handleUploadReviewClick = () => {
+        alert('여기도 나중에 버튼 "리뷰쓰기" 버튼만 눌리게 하기');
+        navigate('/uploadReview');
+    };
+
     return (
         <div>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
@@ -26,7 +34,7 @@ export default function OrderList() {
                         </FoodOrderInfo>
                     </FoodInfo>
                 </FoodItem>
-                <ReviewButtonFirst>리뷰 쓰기</ReviewButtonFirst>
+                <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
             </Wrapper>
             <Wrapper>
                 <OrderStatus>

@@ -2,11 +2,19 @@ import styled from 'styled-components';
 import Header from '../component/Header';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { RPointerIcon } from '../component/Icon';
+import { useNavigate } from 'react-router-dom';
+import Navigator from '../component/Navigator';
 
 export default function MyPage() {
+    const navigate = useNavigate();
+
+    const handleFavClick = () => {
+        navigate('/fav');
+    };
+
     return (
         <Container>
-            <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={true} />
+            <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={false} />
             <InsideBox>
                 <ProfileBox>
                     <ProfileImage />
@@ -21,8 +29,8 @@ export default function MyPage() {
                     <Pencil style={{ marginRight: '0px', width: '24', height: '25' }} />
                 </KeywordBox>
                 <MapImage />
-                <KeywordBox style={{ padding: '20px 0' }}>
-                    <TextBox>즐겨찾는 가계</TextBox>
+                <KeywordBox style={{ padding: '20px 0', cursor: 'pointer' }} onClick={handleFavClick}>
+                    <TextBox>즐겨찾는 가게</TextBox>
                     <RPointerIcon />
                 </KeywordBox>
                 <KeywordBox style={{ padding: '0' }}>
@@ -30,6 +38,7 @@ export default function MyPage() {
                     <RPointerIcon />
                 </KeywordBox>
             </InsideBox>
+            <Navigator />
         </Container>
     );
 }

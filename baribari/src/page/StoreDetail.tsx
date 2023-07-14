@@ -12,7 +12,7 @@ export default function StoreDetail() {
     };
     return (
         <Container>
-            <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={true} />
+            <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={false} />
             <InsideBox>
                 <FoodImgBox />
                 <DetailNav>

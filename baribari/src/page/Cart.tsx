@@ -1,8 +1,14 @@
 import Header from '../component/Header';
 import { styled } from 'styled-components';
 import { ReactComponent as XIcon } from '../assets/xIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function Fav() {
+    const navigate = useNavigate();
+
+    const handleGoOrder = () => {
+        navigate('/order');
+    };
     return (
         <div style={{ width: '100%' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
@@ -102,7 +108,7 @@ export default function Fav() {
                     </button>
                 </FoodInfo>
             </CartList>
-            <SubmitButton>구매하기</SubmitButton>
+            <SubmitButton onClick={handleGoOrder}>구매하기</SubmitButton>
         </div>
     );
 }

@@ -17,17 +17,17 @@ export default function Navigator() {
     };
     return (
         <NavContainer>
-            <NavCard active={currentPage === 'order'} onClick={() => handlePageChange('order')}>
+            <NavCard $isactive={currentPage === 'orderlist'} onClick={() => handlePageChange('orderlist')}>
                 <OrderListIcon />
-                <p>주문내역</p>
+                <span>주문내역</span>
             </NavCard>
-            <NavCard active={currentPage === 'home'} onClick={() => handlePageChange('home')}>
+            <NavCard $isactive={currentPage === 'home'} onClick={() => handlePageChange('home')}>
                 <HomeIcon />
-                <p>홈</p>
+                <span>홈</span>
             </NavCard>
-            <NavCard active={currentPage === 'myPage'} onClick={() => handlePageChange('myPage')}>
+            <NavCard $isactive={currentPage === 'myPage'} onClick={() => handlePageChange('myPage')}>
                 <MyPageIcon />
-                <p>마이페이지</p>
+                <span>마이페이지</span>
             </NavCard>
         </NavContainer>
     );
@@ -40,7 +40,7 @@ const NavContainer = styled.div`
     align-items: flex-end;
     gap: 16px;
 `;
-const NavCard = styled.nav<{ active: boolean }>`
+const NavCard = styled.nav<{ $isactive: boolean }>`
     display: flex;
     width: 119.333px;
     padding: 16px 0px 24px 0px;
@@ -48,8 +48,8 @@ const NavCard = styled.nav<{ active: boolean }>`
     justify-content: center;
     align-items: center;
     gap: 4px;
-    color: ${({ active }) => (active ? '#FF7455' : '#AAAAAA')};
-    filter: ${({ active }) =>
-        active ? '#FF7455' : 'invert(57%) sepia(0%) saturate(0%) hue-rotate(264deg) brightness(103%) contrast(88%)'};
+    color: ${({ $isactive }) => ($isactive ? '#FF7455' : '#AAAAAA')};
+    filter: ${({ $isactive }) =>
+        $isactive ? '#FF7455' : 'invert(57%) sepia(0%) saturate(0%) hue-rotate(264deg) brightness(103%) contrast(88%)'};
     cursor: pointer;
 `;
