@@ -78,7 +78,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 464px;
+    max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;

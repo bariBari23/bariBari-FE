@@ -10,7 +10,7 @@ export default function Fav() {
         navigate('/order');
     };
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
             <CartList>
                 <StoreInfo>
@@ -115,6 +115,7 @@ export default function Fav() {
 
 const CartList = styled.div`
     display: flex;
+    padding: 0 16px;
     flex-direction: column;
     gap: 16px;
 `;
@@ -176,12 +177,13 @@ const CountButton = styled.div`
 const SubmitButton = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 64px);
-    max-width: 464px;
+    width: calc(100% - 32px);
+    max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
     font-size: 24px;
+    font-family: Pretendard;
     font-weight: 700;
     border: none;
     align-items: center;
