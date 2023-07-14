@@ -79,12 +79,10 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    @media (max-width: 408px) {
+    @media (max-width: 365px) {
         justify-content: center; /* 웹뷰 가로 사이즈가 408px 이하일 때 카드 배열을 가운데 정렬 */
     }
-    @media (min-width: 590px) {
-        gap: 20px;
-    }
+    gap: 20px;
 `;
 
 const NameWrapper = styled.div`
@@ -95,11 +93,12 @@ const NameWrapper = styled.div`
 `;
 
 const FoodCard = styled.div`
+    width: calc((100% - 20px) / 2);
     height: 305px;
     flex-direction: column;
     align-items: flex-start;
     display: flex;
-    padding: 8px 8px 8px 0px;
+    padding: 8px 0 8px 0px;
     // 카드 폭을 100%로 맞춰보는 건 어떨까!
     @media (max-width: 408px) {
         width: 100%;
@@ -107,7 +106,7 @@ const FoodCard = styled.div`
 `;
 
 const FoodImg = styled.div`
-    width: 172px;
+    width: 100%;
     height: 206px;
     border-radius: 4px;
     background-color: lightgrey;
