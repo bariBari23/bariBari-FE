@@ -28,43 +28,42 @@ const DATA = [
 
 export default function Fav() {
     return (
-        <div>
-            <Wrapper>
-                <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
-                {DATA[0].data.likeList.map((item) => (
-                    <StoreTab key={item.storeId}>
-                        <StoreImg />
-                        <StoreInfo>
-                            <p style={{ margin: '0px' }}>{item.storeName}</p>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <p style={{ margin: '0px 8px 0px 0px', fontSize: '18px', fontWeight: '700' }}>4.4</p>
-                                {/* 별점에 따라 별 갯수 달라짐 */}
-                                <Star />
-                                <Star />
-                                <Star />
-                                <Star />
-                                <Star />
-                            </div>
-                        </StoreInfo>
-                        <FilledHeartBigIcon />
-                    </StoreTab>
-                ))}
-            </Wrapper>
+        <Wrapper>
+            <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
+            {DATA[0].data.likeList.map((item) => (
+                <StoreTab key={item.storeId}>
+                    <StoreImg />
+                    <StoreInfo>
+                        <p style={{ margin: '0px' }}>{item.storeName}</p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <p style={{ margin: '0px 8px 0px 0px', fontSize: '18px', fontWeight: '700' }}>4.4</p>
+                            {/* 별점에 따라 별 갯수 달라짐 */}
+                            <Star />
+                            <Star />
+                            <Star />
+                            <Star />
+                            <Star />
+                        </div>
+                    </StoreInfo>
+                    <FilledHeartBigIcon />
+                </StoreTab>
+            ))}
             <Navigator />
-        </div>
+        </Wrapper>
     );
 }
 
 const Wrapper = styled.div`
     height: 90vh;
+    width: 100%;
+    padding-top: 110px;
 `;
 
 const StoreTab = styled.div`
     display: flex;
-    margin: 8px 0px 20px 0px;
+    margin: 8px 16px 20px 16px;
     gap: 16px;
     align-items: center;
-    width: 100%;
 `;
 
 const StoreImg = styled.div`
