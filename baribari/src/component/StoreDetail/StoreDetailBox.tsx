@@ -57,23 +57,21 @@ export default function StoreDetailBox({ isSelected }: { isSelected: boolean }) 
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                        <div
+                            style={{
+                                width: 'calc(100% - 70px)',
+                                paddingLeft: '12px',
+                                color: '#212121',
+                                fontWeight: '500',
+                            }}
+                        >
+                            돼지고기 - 국내산, 돼지고기 - 국내산, 돼지고기 - 국내산
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>중량/용량</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
-                    </div>
-                    <div style={{ display: 'flex', paddingBottom: '16px' }}>
-                        {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>끼니</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
+                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>위생정보</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>꺠끗해요</div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}

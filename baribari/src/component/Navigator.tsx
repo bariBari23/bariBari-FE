@@ -42,6 +42,7 @@ const NavContainer = styled.div`
     align-items: center;
     gap: 16px;
     background-color: white;
+    max-width: 600px;
 
     position: fixed;
     bottom: 0;

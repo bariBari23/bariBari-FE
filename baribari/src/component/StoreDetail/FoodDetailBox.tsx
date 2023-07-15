@@ -22,7 +22,7 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
             </MainBox>
             <SubBox>
                 <RawFoodBox>
-                    <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>시금치 나물</div>
+                    <FoodTag>시금치 나물</FoodTag>
                     <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>60g</div>
                 </RawFoodBox>
             </SubBox>
@@ -76,11 +76,14 @@ const StoreNameBox = styled.div`
     margin: 8px auto auto 0;
 `;
 
-const IconHeart = styled.div`
-    display: flex;
-    align-items: center;
-    margin-right: 12px;
-    font-size: 24px;
+const FoodTag = styled.div`
+    margin-right: auto;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 130%;
+    padding: 7.354px 14.709px;
+    border-radius: 14.709px;
+    background-color: #f9f9f9;
 `;
 const SubBox = styled.div`
     display: flex;
@@ -93,8 +96,8 @@ const SubBox = styled.div`
 const RawFoodBox = styled.div`
     display: flex;
     width: 100%;
-    height: 52px;
-    margin: 0 16px 0 16px;
+    height: 33.7px;
+    padding: 12px 16px;
     align-items: center;
     border-bottom: solid 1px #efefef;
     color: #504e5f;
