@@ -15,21 +15,5 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
   }
   
-  button{
-    display: flex;
-    width: 366px;
-    padding: 18px 40px;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 12px;
-    background: #FF7455;
-    color: #FFF;
-    font-size: 24px;
-    font-family: Pretendard;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 28px;
-    border: none;
-  }
+  
 `;
