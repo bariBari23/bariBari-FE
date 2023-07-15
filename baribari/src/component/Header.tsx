@@ -21,7 +21,7 @@ const Header = ({
     return (
         <Container>
             <IconBox>
-                <LeftArrowIcon />
+                <LeftArrowIcon onClick={handleGoBack} />
             </IconBox>
             {showPageName ? <TitleBox>{pageTitle}</TitleBox> : showSearchBar && <SearchBar />}
         </Container>
