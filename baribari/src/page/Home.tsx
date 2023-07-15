@@ -16,7 +16,7 @@ export default function Home() {
     };
 
     return (
-        <div>
+        <div style={{marginBottom: '50px'}}>
             <HeaderHome>
                 <Link to="/" style={{ textDecoration: 'none' }}>
                     <Logo />
