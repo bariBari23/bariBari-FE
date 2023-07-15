@@ -249,7 +249,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 464px;
+    max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
@@ -261,6 +261,7 @@ const AddBtn = styled.div`
     justify-content: center;
 
     position: fixed;
+    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
 `;
