@@ -4,6 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Header from '../component/Header';
 import { useNavigate } from 'react-router';
+import CheckIcon from '../component/CheckIcon';
+import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
+import { useReducer } from 'react';
 
 interface JoinData {
     name: string;
@@ -44,6 +47,27 @@ export default function Join() {
             alert('유효한 정보를 입력했는지 다시 확인해주세요!');
         }
     };
+
+    const [state, dispatch] = useReducer(
+        (state: { [x: string]: boolean }, action: { type: string }) => {
+            switch (action.type) {
+                case 'all':
+                    return { all: !state.all, service: !state.all, usage: !state.all, third: !state.all };
+                case 'service':
+                case 'usage':
+                case 'third':
+                    return { ...state, [action.type]: !state[action.type] };
+                default:
+                    return state;
+            }
+        },
+        {
+            all: false,
+            service: false,
+            usage: false,
+            third: false,
+        },
+    );
 
     return (
         <div style={{ padding: '110px 16px 0px 16px', width: '100vw' }}>
@@ -96,6 +120,30 @@ export default function Join() {
                     {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
                 </InputWrapper>
                 <SubmitButton type="submit">다음</SubmitButton>
+                <AgreeBox>
+                    <AllAgree>
+                        <BigTextBox>전체 동의</BigTextBox>
+                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={true} />
+                    </AllAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>서비스 이용약관</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'service' })} active={state.service} isAll={false} />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 수집 및 이용동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'usage' })} active={state.usage} isAll={false} />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 제 3자 제공동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
+                    </SubAgree>
+                </AgreeBox>
             </Form>
         </div>
     );
@@ -174,4 +222,38 @@ const SubmitButton = styled.button`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const AgreeBox = styled.div`
+    margin: 140px 16px;
+    width: calc(100% - 32px);
+`;
+
+const AllAgree = styled.div`
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: solid 1px #ececec;
+`;
+
+const SubAgree = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+`;
+
+const BigTextBox = styled.div`
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    margin-right: auto;
+`;
+
+const TextBox = styled.div`
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    padding-right: 12px;
 `;
