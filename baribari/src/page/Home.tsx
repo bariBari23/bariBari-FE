@@ -16,7 +16,7 @@ export default function Home() {
     };
 
     return (
-        <div style={{marginBottom: '50px'}}>
+        <div>
             <HeaderHome>
                 <Link to="/" style={{ textDecoration: 'none' }}>
                     <Logo />
@@ -77,6 +77,7 @@ const WrapperList = styled.div`
     align-items: space-between;
     padding: 0 16px;
     margin-top: 5px;
+    margin-bottom: 110px;
 `;
 
 const WrapperNav = styled.div`
