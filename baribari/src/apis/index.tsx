@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { getToken, isTokenExpired, tokenRefresh } from './token';
+import { getToken, isTokenExpired, refreshToken } from './token';
+import { getAccessToken, removeAccessToken } from './cookie';
 
 export const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BARIBARI_URL,
@@ -7,11 +8,14 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-    (config) => {
-        const accessToken = getToken();
+    async (config) => {
+        // accessToken을 가져옵니다.
+        const accessToken = getAccessToken();
 
-        config.headers['Content-Type'] = 'application/json';
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
+        // accessToken이 존재하고 만료되지 않은 경우 헤더에 추가합니다.
+        if (accessToken && !isTokenExpired()) {
+            config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
 
         return config;
     },
@@ -31,18 +35,16 @@ axiosInstance.interceptors.response.use(
     },
     async (error) => {
         if (error.response?.status === 401) {
-            if (isTokenExpired()) await tokenRefresh();
-
-            const accessToken = getToken();
-
-            error.config.headers = {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`,
-            };
-
-            const response = await axios.request(error.config);
-            return response;
+            if (isTokenExpired()) {
+                await refreshToken(); // 토큰 갱신
+                const newAccessToken = getAccessToken();
+                error.config.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                return axios.request(error.config); // 갱신된 토큰으로 다시 요청
+            } else {
+                removeAccessToken(); // 만료된 토큰을 삭제하여 로그인 상태를 해제합니다.
+            }
         }
+
         return Promise.reject(error);
     },
 );
