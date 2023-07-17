@@ -38,8 +38,15 @@ export default function Home() {
                 </InquiryTab>
                 <Link to="/search" style={{ textDecoration: 'none', width: 'calc(100% - 32px)' }}>
                     <SearchTab>
-                        <span>반찬 이름을 검색해보세요</span>
-                        <SearchIcon />
+                        <SearchText>반찬 이름을 검색해보세요</SearchText>
+                        <SearchIcon
+                            style={{
+                                display: 'flex',
+                                padding: '3px',
+                                alignContent: 'center',
+                                justifyContent: 'center',
+                            }}
+                        />
                     </SearchTab>
                 </Link>
             </WrapperTab>
@@ -123,7 +130,7 @@ const InquiryTabSub = styled.div`
     color: #949494;
     font-size: 12px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 16px;
 `;
 
@@ -141,6 +148,13 @@ const SearchTab = styled.button`
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    font-family: Pretendard-Regular;
+    line-height: 28px;
+`;
+
+const SearchText = styled.div`
+    color: #949494;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
     line-height: 28px;
 `;
