@@ -5,37 +5,36 @@ export default function SearchBar() {
     return (
         <SearchTab>
             <SearchInput placeholder="반찬이름을 검색해보세요" />
-            <SearchIcon />
+            <div style={{ padding: '3px' }}>
+                <SearchIcon />
+            </div>
         </SearchTab>
     );
 }
 
 const SearchTab = styled.div`
-    height: 32px;
-    width: 100%;
+    width: calc(100vw - 88px);
+    height: 28px;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 16px 8px 16px 8px;
-    background-color: white;
-
-    position: fixed;
-    margin: auto;
-    top: 0;
-    z-index: 10000;
+    padding: 8px 16px;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #efefef;
+    gap: 4px;
 `;
 const SearchInput = styled.textarea`
+    width: calc(100vw - 112px);
+    display: flex;
     color: #504e5f;
-    width: 465px;
+    align-items: center;
     font-size: 16px;
-    font-family: Pretendard-Regular;
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
     border: none;
     background-color: #efefef;
     resize: none;
-    height: 32px;
+    height: 28px;
     outline: none;
     &::placeholder {
         color: #949494;
