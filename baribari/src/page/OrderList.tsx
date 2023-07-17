@@ -26,7 +26,17 @@ export default function OrderList() {
                     <FoodImg />
                     <FoodInfo>
                         {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                        <p style={{ margin: '0px' }}>반찬가게 이름</p>
+                        <p
+                            style={{
+                                margin: '0px',
+                                fontSize: '16px',
+                                fontWeight: '400',
+                                lineHeight: '28px',
+                                fontStyle: 'normal',
+                            }}
+                        >
+                            반찬가게 이름
+                        </p>
                         <FoodOrderInfo>
                             <p style={{ margin: '0px' }}>반찬 이름</p>
                             <p style={{ margin: '0px' }}>1개</p>
@@ -48,7 +58,17 @@ export default function OrderList() {
                     <FoodImg />
                     <FoodInfo>
                         {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                        <p style={{ margin: '0px' }}>반찬가게 이름</p>
+                        <p
+                            style={{
+                                margin: '0px',
+                                fontSize: '16px',
+                                fontWeight: '400',
+                                lineHeight: '28px',
+                                fontStyle: 'normal',
+                            }}
+                        >
+                            반찬가게 이름
+                        </p>
                         <FoodOrderInfo>
                             <p style={{ margin: '0px' }}>반찬 이름</p>
                             <p style={{ margin: '0px' }}>1개</p>
@@ -70,7 +90,17 @@ export default function OrderList() {
                     <FoodImg />
                     <FoodInfo>
                         {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                        <p style={{ margin: '0px' }}>반찬가게 이름</p>
+                        <p
+                            style={{
+                                margin: '0px',
+                                fontSize: '16px',
+                                fontWeight: '400',
+                                lineHeight: '28px',
+                                fontStyle: 'normal',
+                            }}
+                        >
+                            반찬가게 이름
+                        </p>
                         <FoodOrderInfo>
                             <p style={{ margin: '0px' }}>반찬 이름</p>
                             <p style={{ margin: '0px' }}>1개</p>
@@ -123,12 +153,11 @@ const FoodOrderInfo = styled.div`
     display: flex;
     color: #212121;
     font-size: 18px;
-    font-family: Pretendard;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px;
+    line-height: 21px;
     gap: 12px;
-    margin-top: 0px;
+    margin-top: 4px;
 `;
 
 const Separator = styled.div`
