@@ -38,11 +38,11 @@ export default function Fav() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <p style={{ margin: '0px 8px 0px 0px', fontSize: '18px', fontWeight: '700' }}>4.4</p>
                             {/* 별점에 따라 별 갯수 달라짐 */}
+                            {/*<Star />
                             <Star />
                             <Star />
                             <Star />
-                            <Star />
-                            <Star />
+            <Star />*/}
                         </div>
                     </StoreInfo>
                     <FilledHeartBigIcon />
