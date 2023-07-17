@@ -89,7 +89,7 @@ export default function UploadReview() {
                     <ScoreText>보통</ScoreText>
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                     <ClickBox name="quantity" value="less">
                         양이 적어요
                     </ClickBox>
@@ -101,7 +101,7 @@ export default function UploadReview() {
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 맛은 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                     <ClickBox name="flavor" value="less">
                         별로예요
                     </ClickBox>
@@ -113,7 +113,7 @@ export default function UploadReview() {
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 포장 상태는 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
                     <ClickBox name="wrap" value="less">
                         허술해요
                     </ClickBox>
@@ -210,8 +210,7 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    border: ${(props) => (props.isSelected === true ? '2px' : '1px')} solid
-        ${(props) => (props.isSelected === true ? '#FF7455' : '#EFEFEF')};
+    box-shadow: ${(props) => (props.isSelected === true ? '0 0 0 2px #FF7455 inset' : '0 0 0 1px #EFEFEF inset')};
     color: ${(props) => (props.isSelected === true ? '#FF7455' : '#767676')};
     font-size: 16px;
     font-style: normal;
