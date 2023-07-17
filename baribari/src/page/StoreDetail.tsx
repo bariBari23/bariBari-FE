@@ -30,6 +30,7 @@ export default function StoreDetail() {
                 <StoreDetailBox isSelected={active === '가게 정보'} />
                 <ReviewBox isSelected={active === '리뷰'} />
                 <AddBtn>장바구니에 넣기</AddBtn>
+                <BackSquare />
             </InsideBox>
         </Container>
     );
@@ -93,4 +94,15 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

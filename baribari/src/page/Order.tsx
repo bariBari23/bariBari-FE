@@ -147,6 +147,7 @@ export default function Order() {
                         </div>
                     </div>
                 </InfoBox>
+                <BackSquare />
             </InsideBox>
         </Container>
     );
@@ -227,4 +228,15 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;
