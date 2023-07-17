@@ -219,6 +219,7 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
 `;
 
 const TextReviewBox = styled.textarea`
+    outline: none;
     display: flex;
     height: 153px;
     padding: 8px 16px;
