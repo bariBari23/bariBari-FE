@@ -9,8 +9,7 @@ export async function loginUser(email: string, password: string) {
             password,
         });
 
-        console.log('response:', response);
-        const { accessToken, refreshToken } = response.data;
+        const { accessToken, refreshToken } = response.data.data;
 
         // 토큰을 쿠키에 저장
         setAccessToken(accessToken);
@@ -33,8 +32,6 @@ export async function registerUser(nickname: string, email: string, password: st
             password,
             phone,
         });
-
-        console.log('response:', response);
 
         return response.data; // 필요한 데이터 반환
     } catch (error) {

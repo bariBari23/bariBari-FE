@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { setAccessToken, getAccessToken, removeAccessToken } from './cookie';
 import { axiosInstance } from '.';
 
-// 토큰을 가져오는 함수
 export function getToken(): string | undefined {
-    return getAccessToken(); // 예시로 쿠키에서 토큰을 가져온다고 가정합니다.
+    const token = getAccessToken();
+    if (!token) {
+        return undefined;
+    }
+    return token;
 }
-
 // 토큰의 만료 여부를 확인하는 함수
 export function isTokenExpired(): boolean {
     const token = getToken();
@@ -17,7 +18,7 @@ export function isTokenExpired(): boolean {
     // 실제로는 토큰을 디코딩하여 만료 시간을 확인해야 합니다.
     const expirationTime = getExpirationTimeFromToken(token);
     const currentTime = Math.floor(Date.now() / 1000);
-    return expirationTime < currentTime;
+    return expirationTime === undefined || expirationTime < currentTime;
 }
 // 토큰을 갱신하는 함수
 export async function refreshToken(): Promise<void> {
@@ -33,11 +34,10 @@ export async function refreshToken(): Promise<void> {
     }
 }
 
-// 토큰에서 만료 시간을 추출하는 함수 (예시용으로 간단하게 구현)
 function getExpirationTimeFromToken(token: string): number {
     const payload = token.split('.')[1];
-    const decodedPayload = atob(payload);
-    const { exp } = JSON.parse(decodedPayload);
+    const decodedPayload = JSON.parse(atob(payload));
+    const { exp } = decodedPayload;
     return exp;
 }
 
