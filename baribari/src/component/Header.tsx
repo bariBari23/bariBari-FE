@@ -34,7 +34,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 0 8px 16px 8px;
+    padding: 16px 8px 16px 8px;
     background-color: white;
 
     position: fixed;
@@ -50,6 +50,7 @@ const IconBox = styled.div`
 
 const TitleBox = styled.div`
     display: flex;
+    align-items: center;
     color: ${(props) => props.theme.black};
     font-size: 22px;
     font-weight: 700;

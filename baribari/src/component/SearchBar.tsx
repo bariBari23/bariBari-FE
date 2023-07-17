@@ -11,15 +11,18 @@ export default function SearchBar() {
 }
 
 const SearchTab = styled.div`
-    width: 100%;
     height: 32px;
+    width: 100%;
     display: flex;
-    padding: 8px 16px;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
-    background-color: #efefef;
-    color: #949494;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 16px 8px 16px 8px;
+    background-color: white;
+
+    position: fixed;
+    margin: auto;
+    top: 0;
+    z-index: 10000;
 `;
 const SearchInput = styled.textarea`
     color: #504e5f;
