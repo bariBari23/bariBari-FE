@@ -144,7 +144,7 @@ const Container = styled.div`
 const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 93px;
     justify-content: flex-start;
     padding: 0 16px 110px 16px;
     padding-bottom: 110px;
@@ -153,7 +153,6 @@ const InsideBox = styled.div`
 const StoreBox = styled.div`
     display: flex;
     height: 70px;
-    margin-top: 28px;
     padding: 8px 12px 8px 12px;
     background-color: #f9f9f9;
     border-radius: 12px;

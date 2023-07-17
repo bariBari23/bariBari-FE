@@ -37,7 +37,7 @@ const Container = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 25px 8px 16px 8px;
+    padding: 25px 8px 8px 8px;
     background-color: white;
 
     position: fixed;

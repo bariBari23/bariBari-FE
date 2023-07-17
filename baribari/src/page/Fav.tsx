@@ -56,7 +56,7 @@ export default function Fav() {
 const Wrapper = styled.div`
     height: 90vh;
     width: 100%;
-    padding-top: 110px;
+    padding-top: 70px;
 `;
 
 const StoreTab = styled.div`

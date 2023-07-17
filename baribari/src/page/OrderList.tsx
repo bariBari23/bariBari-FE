@@ -12,14 +12,14 @@ export default function OrderList() {
     };
 
     return (
-        <div style={{ marginTop: '90px', width: '100vw' }}>
+        <div style={{ marginTop: '85px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
             <Wrapper>
                 <OrderStatus>
                     {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                    <p style={{ marginBottom: '8px' }}>5/16(화요일)</p>
-                    <p style={{ marginBottom: '8px' }}>|</p>
-                    <p style={{ marginBottom: '8px' }}>픽업 완료</p>
+                    <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
+                    <div style={{ marginBottom: '8px' }}>|</div>
+                    <div style={{ marginBottom: '8px' }}>픽업 완료</div>
                 </OrderStatus>
                 <Separator />
                 <FoodItem>
@@ -118,7 +118,7 @@ export default function OrderList() {
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 10px 16px;
+    margin: 0 16px;
 `;
 
 const OrderStatus = styled.div`

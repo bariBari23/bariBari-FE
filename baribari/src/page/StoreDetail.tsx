@@ -44,7 +44,7 @@ const InsideBox = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 65px;
     justify-content: flex-start;
     align-items: center;
     background-color: #f9f9f9;

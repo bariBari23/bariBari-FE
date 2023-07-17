@@ -55,7 +55,7 @@ const Container = styled.div`
 const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 126px;
+    margin-top: 99px;
     justify-content: flex-start;
     align-items: center;
     padding: 0 12px;

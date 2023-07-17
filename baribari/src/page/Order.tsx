@@ -161,7 +161,7 @@ const InsideBox = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 91px;
     justify-content: flex-start;
     background-color: #f9f9f9;
 `;
@@ -169,7 +169,7 @@ const InfoBox = styled.div`
     display: flex;
     height: 92px;
     background-color: white;
-    padding: 26px 16px 20px 16px;
+    padding: 0 16px 20px 16px;
     margin-bottom: 14px;
     flex-direction: column;
 `;
