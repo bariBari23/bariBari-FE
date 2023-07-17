@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as Heart } from '../../assets/heart.svg';
+import { ReactComponent as SmallStar } from '../../assets/star.svg';
 
 export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
     return (
@@ -12,12 +13,31 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
                 <StoreBox>
                     <StoreImageBox />
                     <StoreNameBox>
-                        <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
+                        <div
+                            style={{
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                lineHeight: '20px',
+                                alignItems: 'center',
+                            }}
+                        >
                             반찬가게 이름 철산래미안점
                         </div>
-                        <div style={{ fontSize: '12px', fontWeight: '400' }}>별점 4.4</div>
+
+                        <div
+                            style={{
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                height: '21px',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            4.4
+                            <SmallStar style={{ display: 'flex', width: '89.4px', marginLeft: '12px' }} />
+                        </div>
                     </StoreNameBox>
-                    <Heart />
+                    <Heart style={{ padding: '3px', marginRight: '0' }} />
                 </StoreBox>
             </MainBox>
             <SubBox>
@@ -42,7 +62,7 @@ const MainBox = styled.div`
     padding: 20px 0 20px 0;
     background-color: white;
     width: 100%;
-    height: 138px;
+    height: 120px;
 `;
 const TitleBox = styled.div`
     display: flex;
@@ -55,17 +75,18 @@ const TitleBox = styled.div`
 `;
 const StoreBox = styled.div`
     display: flex;
-    height: 70px;
+    height: 52px;
     margin: 24px 12px 0 12px;
     padding: 8px 12px 8px 8px;
     background-color: #f9f9f9;
     border-radius: 8px;
+    align-items: center;
 `;
 
 const StoreImageBox = styled.div`
     width: 52px;
     height: 52px;
-    margin: 8px 16px 8px 12px;
+    margin-right: 16px;
     background-color: grey;
     border-radius: 8px;
 `;
@@ -73,7 +94,8 @@ const StoreImageBox = styled.div`
 const StoreNameBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 8px auto auto 0;
+    gap: 4px;
+    margin-right: auto;
 `;
 
 const FoodTag = styled.div`

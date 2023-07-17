@@ -131,6 +131,7 @@ export default function UploadReview() {
                 </UploadPhoto>
             </InsideBox>
             <AddBtn onClick={onSubmitReview}>리뷰 등록하기</AddBtn>
+            <BackSquare />
         </Container>
     );
 }
@@ -264,4 +265,16 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+//나중에 리팩토링 꼭 하자.... 컴포넌트화 꼭 하자...
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;
