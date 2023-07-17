@@ -46,6 +46,24 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
                     <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>60g</div>
                 </RawFoodBox>
             </SubBox>
+            <SubBox>
+                <InfoBox>
+                    <div style={{ display: 'flex', paddingBottom: '16px' }}>
+                        {' '}
+                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>중량/용량</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                            서울특별시 은평구 어쩌구 무슨로
+                        </div>{' '}
+                    </div>
+                    <div style={{ display: 'flex', paddingBottom: '16px' }}>
+                        {' '}
+                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>끼니</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                            서울특별시 은평구 어쩌구 무슨로
+                        </div>{' '}
+                    </div>
+                </InfoBox>
+            </SubBox>
         </Container>
     );
 }
@@ -109,15 +127,20 @@ const FoodTag = styled.div`
 `;
 const SubBox = styled.div`
     display: flex;
-    min-height: 320px;
     background-color: white;
     margin-top: 14px;
-    padding-top: 20px;
+    padding: 20px 0;
+`;
+const InfoBox = styled.div`
+    width: 100%;
+    font-size: 16px;
+    width: calc(100% - 32px);
+    margin: auto;
 `;
 
 const RawFoodBox = styled.div`
     display: flex;
-    width: 100%;
+
     height: 33.7px;
     padding: 12px 16px;
     align-items: center;
