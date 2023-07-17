@@ -18,16 +18,16 @@ export default function Navigator() {
     return (
         <NavContainer>
             <NavCard $isactive={currentPage === 'orderlist'} onClick={() => handlePageChange('orderlist')}>
-                <OrderListIcon />
-                <span>주문내역</span>
+                <OrderListIcon style={{ margin: '3px' }} />
+                <NavText $isactive={currentPage === 'orderlist'}>주문내역</NavText>
             </NavCard>
             <NavCard $isactive={currentPage === 'home'} onClick={() => handlePageChange('home')}>
-                <HomeIcon />
-                <span>홈</span>
+                <HomeIcon style={{ margin: '3px' }} />
+                <NavText $isactive={currentPage === 'home'}>홈</NavText>
             </NavCard>
             <NavCard $isactive={currentPage === 'myPage'} onClick={() => handlePageChange('myPage')}>
-                <MyPageIcon />
-                <span>마이페이지</span>
+                <MyPageIcon style={{ margin: '3px' }} />
+                <NavText $isactive={currentPage === 'myPage'}>마이페이지</NavText>
             </NavCard>
         </NavContainer>
     );
@@ -43,6 +43,7 @@ const NavContainer = styled.div`
     gap: 16px;
     background-color: white;
     max-width: 600px;
+    box-shadow: 0px -2px 4px 0px rgba(33, 33, 33, 0.05);
 
     position: fixed;
     bottom: 0;
@@ -60,4 +61,13 @@ const NavCard = styled.nav<{ $isactive: boolean }>`
     filter: ${({ $isactive }) =>
         $isactive ? '#FF7455' : 'invert(57%) sepia(0%) saturate(0%) hue-rotate(264deg) brightness(103%) contrast(88%)'};
     cursor: pointer;
+`;
+
+const NavText = styled.div<{ $isactive: boolean }>`
+    color: ${({ $isactive }) => ($isactive ? '#FF7455' : '#AAAAAA')};
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
 `;
