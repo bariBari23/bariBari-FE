@@ -5,13 +5,7 @@ import * as yup from 'yup';
 import Header from '../component/Header';
 import { useNavigate } from 'react-router';
 import { registerUser } from '../apis/api/user';
-
-interface JoinData {
-    name: string;
-    password: string;
-    phone: string;
-    email: string;
-}
+import { JoinData } from '../utils/interface';
 
 const validationSchema = yup.object({
     name: yup.string().required('성명을 입력해주세요!'),

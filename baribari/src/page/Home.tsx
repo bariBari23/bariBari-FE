@@ -7,6 +7,8 @@ import RandomTab from '../component/RandomTab';
 import DropDown from '../component/DropDown';
 import HeartList from '../component/HeartList';
 import { Link, useNavigate } from 'react-router-dom';
+import { searchByQuery } from '../apis/api/search';
+import { useEffect } from 'react';
 
 export default function Home() {
     const navigate = useNavigate();

@@ -10,12 +10,7 @@ import { axiosInstance } from '../apis';
 import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { loginUser } from '../apis/api/user';
-console.log(process.env.REACT_APP_BARIBARI_URL); // 확인용 코드
-
-interface LoginData {
-    email: string;
-    password: string;
-}
+import { LoginData } from '../utils/interface';
 
 const validationSchema = yup.object({
     email: yup.string().required('이메일을 입력해주세요!').email('@를 포함한 유효한 이메일 주소를 작성해주세요.'),
