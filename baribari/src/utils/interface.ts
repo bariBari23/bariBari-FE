@@ -14,3 +14,19 @@ export interface StoreLikedItem {
     storeId: number;
     storeName: string;
 }
+
+export interface ContentContainerProps {
+    keyword: string | null;
+    filterLiked: boolean;
+    sort: string | null;
+}
+
+export interface DosirakItem {
+    id: number;
+    banchanList: string[];
+    mainImageUrl: string;
+    name: string;
+    price: number;
+    stock: number;
+    storeName: string;
+}

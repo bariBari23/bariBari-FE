@@ -8,10 +8,12 @@ import DropDown from '../component/DropDown';
 import HeartList from '../component/HeartList';
 import { Link, useNavigate } from 'react-router-dom';
 import { searchByQuery } from '../apis/api/search';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
     const navigate = useNavigate();
+    const [filterLiked, setFilterLiked] = useState(false);
+    const [selectedSortOption, setSelectedSortOption] = useState('');
 
     const handleCartClick = () => {
         navigate('/cart'); // 장바구니 페이지로 이동
@@ -47,10 +49,10 @@ export default function Home() {
             </WrapperTab>
             <WrapperList>
                 <Container>
-                    <HeartList />
-                    <DropDown />
+                    <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
+                    <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
-                <ContentContainer />
+                <ContentContainer keyword={null} filterLiked={filterLiked} sort={selectedSortOption} />
             </WrapperList>
             <WrapperNav>
                 <Navigator />
