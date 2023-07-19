@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { DPointerIcon, UPointerIcon } from './IconFin';
 import { ReactComponent as HorizontalLine } from '../assets/horizontalLine2.svg';
 
-export default function DropDown() {
+export default function DropDown({ onSelectSortOption }: { onSelectSortOption: (option: string) => void }) {
     const [viewOpen, setViewOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState('최신순');
 
@@ -12,8 +12,24 @@ export default function DropDown() {
     };
 
     const handleSelectValue = (option: string) => {
+        let sortOption: string = '';
+
+        switch (option) {
+            case '최신순':
+                sortOption = '';
+                break;
+            case '가격 낮은순':
+                sortOption = 'price,asc';
+                break;
+            case '가격 높은순':
+                sortOption = 'price,desc';
+                break;
+            default:
+                break;
+        }
         setSelectedValue(option);
         setViewOpen(false);
+        onSelectSortOption(sortOption); // 선택된 옵션을 부모 컴포넌트로 전달
     };
 
     return (
@@ -72,7 +88,7 @@ const DropDownList = styled.div`
     border-radius: 8px;
     background: #f9f9f9;
     font-weight: 600;
-
+    z-index: 1000;
     box-shadow: 0px 2px 4px 0px rgba(33, 33, 33, 0.15);
 `;
 
