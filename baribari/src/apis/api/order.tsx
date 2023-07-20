@@ -6,11 +6,7 @@ export async function createOrder(orderData: object) {
     try {
         const token = getAccessToken();
         console.log(token);
-        const response = await axiosInstance.post(`/v1/orders`, orderData, {
-            headers: {
-                Authorization: `Bearer ${token}`, // Add token to headers
-            },
-        });
+        const response = await axiosInstance.post(`/v1/order`, orderData);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
