@@ -1,9 +1,16 @@
 import { axiosInstance } from '..';
+import { getAccessToken } from '../cookie';
 
 // 주문 api
-export async function createOrder() {
+export async function createOrder(orderData: object) {
     try {
-        const response = await axiosInstance.post(`/v1/orders`, {});
+        const token = getAccessToken();
+        console.log(token);
+        const response = await axiosInstance.post(`/v1/orders`, orderData, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Add token to headers
+            },
+        });
         return response.data;
     } catch (error) {
         console.log('Error:', error);

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { ReactComponent as Star } from '../assets/star.svg';
 import Photo from '../assets/photo.png';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { postReview } from '../apis/api/review';
 
 type SelectedValue = {
     quantity: string;
@@ -13,22 +15,86 @@ type SelectedValue = {
 };
 
 export default function UploadReview() {
-    const [selectedValue, setSelectedValue] = useState<SelectedValue>({ quantity: '', flavor: '', wrap: '' });
-    const [image, setImage] = useState('');
+    let isSelected = false;
+    const [quantity, setQuantity] = useState<string | null>(null);
+    const [flavor, setFlavor] = useState<string | null>(null);
+    const [wrap, setWrap] = useState<string | null>(null);
+
+    const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [rating, setRating] = useState(0);
+    const [reviewText, setReviewText] = useState('');
+
+    const reviewMutation = useMutation(postReview);
+
     const handleSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue({ ...selectedValue, [e.target.name]: e.target.value });
+        switch (e.target.name) {
+            case 'quantity':
+                setQuantity(e.target.value);
+                break;
+            case 'flavor':
+                setFlavor(e.target.value);
+                break;
+            case 'wrap':
+                setWrap(e.target.value);
+                break;
+            default:
+                break;
+        }
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const imageUrl = URL.createObjectURL(e.target.files[0]);
-            setImage(imageUrl);
+            setImage(e.target.files[0]);
+            setImageUrl(URL.createObjectURL(e.target.files[0]));
+        }
+    };
+
+    const handleReviewTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setReviewText(e.target.value);
+    };
+
+    const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setRating(/*e.target.value*/ 5);
+    };
+
+    const onSubmitReview = async () => {
+        const reviewData = new FormData();
+
+        reviewData.append('orderItemId', '2');
+        reviewData.append('content', reviewText);
+        reviewData.append('rating', String(rating));
+        if (image) {
+            reviewData.append('mainImageUrl', image);
+        }
+        const selectedValue = { quantity, flavor, wrap };
+        reviewData.append('tag', JSON.stringify(selectedValue));
+
+        try {
+            await reviewMutation.mutateAsync(reviewData);
+            navigate('/orderlist'); // If the mutation succeeds, navigate to the order list page.
+        } catch (error) {
+            // Handle the error here
+            console.error('Failed to submit review:', error);
         }
     };
 
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {
+        switch (name) {
+            case 'quantity':
+                isSelected = quantity === value;
+                break;
+            case 'flavor':
+                isSelected = flavor === value;
+                break;
+            case 'wrap':
+                isSelected = wrap === value;
+                break;
+            default:
+                break;
+        }
         return (
-            <CheckBox isSelected={selectedValue[name] === value}>
+            <CheckBox isSelected={isSelected}>
                 <input type="radio" name={name} value={value} style={{ display: 'none' }} onChange={handleSelection} />
                 {children}
             </CheckBox>
@@ -36,10 +102,6 @@ export default function UploadReview() {
     }
 
     const navigate = useNavigate();
-
-    const onSubmitReview = () => {
-        navigate('/orderlist');
-    };
 
     return (
         <Container>
@@ -90,7 +152,7 @@ export default function UploadReview() {
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="quantity" value="less">
+                    <ClickBox name="quantity" value="smallAmount">
                         양이 적어요
                     </ClickBox>
                     <ClickBox name="quantity" value="enough">
@@ -102,7 +164,7 @@ export default function UploadReview() {
                 </div>
                 <SubText>주문하신 반찬의 맛은 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="flavor" value="less">
+                    <ClickBox name="flavor" value="plainTaste">
                         별로예요
                     </ClickBox>
                     <ClickBox name="flavor" value="enough">
@@ -114,7 +176,7 @@ export default function UploadReview() {
                 </div>
                 <SubText>주문하신 반찬의 포장 상태는 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="wrap" value="less">
+                    <ClickBox name="wrap" value="goodStatus">
                         허술해요
                     </ClickBox>
                     <ClickBox name="wrap" value="enough">
@@ -125,8 +187,8 @@ export default function UploadReview() {
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬은 어떠셨나요?</SubText>
-                <TextReviewBox placeholder="후기를 입력해주세요."></TextReviewBox>
-                <UploadPhoto htmlFor="upload" image={image}>
+                <TextReviewBox placeholder="후기를 입력해주세요." onChange={handleReviewTextChange}></TextReviewBox>
+                <UploadPhoto htmlFor="upload" image={imageUrl}>
                     <input type="file" id="upload" onChange={handleFileChange} style={{ display: 'none' }} />
                 </UploadPhoto>
             </InsideBox>
@@ -236,7 +298,7 @@ const TextReviewBox = styled.textarea`
     resize: none;
 `;
 
-const UploadPhoto = styled.label<{ image: string }>`
+const UploadPhoto = styled.label<{ image: string | null }>`
     display: inline-block;
     width: 62px;
     height: 62px;
