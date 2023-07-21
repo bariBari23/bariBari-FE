@@ -35,9 +35,9 @@ export async function cancelOrder(orderId: number) {
 }
 
 // 주문 조회 api
-export async function getOrder() {
+export async function getOrder(orderItems: object) {
     try {
-        const response = await axiosInstance.get(`/v1/orderItem`);
+        const response = await axiosInstance.get(`/v1/order`, orderItems);
         return response.data;
     } catch (error) {
         console.log('Error:', error);

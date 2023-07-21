@@ -7,8 +7,8 @@ import { getOrder } from '../apis/api/order';
 import { Key } from 'react';
 
 export default function OrderList() {
-    const { status, data, error } = useQuery('orderList', getOrder);
-
+    const { data: orderItems } = useQuery('orderList', getOrder);
+    console.log(orderItems);
     const navigate = useNavigate();
 
     const handleUploadReviewClick = () => {
@@ -19,24 +19,24 @@ export default function OrderList() {
     return (
         <div>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
-            {data.data.orderList.map((order: { orderId: Key | null | undefined }) => (
+            {orderItems.data.orderList.map((order: any) => (
                 <Wrapper key={order.orderId}>
                     <OrderStatus>
                         {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
                         <p style={{ marginBottom: '8px' }}>5/16(화요일)</p>
                         <p style={{ marginBottom: '8px' }}>|</p>
-                        <p style={{ marginBottom: '8px' }}>픽업 완료</p>
+                        <p style={{ marginBottom: '8px' }}>{order.status}</p>
                     </OrderStatus>
                     <Separator />
                     <FoodItem>
                         <FoodImg />
                         <FoodInfo>
                             {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                            <p style={{ margin: '0px' }}>반찬가게 이름</p>
+                            <p style={{ margin: '0px' }}>{order.orderItemList.storeName}</p>
                             <FoodOrderInfo>
-                                <p style={{ margin: '0px' }}>반찬 이름</p>
-                                <p style={{ margin: '0px' }}>1개</p>
-                                <p style={{ margin: '0px' }}>8,000원</p>
+                                <p style={{ margin: '0px' }}>{order.orderItemList.dosirakName}</p>
+                                <p style={{ margin: '0px' }}>{order.orderItemList.count}개</p>
+                                <p style={{ margin: '0px' }}>{order.orderItemList.total}원</p>
                             </FoodOrderInfo>
                         </FoodInfo>
                     </FoodItem>
