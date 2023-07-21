@@ -1,12 +1,12 @@
 import { axiosInstance } from '..';
 
 // 도시락 id로 검색 api
-export async function searchById([dosirakList, id]: [object, number]) {
+export async function searchById(id: [number]) {
     try {
         console.log('api' + id);
         const endpoint = `/v1/dosirak/${id}`;
         console.log('Sending request to:', endpoint);
-        const response = await axiosInstance.get(`/v1/dosirak/${id}`, dosirakList);
+        const response = await axiosInstance.get(`/v1/dosirak/${id}`);
         console.log('Response:' + response);
         return response.data;
     } catch (error) {
