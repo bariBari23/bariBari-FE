@@ -103,7 +103,7 @@ const NameWrapper = styled.div`
 `;
 
 const FoodCard = styled.div`
-    width: 172px;
+    width: calc((100% - 8px) / 2);
     height: 305px;
     flex-direction: column;
     align-items: flex-start;

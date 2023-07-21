@@ -168,22 +168,21 @@ const ErrorMessage = styled.span`
 
 const SubmitButton = styled.button`
     display: flex;
-    width: 392px;
-    padding: 18px 40px;
-    justify-content: center;
-    gap: 10px;
+    height: 64px;
+    width: calc(100% - 32px);
+    max-width: 464px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
-    font-size: 18px;
-    font-family: Pretendard-Regular;
-    font-style: normal;
+    font-size: 24px;
+    font-family: Pretendard;
     font-weight: 700;
-    line-height: 28px;
     border: none;
-    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
     position: fixed;
+    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
 `;
