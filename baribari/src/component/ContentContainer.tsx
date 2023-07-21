@@ -40,7 +40,7 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
                     </ImgWrapper>
                     <NameWrapper>
                         <FoodStoreName>{dosirak.storeName}</FoodStoreName>
-                        {/* {dosirak.isLiked && <FilledHeartIcon />} */}
+                        {dosirak.likedStore && <FilledHeartIcon />}
                     </NameWrapper>
                     <FoodName>{dosirak.name}</FoodName>
                     <TagWrapper>
