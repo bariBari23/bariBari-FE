@@ -16,6 +16,9 @@ import StoreDetail from './page/StoreDetail';
 import UploadReview from './page/UploadReview';
 import MyPage from './page/MyPage';
 import SignUp3 from './page/SignUp3';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 export default function App() {
     function setScreenSize() {
@@ -26,25 +29,27 @@ export default function App() {
         setScreenSize();
     });
     return (
-        <Container>
-            <GlobalStyle />
-            <InsideContainer>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/join" element={<Join />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/order" element={<Order />} />
-                    <Route path="/orderlist" element={<OrderList />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/detail" element={<StoreDetail />} />
-                    <Route path="/uploadReview" element={<UploadReview />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/fav" element={<Fav />} />
-                    <Route path="/myPage" element={<MyPage />} />
-                    <Route path="/signUp3" element={<SignUp3 />} />
-                </Routes>
-            </InsideContainer>
-        </Container>
+        <QueryClientProvider client={queryClient}>
+            <Container>
+                <GlobalStyle />
+                <InsideContainer>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/join" element={<Join />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/order" element={<Order />} />
+                        <Route path="/orderlist" element={<OrderList />} />
+                        <Route path="/search" element={<Search />} />
+                        <Route path="/detail/:id" element={<StoreDetail />} />
+                        <Route path="/uploadReview" element={<UploadReview />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/fav" element={<Fav />} />
+                        <Route path="/myPage" element={<MyPage />} />
+                        <Route path="/signUp3" element={<SignUp3 />} />
+                    </Routes>
+                </InsideContainer>
+            </Container>
+        </QueryClientProvider>
     );
 }
 

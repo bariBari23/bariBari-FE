@@ -1,11 +1,13 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
+import { HeartListProps } from '../utils/interface';
 
-export default function HeartList() {
+export default function HeartList({ filterLiked, onFilterLikedChange }: HeartListProps) {
     const [isClicked, setIsClicked] = useState(false);
 
     const handleClick = () => {
         setIsClicked(!isClicked);
+        onFilterLikedChange(!isClicked);
     };
 
     return (

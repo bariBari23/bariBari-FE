@@ -1,27 +1,36 @@
 import styled from 'styled-components';
 import { ReactComponent as Heart } from '../../assets/heart.svg';
-import { ReactComponent as SmallStar } from '../../assets/star.svg';
+import { useQuery } from 'react-query';
+import { searchById } from '../../apis/api/search';
 
-export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
+export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
+    // const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
+
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (error) {
+    //     return <div>Error occurred</div>;
+    // }
+
     return (
         <Container isSelected={isSelected}>
-            <MainBox>
-                <TitleBox>
-                    <div style={{ marginRight: 'auto' }}>명절 반찬 박스 세트</div>
-                    <div style={{ marginRight: '0' }}>18,000원</div>
+            {/* <MainBox> */}
+            {/* <TitleBox>
+                    <div style={{ marginRight: 'auto', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
+                        {dosirakData?.data.name}
+                    </div>
+                    <div style={{ marginRight: '0', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
+                        {dosirakData?.data.price}
+                    </div>
                 </TitleBox>
                 <StoreBox>
-                    <StoreImageBox />
+                    <StoreImageBox src={dosirakData?.data.mainImageUrl} />
                     <StoreNameBox>
-                        <div
-                            style={{
-                                fontSize: '14px',
-                                fontWeight: '700',
-                                lineHeight: '20px',
-                                alignItems: 'center',
-                            }}
-                        >
-                            반찬가게 이름 철산래미안점
+
+                        <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
+                            {dosirakData?.data.storeName}
                         </div>
 
                         <div
@@ -41,29 +50,16 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
                 </StoreBox>
             </MainBox>
             <SubBox>
-                <RawFoodBox>
-                    <FoodTag>시금치 나물</FoodTag>
-                    <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>60g</div>
-                </RawFoodBox>
-            </SubBox>
-            <SubBox>
-                <InfoBox>
-                    <div style={{ display: 'flex', paddingBottom: '16px' }}>
-                        {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>중량/용량</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
-                    </div>
-                    <div style={{ display: 'flex', paddingBottom: '16px' }}>
-                        {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>끼니</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
-                    </div>
-                </InfoBox>
-            </SubBox>
+
+                {dosirakData?.data.banchanList?.map((banchan: any) => (
+                    <RawFoodBox key={banchan.banchanName}>
+                        <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>
+                            {banchan.banchanName}
+                        </div>
+                        <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>{banchan.gram}g</div>
+                    </RawFoodBox>
+                ))} */}
+            {/* </SubBox> */}
         </Container>
     );
 }
@@ -101,7 +97,7 @@ const StoreBox = styled.div`
     align-items: center;
 `;
 
-const StoreImageBox = styled.div`
+const StoreImageBox = styled.img`
     width: 52px;
     height: 52px;
     margin-right: 16px;

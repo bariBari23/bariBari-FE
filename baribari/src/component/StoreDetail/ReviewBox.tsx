@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import ReviewCard from './ReviewCard';
 import { ReactComponent as Star } from '../../assets/star.svg';
+import { useQuery } from 'react-query';
+import { getReview } from '../../apis/api/review';
 
-export default function ReviewBox({ isSelected }: { isSelected: boolean }) {
+export default function ReviewBox({ isSelected, id }: { isSelected: boolean; id: number }) {
     return (
         <Container isSelected={isSelected}>
             <ScoreBox>
@@ -21,7 +23,7 @@ export default function ReviewBox({ isSelected }: { isSelected: boolean }) {
                     <Star />
                 </div>
             </ScoreBox>
-            <ReviewCard />
+            <ReviewCard id={id} />
         </Container>
     );
 }

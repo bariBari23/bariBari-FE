@@ -4,14 +4,13 @@ import { ReactComponent as VerticalLine } from '../assets/verticalLine.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-
 import Header from '../component/Header';
 import { useNavigate } from 'react-router';
-
-interface LoginData {
-    email: string;
-    password: string;
-}
+import { axiosInstance } from '../apis';
+import axios, { AxiosError } from 'axios';
+import { useEffect } from 'react';
+import { loginUser } from '../apis/api/user';
+import { LoginData } from '../utils/interface';
 
 const validationSchema = yup.object({
     email: yup.string().required('이메일을 입력해주세요!').email('@를 포함한 유효한 이메일 주소를 작성해주세요.'),
@@ -32,9 +31,17 @@ export default function LogIn() {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = (data: LoginData) => {
-        alert('로그인 성공!'); //임시로 해놓음
-        navigate('/');
+    const onSubmit: SubmitHandler<LoginData> = async (data) => {
+        try {
+            // 로그인 API 호출
+            const response = await loginUser(data.email, data.password);
+            // 로그인 성공 시 처리
+            alert('로그인 성공!');
+            navigate('/');
+        } catch (error) {
+            // 로그인실패 처리
+            alert('로그인 실패!');
+        }
     };
 
     const navigate = useNavigate();

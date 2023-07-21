@@ -2,52 +2,61 @@ import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import { FilledHeartBigIcon } from '../component/IconFin';
 import { styled } from 'styled-components';
-import { ReactComponent as Star } from '../assets/StarIcon.svg';
-
-const DATA = [
-    {
-        status: 'success',
-        data: {
-            likeList: [
-                {
-                    storeId: 2,
-                    storeName: '유미네 반찬가게',
-                },
-                {
-                    storeId: 3,
-                    storeName: '오씨네 반찬가게',
-                },
-                {
-                    storeId: 4,
-                    storeName: '민주네 반찬가게',
-                },
-            ],
-        },
-    },
-];
+import { cancelStoreLike, clickStoreLike, getLikedStoreInfo } from '../apis/api/store';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { StoreLikedItem } from '../utils/interface';
 
 export default function Fav() {
+    const { status, data, refetch } = useQuery(['likedStoreInfo'], getLikedStoreInfo);
+
+    const { mutate: likeStore } = useMutation(clickStoreLike, {
+        onSuccess: () => {
+            refetch(); // API 호출 성공 시 데이터를 리프레시합니다.
+        },
+    });
+
+    const { mutate: unlikeStore } = useMutation(cancelStoreLike, {
+        onSuccess: () => {
+            refetch(); // API 호출 성공 시 데이터를 리프레시합니다.
+        },
+    });
+
+    if (status === 'loading') {
+        return <span>Loading...</span>;
+    }
+
+    if (status === 'error') {
+        return <span>Error</span>;
+    }
+
+    const handleLikeToggle = (storeId: number) => {
+        // 해당 storeId가 이미 즐겨찾기에 있는지 확인
+        const isLiked = data.data.likeList.some((item: any) => item.storeId === storeId);
+
+        if (isLiked) {
+            // 이미 즐겨찾기에 있는 경우, 취소
+            unlikeStore(storeId);
+        } else {
+            // 즐겨찾기에 없는 경우, 추가
+            likeStore(storeId);
+        }
+    };
+
     return (
-        <Wrapper>
-            <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
-            {DATA[0].data.likeList.map((item) => (
-                <StoreTab key={item.storeId}>
-                    <StoreImg />
-                    <StoreInfo>
-                        <p style={{ margin: '0px' }}>{item.storeName}</p>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <p style={{ margin: '0px 8px 0px 0px', fontSize: '18px', fontWeight: '700' }}>4.4</p>
-                            {/* 별점에 따라 별 갯수 달라짐 */}
-                            {/*<Star />
-                            <Star />
-                            <Star />
-                            <Star />
-            <Star />*/}
-                        </div>
-                    </StoreInfo>
-                    <FilledHeartBigIcon />
-                </StoreTab>
-            ))}
+
+        <div>
+            <Wrapper>
+                <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
+                {data.data.likeList.map((item: StoreLikedItem) => (
+                    <StoreTab key={item.storeId}>
+                        <StoreImg />
+                        <StoreInfo>
+                            <p style={{ margin: '0px' }}>{item.storeName}</p>
+                        </StoreInfo>
+                        <FilledHeartBigIcon onClick={() => handleLikeToggle(item.storeId)} />
+                    </StoreTab>
+                ))}
+            </Wrapper>
             <Navigator />
         </Wrapper>
     );

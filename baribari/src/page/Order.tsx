@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
-import { useReducer } from 'react';
+import { SetStateAction, useReducer, useState } from 'react';
 import CheckIcon from '../component/CheckIcon';
 import { useNavigate } from 'react-router-dom';
+import { createOrder } from '../apis/api/order';
 
 const timeSlots = [
     '8:00 ~ 9:00',
@@ -24,9 +25,24 @@ type Action = { type: 'SET_TIME'; time: string } | { type: 'SET_PAY'; pay: strin
 
 export default function Order() {
     const navigate = useNavigate();
+    const [phoneNumber, setPhoneNumber] = useState('');
 
-    const handleOrderClick = () => {
-        navigate('/orderlist');
+    const handleOrderClick = async () => {
+        try {
+            const orderData = new FormData();
+            orderData.append('orderDemand', '잘부탁');
+            orderData.append('orderPhoneNumber', phoneNumber);
+            orderData.append('pickupTime', state.time);
+            orderData.append('payMethod', state.pay);
+
+            const response = await createOrder(orderData);
+            console.log(response);
+            navigate('/orderlist');
+        } catch (error) {
+            console.log(phoneNumber);
+            console.log(state.time);
+            console.log('Order failed: ', error);
+        }
     };
 
     const [state, dispatch] = useReducer(
@@ -52,7 +68,10 @@ export default function Order() {
             <InsideBox>
                 <InfoBox>
                     <TitleText>주문자 정보</TitleText>
-                    <PhoneInput placeholder="휴대폰 번호를 입력해주세요"></PhoneInput>
+                    <PhoneInput
+                        placeholder="휴대폰 번호를 입력해주세요"
+                        onChange={(e: { target: { value: SetStateAction<string> } }) => setPhoneNumber(e.target.value)}
+                    />
                 </InfoBox>
                 <InfoBox style={{ height: '201px', padding: '24px 16px 24px 16px' }}>
                     <TitleText>픽업 시간</TitleText>

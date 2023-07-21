@@ -1,81 +1,65 @@
 import { styled } from 'styled-components';
 import { FilledHeartIcon } from './IconFin';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { searchByQuery } from '../apis/api/search';
+import defaultImg from '../assets/defaultImg.jpg';
+import { ReactComponent as FloatingRefreshBtn } from '../assets/RefreshBtn.svg';
+import { ContentContainerProps, DosirakItem } from '../utils/interface';
+import { useQuery } from '@tanstack/react-query';
 
-export default function ContentContainer() {
+export default function ContentContainer({ keyword, filterLiked, sort }: ContentContainerProps) {
     const navigate = useNavigate();
-
-    const handleCardClick = () => {
-        navigate('/detail'); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
+    const handleCardClick = (id: number) => {
+        navigate(`/detail/${id}`); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
     };
 
+    // React Query를 사용하여 API 데이터 가져오기
+    const { data: dosirakList, refetch } = useQuery(
+        ['dosirakList', keyword, filterLiked, sort],
+        () => searchByQuery(keyword ?? '', filterLiked, sort ?? ''),
+        {
+            staleTime: 30000, //  30초 이상 오래된 경우에만 업데이트
+            cacheTime: 300000, // 5분 동안 데이터를 캐시에 보관
+            refetchOnWindowFocus: true, // 창이 포커스를 얻었을 때만 리프레시
+            enabled: keyword !== undefined || filterLiked !== undefined || sort !== undefined, // 키워드, 필터, 정렬 값이 있을 때에만 API 호출
+        },
+    );
     return (
         <Container>
-            <FoodCard onClick={handleCardClick}>
-                <FoodImg></FoodImg>
-                <NameWrapper>
-                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                    <FilledHeartIcon />
-                </NameWrapper>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
-            <FoodCard onClick={handleCardClick}>
-                <FoodImg></FoodImg>
-                <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
-            <FoodCard onClick={handleCardClick}>
-                <FoodImg></FoodImg>
-                <NameWrapper>
-                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                    <FilledHeartIcon />
-                </NameWrapper>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
-            <FoodCard onClick={handleCardClick}>
-                <FoodImg></FoodImg>
-                <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
-            <FoodCard onClick={handleCardClick}>
-                <FoodImg></FoodImg>
-                <NameWrapper>
-                    <FoodStoreName>유미네 반찬가게</FoodStoreName>
-                    <FilledHeartIcon />
-                </NameWrapper>
-                <FoodName>계란말이 쏙쏙 반찬 박스</FoodName>
-                <TagWrapper>
-                    <FoodTag>계란말이</FoodTag>
-                    <FoodTag>감자채볶음</FoodTag>
-                    <FoodTag>멸치볶음</FoodTag>
-                </TagWrapper>
-                <Price>7,000원</Price>
-            </FoodCard>
+            {dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
+                <FoodCard key={dosirak.id} onClick={() => handleCardClick(dosirak.id)}>
+                    <ImgWrapper>
+                        {!dosirak.mainImageUrl || dosirak.mainImageUrl === ' ' || dosirak.mainImageUrl === '  ' ? (
+                            <FoodImg src={defaultImg} alt="Default Food" />
+                        ) : (
+                            <FoodImg src={dosirak.mainImageUrl} alt={dosirak.name} />
+                        )}
+                        <StockTag>{dosirak.stock}개</StockTag>
+                    </ImgWrapper>
+                    <NameWrapper>
+                        <FoodStoreName>{dosirak.storeName}</FoodStoreName>
+                        {dosirak.likedStore && <FilledHeartIcon />}
+                    </NameWrapper>
+                    <FoodName>{dosirak.name}</FoodName>
+                    <TagWrapper>
+                        {dosirak.banchanList.map((banchan, index) => (
+                            <FoodTag key={index}>{banchan}</FoodTag>
+                        ))}
+                    </TagWrapper>
+                    <Price>{dosirak.price.toLocaleString()}원</Price>
+                </FoodCard>
+            ))}
+            <RotateFloatingRefreshBtn
+                style={{ position: 'absolute', bottom: '16px', right: '16px' }}
+                onClick={() => refetch()}
+            />
         </Container>
     );
 }
 
 const Container = styled.div`
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -83,6 +67,29 @@ const Container = styled.div`
         justify-content: center; /* 웹뷰 가로 사이즈가 408px 이하일 때 카드 배열을 가운데 정렬 */
     }
     gap: 8px;
+`;
+
+const ImgWrapper = styled.div`
+    position: relative;
+`;
+
+const StockTag = styled.div`
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 35px;
+    height: 18px;
+    border-radius: 8px;
+    background: #ff7455;
+    color: #fff;
+    font-family: Pretendard;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const NameWrapper = styled.div`
@@ -110,6 +117,7 @@ const FoodImg = styled.div`
     height: 206px;
     border-radius: 4px;
     background-color: lightgrey;
+    object-fit: cover;
     margin-bottom: 12px;
 
     @media (max-width: 365px) {
@@ -134,6 +142,7 @@ const FoodName = styled.div`
 `;
 const TagWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     margin: 4px 0px;
 `;
@@ -160,4 +169,12 @@ const Price = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 23px;
+`;
+
+const RotateFloatingRefreshBtn = styled(FloatingRefreshBtn)`
+    transition: transform 1s ease;
+
+    &:hover {
+        transform: rotate(75deg);
+    }
 `;

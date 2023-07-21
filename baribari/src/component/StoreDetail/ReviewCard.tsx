@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Star } from '../../assets/star.svg';
+import { useQuery } from 'react-query';
+import { getReview } from '../../apis/api/review';
 
-export default function ReviewCard() {
+export default function ReviewCard({ id }: { id: number }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
+    const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
 
     useEffect(() => {
         if (textRef.current) {
@@ -13,56 +16,58 @@ export default function ReviewCard() {
     }, []);
     return (
         <Container>
-            <CircleProfile />
-            <SubReviewCard>
-                <div
-                    style={{
-                        width: '100%',
-                        marginBottom: '12px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    <div style={{ display: 'flex', fontSize: '18px', fontStyle: 'normal', fontWeight: '700' }}>
-                        닉네임
-                    </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            fontSize: '12px',
-                            fontStyle: 'normal',
-                            fontWeight: '600',
-                            color: '#AAA',
-                        }}
-                    >
-                        2022.08.12
-                    </div>
-                </div>
-                <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <div
-                        style={{
-                            display: 'flex',
-                            fontSize: '16px',
-                            fontStyle: 'normal',
-                            fontWeight: '600',
-                            lineHeight: '28px',
-                        }}
-                    >
-                        명철 반찬세트
-                    </div>
-                    <Star style={{ display: 'flex', width: '102px' }} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <EvaluationTile>맛있어요</EvaluationTile>
-                    <EvaluationTile>양은 충분했어요</EvaluationTile>
-                    <EvaluationTile style={{ marginRight: '0px' }}>포장이 깔끔해요</EvaluationTile>
-                </div>
-                <ImageBox />
-                <ReviewText ref={textRef}>
-                    어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고어쩌고
-                </ReviewText>
-            </SubReviewCard>
+            {reviewData?.data?.reviewList.map((review: any) => (
+                <>
+                    <CircleProfile src={review.reviewWriterProfileImageUrl} />
+                    <SubReviewCard key={review.reviewId}>
+                        <div
+                            style={{
+                                width: '100%',
+                                marginBottom: '12px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <div style={{ display: 'flex', fontSize: '18px', fontStyle: 'normal', fontWeight: '700' }}>
+                                {review.reviewWriterName}
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    fontSize: '12px',
+                                    fontStyle: 'normal',
+                                    fontWeight: '600',
+                                    color: '#AAA',
+                                }}
+                            >
+                                {review.createdAt}
+                            </div>
+                        </div>
+                        <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    fontSize: '16px',
+                                    fontStyle: 'normal',
+                                    fontWeight: '600',
+                                    lineHeight: '28px',
+                                }}
+                            >
+                                {review.orderItem.dosirakName}
+                            </div>
+                            <Star style={{ display: 'flex', width: '102px' }} />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            <EvaluationTile>맛있어요</EvaluationTile>
+                            <EvaluationTile>양은 충분했어요</EvaluationTile>
+                            <EvaluationTile style={{ marginRight: '0px' }}>포장이 깔끔해요</EvaluationTile>
+                        </div>
+                        <ImageBox src={review.mainImageUrl} />
+                        <ReviewText ref={textRef}>{review.content}</ReviewText>
+                    </SubReviewCard>
+                </>
+            ))}
         </Container>
     );
 }
@@ -76,7 +81,7 @@ const Container = styled.div`
     margin-bottom: 20px;
 `;
 
-const CircleProfile = styled.div`
+const CircleProfile = styled.img`
     width: 44px;
     height: 44px;
     background-color: grey;
@@ -103,7 +108,7 @@ const EvaluationTile = styled.div`
     font-weight: 600;
 `;
 
-const ImageBox = styled.div`
+const ImageBox = styled.img`
     margin: 14px 0;
     display: flex;
     height: 282px;

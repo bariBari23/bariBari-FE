@@ -4,14 +4,31 @@ import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { RPointerMedIcon } from '../component/IconFin';
 import { useNavigate } from 'react-router-dom';
 import Navigator from '../component/Navigator';
+import { getUserInfo } from '../apis/api/user';
+import { useEffect, useState } from 'react';
+import MapContainer from '../component/Map/MapContainer';
 
 export default function MyPage() {
     const navigate = useNavigate();
-
+    const [nickname, setNickname] = useState('');
+    const userAddress = '';
+    const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
     const handleFavClick = () => {
         navigate('/fav');
     };
-
+    const callUserInfo = async () => {
+        try {
+            const userInfo = await getUserInfo();
+            // console.log(userInfo);
+            setNickname(userInfo.data.nickname);
+            setUserPosition(userInfo.data.position);
+        } catch (error) {
+            console.log('Error', error);
+        }
+    };
+    useEffect(() => {
+        callUserInfo();
+    }, []);
     return (
         <Container>
             <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={false} />
@@ -19,7 +36,7 @@ export default function MyPage() {
                 <ProfileBox>
                     <ProfileImage />
                     <div style={{ fontSize: '22px', fontWeight: '700', lineHeight: '60px', marginRight: 'auto' }}>
-                        바리바리 님
+                        {nickname} 님
                     </div>
                     <Pencil style={{ marginRight: '0px' }} />
                 </ProfileBox>
@@ -28,7 +45,12 @@ export default function MyPage() {
                     <TextBox>내 위치</TextBox>
                     <Pencil style={{ marginRight: '0px', width: '24', height: '25' }} />
                 </KeywordBox>
-                <MapImage />
+                <MapContainer
+                    size={[500, 300]}
+                    userAddress={userAddress}
+                    userPosition={userPosition}
+                    isSearched={true}
+                />
                 <KeywordBox style={{ padding: '20px 0', cursor: 'pointer' }} onClick={handleFavClick}>
                     <TextBox>즐겨찾는 가게</TextBox>
                     <div style={{ padding: '8.5px' }}>
