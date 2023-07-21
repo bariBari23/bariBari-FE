@@ -30,11 +30,13 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
             {dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
                 <FoodCard key={dosirak.id} onClick={() => handleCardClick(dosirak.id)}>
                     <ImgWrapper>
-                        {!dosirak.mainImageUrl || dosirak.mainImageUrl === ' ' || dosirak.mainImageUrl === '  ' ? (
-                            <FoodImg src={defaultImg} alt="Default Food" />
-                        ) : (
-                            <FoodImg src={dosirak.mainImageUrl} alt={dosirak.name} />
-                        )}
+                        <div style={{ width: '100%', height: '206px' }}>
+                            {!dosirak.mainImageUrl || dosirak.mainImageUrl === ' ' || dosirak.mainImageUrl === '  ' ? (
+                                <FoodImg src={defaultImg} alt="Default Food" />
+                            ) : (
+                                <FoodImg src={dosirak.mainImageUrl} alt={dosirak.name} />
+                            )}
+                        </div>
                         <StockTag>{dosirak.stock}개</StockTag>
                     </ImgWrapper>
                     <NameWrapper>
@@ -71,6 +73,8 @@ const Container = styled.div`
 
 const ImgWrapper = styled.div`
     position: relative;
+    width: 100%;
+    height: 206px;
 `;
 
 const StockTag = styled.div`
@@ -112,14 +116,13 @@ const FoodCard = styled.div`
     }
 `;
 
-const FoodImg = styled.div`
-    width: 100%;
-    height: 206px;
+const FoodImg = styled.img`
     border-radius: 4px;
     background-color: lightgrey;
-    object-fit: cover;
     margin-bottom: 12px;
-
+    width: 100%; /* 이미지의 너비는 부모 컴포넌트의 너비에 맞추어짐 */
+    height: 100%; /* 이미지의 높이는 100%로 설정하여 ImageContainer의 높이와 일치시킴 */
+    object-fit: cover;
     @media (max-width: 365px) {
         width: 100%;
     }

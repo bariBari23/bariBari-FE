@@ -32,14 +32,18 @@ const Header = ({
         };
     }, [resetSearchKeyword]);
     return (
-        <HeaderContainer>
-            <LeftArrowIcon onClick={handleGoBack} />
+        <Container>
+            <IconBox>
+                <div style={{ padding: '8px' }}>
+                    <LeftArrowIcon onClick={handleGoBack} />
+                </div>
+            </IconBox>
             {showPageName ? (
-                <PageTitle>{pageTitle}</PageTitle>
+                <TitleBox>{pageTitle}</TitleBox>
             ) : (
                 showSearchBar && <SearchBar onKeywordChange={handleSearchKeywordChange} />
             )}
-        </HeaderContainer>
+        </Container>
     );
 };
 

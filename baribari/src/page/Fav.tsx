@@ -43,7 +43,6 @@ export default function Fav() {
     };
 
     return (
-
         <div>
             <Wrapper>
                 <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
@@ -58,7 +57,7 @@ export default function Fav() {
                 ))}
             </Wrapper>
             <Navigator />
-        </Wrapper>
+        </div>
     );
 }
 

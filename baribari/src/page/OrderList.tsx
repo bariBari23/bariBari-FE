@@ -7,8 +7,8 @@ import { getOrder } from '../apis/api/order';
 import { Key } from 'react';
 
 export default function OrderList() {
-    const { data: orderList, isLoading, error } = useQuery('orderList', getOrder);
-    console.log(orderList);
+    // const { data: orderList, isLoading, error } = useQuery('orderList', getOrder);
+    // console.log(orderList);
     const navigate = useNavigate();
 
     const handleUploadReviewClick = () => {
@@ -52,23 +52,23 @@ export default function OrderList() {
                 </FoodItem>
                 <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
             </Wrapper>
-        
+
             <Navigator />
 
-            {orderList.data.orderList.map((order: any) => (
+            {/* {orderList.data.orderList.map((order: any) => (
                 <Wrapper key={order.orderId}>
-                    <OrderStatus>
-                        {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                        <p style={{ marginBottom: '8px' }}>5/16(화요일)</p>
+                    <OrderStatus> */}
+            {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
+            {/* <p style={{ marginBottom: '8px' }}>5/16(화요일)</p>
                         <p style={{ marginBottom: '8px' }}>|</p>
                         <p style={{ marginBottom: '8px' }}>{order.status}</p>
                     </OrderStatus>
                     <Separator />
                     <FoodItem>
                         <FoodImg />
-                        <FoodInfo>
-                            {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                            <p style={{ margin: '0px' }}>{order.orderItemList.storeName}</p>
+                        <FoodInfo> */}
+            {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
+            {/* <p style={{ margin: '0px' }}>{order.orderItemList.storeName}</p>
                             <FoodOrderInfo>
                                 <p style={{ margin: '0px' }}>{order.orderItemList.dosirakName}</p>
                                 <p style={{ margin: '0px' }}>{order.orderItemList.count}개</p>
@@ -78,8 +78,7 @@ export default function OrderList() {
                     </FoodItem>
                     <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
                 </Wrapper>
-            ))}
-
+            ))} */}
         </div>
     );
 }
