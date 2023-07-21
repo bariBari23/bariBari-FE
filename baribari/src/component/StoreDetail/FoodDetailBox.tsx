@@ -4,20 +4,20 @@ import { useQuery } from 'react-query';
 import { searchById } from '../../apis/api/search';
 
 export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
-    const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
+    // const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (error) {
-        return <div>Error occurred</div>;
-    }
+    // if (error) {
+    //     return <div>Error occurred</div>;
+    // }
 
     return (
         <Container isSelected={isSelected}>
-            <MainBox>
-                <TitleBox>
+            {/* <MainBox> */}
+            {/* <TitleBox>
                     <div style={{ marginRight: 'auto', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
                         {dosirakData?.data.name}
                     </div>
@@ -44,8 +44,8 @@ export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean;
                         </div>
                         <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>{banchan.gram}g</div>
                     </RawFoodBox>
-                ))}
-            </SubBox>
+                ))} */}
+            {/* </SubBox> */}
         </Container>
     );
 }

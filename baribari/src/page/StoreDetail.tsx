@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
 import ReviewBox from '../component/StoreDetail/ReviewBox';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
 
 export default function StoreDetail() {
@@ -17,23 +17,23 @@ export default function StoreDetail() {
     const id = Number(useParams<{ id: string }>().id);
     console.log(id);
 
-    const { data: dosirakData, isLoading, error } = useQuery(['dosirakData', id], searchById);
-    console.log(dosirakData);
-    console.log('dkdkdkdk');
-    console.log('여기에요' + dosirakData?.data?.storeId);
-    const storeId = dosirakData?.data?.storeId as number;
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // const { data: dosirakData, isLoading, error } = useQuery(['dosirakData', id], searchById);
+    // console.log(dosirakData);
+    // console.log('dkdkdkdk');
+    // console.log('여기에요' + dosirakData?.data?.storeId);
+    // const storeId = dosirakData?.data?.storeId as number;
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (error) {
-        return <div>Error occurred</div>;
-    }
+    // if (error) {
+    //     return <div>Error occurred</div>;
+    // }
     return (
         <Container>
             <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={false} />
             <InsideBox>
-                <FoodImgBox src={dosirakData.data.mainImageUrl} />
+                {/* <FoodImgBox src={dosirakData.data.mainImageUrl} /> */}
                 <DetailNav>
                     <InformBtn isSelected={active === '반찬 상세'} onClick={() => changeDetailBox('반찬 상세')}>
                         반찬 상세
@@ -47,7 +47,7 @@ export default function StoreDetail() {
                 </DetailNav>
                 <FoodDetailBox isSelected={active === '반찬 상세'} id={id} />
                 <StoreDetailBox isSelected={active === '가게 정보'} id={id} />
-                <ReviewBox isSelected={active === '리뷰'} id={storeId} />
+                {/* <ReviewBox isSelected={active === '리뷰'} id={storeId} /> */}
                 <AddBtn>장바구니에 넣기</AddBtn>
             </InsideBox>
         </Container>

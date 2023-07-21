@@ -29,4 +29,10 @@ export interface DosirakItem {
     price: number;
     stock: number;
     storeName: string;
+    likedStore: boolean;
+}
+
+export interface HeartListProps {
+    filterLiked: boolean;
+    onFilterLikedChange: (value: boolean) => void;
 }

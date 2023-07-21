@@ -68,7 +68,7 @@ export const RightArrowIcon = styled.div`
 `;
 
 //돋보기 모양 아이콘
-export const SearchIcon = styled.div`
+export const SearchIcon = styled.button`
     width: 32px;
     height: 32px;
     filter: invert(57%) sepia(0%) saturate(0%) hue-rotate(264deg) brightness(103%) contrast(88%);

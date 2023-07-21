@@ -4,22 +4,22 @@ import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
 
 export default function StoreDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
-    const { data: storeData, isLoading, error } = useQuery(['store', id], () => getStoreInfo(id));
-    const { data: dosirakData } = useQuery(['dosirak', id], () => searchById(id));
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // const { data: storeData, isLoading, error } = useQuery(['store', id], () => getStoreInfo(id));
+    // const { data: dosirakData } = useQuery(['dosirak', id], () => searchById(id));
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (error) {
-        return <div>Error occurred</div>;
-    }
+    // if (error) {
+    //     return <div>Error occurred</div>;
+    // }
     return (
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
-                    <div style={{ height: '21px', marginRight: 'auto', marginBottom: '11px' }}>
+                    {/* <div style={{ height: '21px', marginRight: 'auto', marginBottom: '11px' }}>
                         {storeData.data.storeName}
-                    </div>
+                    </div> */}
                     <div style={{ height: '21px' }}>4.4</div>
                 </TitleBox>
                 <CallBtn style={{ marginRight: '12px' }}>연락하기</CallBtn>
@@ -29,30 +29,30 @@ export default function StoreDetailBox({ isSelected, id }: { isSelected: boolean
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {storeData.data.storeAddress}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {storeData.data.businessNumber}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {storeData.data.dayList}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {storeData.data.offDay}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
@@ -69,9 +69,9 @@ export default function StoreDetailBox({ isSelected, id }: { isSelected: boolean
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {dosirakData.data.fromWhere}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
@@ -86,9 +86,9 @@ export default function StoreDetailBox({ isSelected, id }: { isSelected: boolean
                     <div style={{ display: 'flex' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        {/* <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
                             {storeData.data.description}
-                        </div>{' '}
+                        </div>{' '} */}
                     </div>
                 </InfoBox>
             </SubBox>

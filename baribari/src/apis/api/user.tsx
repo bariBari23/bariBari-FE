@@ -40,3 +40,15 @@ export async function registerUser(nickname: string, email: string, password: st
         throw error;
     }
 }
+
+export async function getUserInfo() {
+    try {
+        // 회원가입 API 호출
+        const response = await axiosInstance.get('/v1/auth/info', {});
+        return response.data; // 필요한 데이터 반환
+    } catch (error) {
+        // 에러 처리
+        console.log('Error:', error);
+        throw error;
+    }
+}
