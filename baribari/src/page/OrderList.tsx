@@ -7,8 +7,8 @@ import { getOrder } from '../apis/api/order';
 import { Key } from 'react';
 
 export default function OrderList() {
-    const { data: orderItems } = useQuery('orderList', getOrder);
-    console.log(orderItems);
+    const { data: orderList, isLoading, error } = useQuery('orderList', getOrder);
+    console.log(orderList);
     const navigate = useNavigate();
 
     const handleUploadReviewClick = () => {
@@ -19,7 +19,7 @@ export default function OrderList() {
     return (
         <div>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
-            {orderItems.data.orderList.map((order: any) => (
+            {orderList.data.orderList.map((order: any) => (
                 <Wrapper key={order.orderId}>
                     <OrderStatus>
                         {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}

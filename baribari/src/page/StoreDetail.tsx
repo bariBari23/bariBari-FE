@@ -15,10 +15,13 @@ export default function StoreDetail() {
     };
 
     const id = Number(useParams<{ id: string }>().id);
-    const params = useParams<{ id: string }>();
+    console.log(id);
 
-    const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
-    const storeId = dosirakData.data.storeId as number;
+    const { data: dosirakData, isLoading, error } = useQuery(['dosirakData', id], searchById);
+    console.log(dosirakData);
+    console.log('dkdkdkdk');
+    console.log('여기에요' + dosirakData?.data?.storeId);
+    const storeId = dosirakData?.data?.storeId as number;
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -42,8 +45,8 @@ export default function StoreDetail() {
                         리뷰
                     </InformBtn>
                 </DetailNav>
-                <FoodDetailBox isSelected={active === '반찬 상세'} id={id!} />
-                <StoreDetailBox isSelected={active === '가게 정보'} id={id!} />
+                <FoodDetailBox isSelected={active === '반찬 상세'} id={id} />
+                <StoreDetailBox isSelected={active === '가게 정보'} id={id} />
                 <ReviewBox isSelected={active === '리뷰'} id={storeId} />
                 <AddBtn>장바구니에 넣기</AddBtn>
             </InsideBox>
