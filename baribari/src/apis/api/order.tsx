@@ -4,8 +4,6 @@ import { getAccessToken } from '../cookie';
 // 주문 api
 export async function createOrder(orderData: object) {
     try {
-        const token = getAccessToken();
-        console.log(token);
         const response = await axiosInstance.post(`/v1/order`, orderData);
         return response.data;
     } catch (error) {

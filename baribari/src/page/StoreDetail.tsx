@@ -7,33 +7,40 @@ import ReviewBox from '../component/StoreDetail/ReviewBox';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
+import { getStoreInfo } from '../apis/api/store';
 
 export default function StoreDetail() {
     const [active, setActive] = useState('반찬 상세');
     const changeDetailBox = (value: string) => {
         setActive(value);
     };
+    const [storeId, setStoreId] = useState<number | null>(null);
 
     const id = Number(useParams<{ id: string }>().id);
-    console.log(id);
+    const {
+        data: dosirakData,
+        isLoading,
+        error,
+    } = useQuery(['dosirakData', id], () => searchById(id), {
+        onSuccess: (data) => {
+            console.log(data.data.storeId);
+            setStoreId(data.data.storeId);
+        },
+    });
+    console.log('바로 여기에요' + storeId);
+    if (error) {
+        return <div>An error has occurred</div>;
+    }
+    if (isLoading) {
+        return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
+    }
+    console.log('dosirakdata' + dosirakData);
 
-    // const { data: dosirakData, isLoading, error } = useQuery(['dosirakData', id], searchById);
-    // console.log(dosirakData);
-    // console.log('dkdkdkdk');
-    // console.log('여기에요' + dosirakData?.data?.storeId);
-    // const storeId = dosirakData?.data?.storeId as number;
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (error) {
-    //     return <div>Error occurred</div>;
-    // }
     return (
         <Container>
             <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={false} />
             <InsideBox>
-                {/* <FoodImgBox src={dosirakData.data.mainImageUrl} /> */}
+                <FoodImgBox src={dosirakData.data.mainImageUrl} />
                 <DetailNav>
                     <InformBtn isSelected={active === '반찬 상세'} onClick={() => changeDetailBox('반찬 상세')}>
                         반찬 상세
@@ -45,9 +52,9 @@ export default function StoreDetail() {
                         리뷰
                     </InformBtn>
                 </DetailNav>
-                <FoodDetailBox isSelected={active === '반찬 상세'} id={id} />
-                <StoreDetailBox isSelected={active === '가게 정보'} id={id} />
-                {/* <ReviewBox isSelected={active === '리뷰'} id={storeId} /> */}
+                <FoodDetailBox isSelected={active === '반찬 상세'} dosirakData={dosirakData} />
+                <StoreDetailBox isSelected={active === '가게 정보'} storeId={storeId} />
+                <ReviewBox isSelected={active === '리뷰'} id={storeId} />
                 <AddBtn>장바구니에 넣기</AddBtn>
                 <BackSquare />
             </InsideBox>

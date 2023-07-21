@@ -15,7 +15,7 @@ export async function postReview(data: object) {
 }
 
 // 상점 리뷰 전체 조회 api
-export async function getReview(storeId: number) {
+export async function getReview(storeId: number | null) {
     try {
         const response = await axiosInstance.get(`/v1/review/store/${storeId}`);
         return response.data;

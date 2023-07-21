@@ -1,7 +1,7 @@
 import { axiosInstance } from '..';
 
 // 상점 정보 조회 api
-export async function getStoreInfo(storeId: number) {
+export async function getStoreInfo(storeId: number | null) {
     try {
         const response = await axiosInstance.get(`/v1/store/${storeId}`);
         return response.data;
@@ -15,7 +15,7 @@ export async function getStoreInfo(storeId: number) {
 export async function getLikedStoreInfo() {
     try {
         const response = await axiosInstance.get(`/v1/store/like/`);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.log('Error:', error);
         throw error;

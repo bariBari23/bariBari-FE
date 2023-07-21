@@ -4,7 +4,7 @@ import { ReactComponent as Star } from '../../assets/star.svg';
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
 
-export default function ReviewCard({ id }: { id: number }) {
+export default function ReviewCard({ id }: { id: number | null }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
 

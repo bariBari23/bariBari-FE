@@ -2,22 +2,13 @@ import styled from 'styled-components';
 import { ReactComponent as Heart } from '../../assets/heart.svg';
 import { useQuery } from 'react-query';
 import { searchById } from '../../apis/api/search';
+import { ReactComponent as SmallStar } from '../../assets/star.svg';
 
-export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
-    // const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (error) {
-    //     return <div>Error occurred</div>;
-    // }
-
+export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected: boolean; dosirakData: any }) {
     return (
         <Container isSelected={isSelected}>
-            {/* <MainBox> */}
-            {/* <TitleBox>
+            <MainBox>
+                <TitleBox>
                     <div style={{ marginRight: 'auto', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
                         {dosirakData?.data.name}
                     </div>
@@ -28,7 +19,6 @@ export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean;
                 <StoreBox>
                     <StoreImageBox src={dosirakData?.data.mainImageUrl} />
                     <StoreNameBox>
-
                         <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
                             {dosirakData?.data.storeName}
                         </div>
@@ -50,7 +40,6 @@ export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean;
                 </StoreBox>
             </MainBox>
             <SubBox>
-
                 {dosirakData?.data.banchanList?.map((banchan: any) => (
                     <RawFoodBox key={banchan.banchanName}>
                         <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>
@@ -58,8 +47,8 @@ export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean;
                         </div>
                         <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>{banchan.gram}g</div>
                     </RawFoodBox>
-                ))} */}
-            {/* </SubBox> */}
+                ))}
+            </SubBox>
         </Container>
     );
 }
