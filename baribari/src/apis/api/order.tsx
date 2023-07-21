@@ -1,10 +1,29 @@
 import { axiosInstance } from '..';
 import { getAccessToken } from '../cookie';
+interface OrderData {
+    orderDemand: string;
+    orderPhoneNumber: string;
+    estimatedPickUpTime: string;
+    payMethod: string;
+}
 
 // 주문 api
-export async function createOrder(orderData: object) {
+export async function createOrder(orderData: OrderData) {
     try {
-        const response = await axiosInstance.post(`/v1/order`, orderData);
+        console.log(orderData);
+        const modifiedOrderData = {
+            orderDemand: '맛있게해주세요요',
+            orderPhoneNumber: '5555',
+            estimatedPickUpTime: '8:00 ~ 9:00',
+            payMethod: 'CARD',
+        };
+        console.log(modifiedOrderData);
+
+        const response = await axiosInstance.post(`/v1/order`, orderData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         return response.data;
     } catch (error) {
         console.log('Error:', error);
