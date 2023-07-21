@@ -49,6 +49,7 @@ export default function StoreDetail() {
                 <StoreDetailBox isSelected={active === '가게 정보'} id={id} />
                 {/* <ReviewBox isSelected={active === '리뷰'} id={storeId} /> */}
                 <AddBtn>장바구니에 넣기</AddBtn>
+                <BackSquare />
             </InsideBox>
         </Container>
     );
@@ -63,7 +64,7 @@ const InsideBox = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 65px;
     justify-content: flex-start;
     align-items: center;
     background-color: #f9f9f9;
@@ -97,7 +98,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 464px;
+    max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
@@ -112,4 +113,15 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

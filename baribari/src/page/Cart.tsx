@@ -18,7 +18,7 @@ export default function Cart() {
         navigate('/order');
     };
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
             <CartList>
                 {cartItems?.data?.items.map((item: any) => (
@@ -74,12 +74,14 @@ export default function Cart() {
                 ))}
             </CartList>
             <SubmitButton onClick={handleGoOrder}>구매하기</SubmitButton>
+            <BackSquare />
         </div>
     );
 }
 
 const CartList = styled.div`
     display: flex;
+    padding: 0 16px;
     flex-direction: column;
     gap: 16px;
 `;
@@ -141,12 +143,13 @@ const CountButton = styled.div`
 const SubmitButton = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 64px);
-    max-width: 464px;
+    width: calc(100% - 32px);
+    max-width: 564px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
     font-size: 24px;
+    font-family: Pretendard;
     font-weight: 700;
     border: none;
     align-items: center;
@@ -156,4 +159,15 @@ const SubmitButton = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

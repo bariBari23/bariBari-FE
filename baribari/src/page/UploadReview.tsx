@@ -151,8 +151,9 @@ export default function UploadReview() {
                     <ScoreText>보통</ScoreText>
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="quantity" value="smallAmount">
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                    <ClickBox name="quantity" value="less">
+
                         양이 적어요
                     </ClickBox>
                     <ClickBox name="quantity" value="enough">
@@ -163,8 +164,8 @@ export default function UploadReview() {
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 맛은 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="flavor" value="plainTaste">
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                    <ClickBox name="flavor" value="less">
                         별로예요
                     </ClickBox>
                     <ClickBox name="flavor" value="enough">
@@ -175,8 +176,8 @@ export default function UploadReview() {
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 포장 상태는 어떠셨나요?</SubText>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <ClickBox name="wrap" value="goodStatus">
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
+                    <ClickBox name="wrap" value="less">
                         허술해요
                     </ClickBox>
                     <ClickBox name="wrap" value="enough">
@@ -193,6 +194,7 @@ export default function UploadReview() {
                 </UploadPhoto>
             </InsideBox>
             <AddBtn onClick={onSubmitReview}>리뷰 등록하기</AddBtn>
+            <BackSquare />
         </Container>
     );
 }
@@ -205,7 +207,7 @@ const Container = styled.div`
 const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 93px;
     justify-content: flex-start;
     padding: 0 16px 110px 16px;
     padding-bottom: 110px;
@@ -214,7 +216,6 @@ const InsideBox = styled.div`
 const StoreBox = styled.div`
     display: flex;
     height: 70px;
-    margin-top: 28px;
     padding: 8px 12px 8px 12px;
     background-color: #f9f9f9;
     border-radius: 12px;
@@ -271,8 +272,7 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    border: ${(props) => (props.isSelected === true ? '2px' : '1px')} solid
-        ${(props) => (props.isSelected === true ? '#FF7455' : '#EFEFEF')};
+    box-shadow: ${(props) => (props.isSelected === true ? '0 0 0 2px #FF7455 inset' : '0 0 0 1px #EFEFEF inset')};
     color: ${(props) => (props.isSelected === true ? '#FF7455' : '#767676')};
     font-size: 16px;
     font-style: normal;
@@ -281,6 +281,7 @@ const CheckBox = styled.label<{ isSelected: boolean }>`
 `;
 
 const TextReviewBox = styled.textarea`
+    outline: none;
     display: flex;
     height: 153px;
     padding: 8px 16px;
@@ -311,7 +312,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 464px;
+    max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
@@ -323,6 +324,19 @@ const AddBtn = styled.div`
     justify-content: center;
 
     position: fixed;
+    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+//나중에 리팩토링 꼭 하자.... 컴포넌트화 꼭 하자...
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

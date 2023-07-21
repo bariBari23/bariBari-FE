@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
-import { RPointerIcon } from '../component/Icon';
+import { RPointerMedIcon } from '../component/IconFin';
 import { useNavigate } from 'react-router-dom';
 import Navigator from '../component/Navigator';
 import { getUserInfo } from '../apis/api/user';
@@ -40,7 +40,7 @@ export default function MyPage() {
                     </div>
                     <Pencil style={{ marginRight: '0px' }} />
                 </ProfileBox>
-                <div style={{ backgroundColor: '#f9f9f9', height: '14px', width: '100%' }} />
+                <div style={{ backgroundColor: '#f9f9f9', height: '14px', width: '100vw' }} />
                 <KeywordBox>
                     <TextBox>내 위치</TextBox>
                     <Pencil style={{ marginRight: '0px', width: '24', height: '25' }} />
@@ -53,11 +53,15 @@ export default function MyPage() {
                 />
                 <KeywordBox style={{ padding: '20px 0', cursor: 'pointer' }} onClick={handleFavClick}>
                     <TextBox>즐겨찾는 가게</TextBox>
-                    <RPointerIcon />
+                    <div style={{ padding: '8.5px' }}>
+                        <RPointerMedIcon />
+                    </div>
                 </KeywordBox>
                 <KeywordBox style={{ padding: '0' }}>
                     <TextBox>내가 쓴 리뷰</TextBox>
-                    <RPointerIcon />
+                    <div style={{ padding: '8.5px' }}>
+                        <RPointerMedIcon />
+                    </div>
                 </KeywordBox>
             </InsideBox>
             <Navigator />
@@ -73,7 +77,7 @@ const Container = styled.div`
 const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 126px;
+    margin-top: 99px;
     justify-content: flex-start;
     align-items: center;
     padding: 0 12px;
@@ -104,10 +108,12 @@ const KeywordBox = styled.div`
 `;
 
 const TextBox = styled.div`
+    display: flex;
     font-size: 18px;
     font-weight: 700;
     line-height: 21px;
     margin-right: auto;
+    align-items: center;
 `;
 
 const MapImage = styled.div`

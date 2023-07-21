@@ -1,4 +1,6 @@
+
 import { useEffect, useRef, useState } from 'react';
+
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
@@ -94,7 +96,7 @@ const SearchTab = styled.button`
     height: 45px;
     width: calc(100% - 32px);
     display: flex;
-    margin: 16px 16px 20px 16px;
+    margin: 16px 16px 30px 16px;
     margin-top: 
     padding: 8px 16px;
     justify-content: space-between;
@@ -128,42 +130,8 @@ const SearchInput = styled.textarea`
 `;
 const MapBox = styled.div`
     width: 100%;
-    height: 400px;
+    height: 500px;
     background-color: grey;
-`;
-
-const AgreeBox = styled.div`
-    margin: 28px 16px;
-    width: calc(100% - 32px);
-`;
-
-const AllAgree = styled.div`
-    padding-bottom: 16px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    border-bottom: solid 1px #ececec;
-`;
-
-const SubAgree = styled.div`
-    display: flex;
-    align-items: center;
-    margin-top: 16px;
-`;
-
-const BigTextBox = styled.div`
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 32px;
-    margin-right: auto;
-`;
-
-const TextBox = styled.div`
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    padding-right: 12px;
 `;
 
 const AddBtn = styled.div`
@@ -185,4 +153,15 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

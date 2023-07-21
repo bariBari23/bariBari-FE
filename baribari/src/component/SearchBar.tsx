@@ -19,6 +19,7 @@ export default function SearchBar({ onKeywordChange }: { onKeywordChange: (keywo
 
     return (
         <SearchTab>
+
             <SearchInput
                 placeholder="반찬이름을 검색해보세요"
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setKeyword(e.target.value)}
@@ -30,28 +31,28 @@ export default function SearchBar({ onKeywordChange }: { onKeywordChange: (keywo
 }
 
 const SearchTab = styled.div`
-    width: 100%;
-    height: 32px;
+    width: calc(100vw - 88px);
+    height: 28px;
     display: flex;
     padding: 8px 16px;
-    justify-content: space-between;
     align-items: center;
     border-radius: 8px;
     background-color: #efefef;
-    color: #949494;
+    gap: 4px;
 `;
 const SearchInput = styled.textarea`
+    width: calc(100vw - 112px);
+    display: flex;
     color: #504e5f;
-    width: 465px;
+    align-items: center;
     font-size: 16px;
-    font-family: Pretendard-Regular;
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
     border: none;
     background-color: #efefef;
     resize: none;
-    height: 32px;
+    height: 28px;
     outline: none;
     &::placeholder {
         color: #949494;

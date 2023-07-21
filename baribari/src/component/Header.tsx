@@ -43,20 +43,33 @@ const Header = ({
     );
 };
 
-const HeaderContainer = styled.div`
-    padding: 48px 8px 8px 8px;
+const Container = styled.div`
+    height: 32px;
+    width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 4px;
+    justify-content: flex-start;
+    padding: 25px 8px 8px 8px;
+    background-color: white;
+
+    position: fixed;
+    margin: auto;
+    top: 0;
+    z-index: 10000;
+`;
+const IconBox = styled.div`
+    display: flex;
+    width: 32px;
+    padding-right: 8px;
 `;
 
-const PageTitle = styled.div`
-    color: var(--grey-subtext, #504e5f);
+const TitleBox = styled.div`
+    display: flex;
+    align-items: center;
+    color: ${(props) => props.theme.black};
     font-size: 22px;
-    font-style: normal;
     font-weight: 700;
-    line-height: 32px;
-    margin-left: 8px;
 `;
 
 export default Header;

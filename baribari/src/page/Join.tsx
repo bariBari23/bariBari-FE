@@ -4,8 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Header from '../component/Header';
 import { useNavigate } from 'react-router';
+
 import { registerUser } from '../apis/api/user';
 import { JoinData } from '../utils/interface';
+
 
 const validationSchema = yup.object({
     name: yup.string().required('성명을 입력해주세요!'),
@@ -52,8 +54,29 @@ export default function Join() {
         }
     };
 
+    const [state, dispatch] = useReducer(
+        (state: { [x: string]: boolean }, action: { type: string }) => {
+            switch (action.type) {
+                case 'all':
+                    return { all: !state.all, service: !state.all, usage: !state.all, third: !state.all };
+                case 'service':
+                case 'usage':
+                case 'third':
+                    return { ...state, [action.type]: !state[action.type] };
+                default:
+                    return state;
+            }
+        },
+        {
+            all: false,
+            service: false,
+            usage: false,
+            third: false,
+        },
+    );
+
     return (
-        <div>
+        <div style={{ padding: '110px 16px 0px 16px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="회원가입" showSearchBar={false} />
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <InputWrapper>
@@ -102,7 +125,31 @@ export default function Join() {
                     />
                     {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
                 </InputWrapper>
-                <SubmitButton type="submit">가입하기</SubmitButton>
+                <SubmitButton type="submit">다음</SubmitButton>
+                <AgreeBox>
+                    <AllAgree>
+                        <BigTextBox>전체 동의</BigTextBox>
+                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={true} />
+                    </AllAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>서비스 이용약관</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'service' })} active={state.service} isAll={false} />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 수집 및 이용동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'usage' })} active={state.usage} isAll={false} />
+                    </SubAgree>
+                    <SubAgree>
+                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                        <TextBox>개인정보 제 3자 제공동의</TextBox>
+                        <RPointerIcon style={{ marginRight: 'auto' }} />
+                        <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
+                    </SubAgree>
+                </AgreeBox>
             </Form>
         </div>
     );
@@ -113,20 +160,16 @@ const Form = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 16px;
-    margin-top: 16px;
 `;
 
 const InputWrapper = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 100%;
 `;
 
 const Input = styled.input`
     height: 28px;
-    width: 358px;
     padding: 8px 16px;
     border-radius: 8px;
     border: 0.75px solid #aaa;
@@ -168,22 +211,55 @@ const ErrorMessage = styled.span`
 
 const SubmitButton = styled.button`
     display: flex;
-    width: 392px;
-    padding: 18px 40px;
-    justify-content: center;
-    gap: 10px;
+    height: 64px;
+    width: calc(100% - 32px);
+    max-width: 564px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
-    font-size: 18px;
-    font-family: Pretendard-Regular;
-    font-style: normal;
+    font-size: 24px;
+    font-family: Pretendard;
     font-weight: 700;
-    line-height: 28px;
     border: none;
-    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
     position: fixed;
+    margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const AgreeBox = styled.div`
+    margin: 140px 16px;
+    width: calc(100% - 32px);
+`;
+
+const AllAgree = styled.div`
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: solid 1px #ececec;
+`;
+
+const SubAgree = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+`;
+
+const BigTextBox = styled.div`
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 32px;
+    margin-right: auto;
+`;
+
+const TextBox = styled.div`
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    padding-right: 12px;
 `;

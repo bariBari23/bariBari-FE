@@ -43,6 +43,7 @@ export default function Fav() {
     };
 
     return (
+
         <div>
             <Wrapper>
                 <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
@@ -57,20 +58,21 @@ export default function Fav() {
                 ))}
             </Wrapper>
             <Navigator />
-        </div>
+        </Wrapper>
     );
 }
 
 const Wrapper = styled.div`
     height: 90vh;
+    width: 100%;
+    padding-top: 70px;
 `;
 
 const StoreTab = styled.div`
     display: flex;
-    margin: 8px 0px 20px 0px;
+    margin: 8px 16px 20px 16px;
     gap: 16px;
     align-items: center;
-    width: 100%;
 `;
 
 const StoreImg = styled.div`

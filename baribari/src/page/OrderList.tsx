@@ -17,8 +17,44 @@ export default function OrderList() {
     };
 
     return (
-        <div>
+        <div style={{ marginTop: '85px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
+
+            <Wrapper>
+                <OrderStatus>
+                    {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
+                    <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
+                    <div style={{ marginBottom: '8px' }}>|</div>
+                    <div style={{ marginBottom: '8px' }}>픽업 완료</div>
+                </OrderStatus>
+                <Separator />
+                <FoodItem>
+                    <FoodImg />
+                    <FoodInfo>
+                        {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
+                        <p
+                            style={{
+                                margin: '0px',
+                                fontSize: '16px',
+                                fontWeight: '400',
+                                lineHeight: '28px',
+                                fontStyle: 'normal',
+                            }}
+                        >
+                            반찬가게 이름
+                        </p>
+                        <FoodOrderInfo>
+                            <p style={{ margin: '0px' }}>반찬 이름</p>
+                            <p style={{ margin: '0px' }}>1개</p>
+                            <p style={{ margin: '0px' }}>8,000원</p>
+                        </FoodOrderInfo>
+                    </FoodInfo>
+                </FoodItem>
+                <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
+            </Wrapper>
+        
+            <Navigator />
+
             {orderList.data.orderList.map((order: any) => (
                 <Wrapper key={order.orderId}>
                     <OrderStatus>
@@ -43,6 +79,7 @@ export default function OrderList() {
                     <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
                 </Wrapper>
             ))}
+
         </div>
     );
 }
@@ -50,7 +87,7 @@ export default function OrderList() {
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 10px 0px;
+    margin: 0 16px;
 `;
 
 const OrderStatus = styled.div`
@@ -85,12 +122,11 @@ const FoodOrderInfo = styled.div`
     display: flex;
     color: #212121;
     font-size: 18px;
-    font-family: Pretendard;
     font-style: normal;
     font-weight: 700;
-    line-height: 28px;
+    line-height: 21px;
     gap: 12px;
-    margin-top: 0px;
+    margin-top: 4px;
 `;
 
 const Separator = styled.div`

@@ -166,6 +166,7 @@ export default function Order() {
                         </div>
                     </div>
                 </InfoBox>
+                <BackSquare />
             </InsideBox>
         </Container>
     );
@@ -180,7 +181,7 @@ const InsideBox = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 88px;
+    margin-top: 91px;
     justify-content: flex-start;
     background-color: #f9f9f9;
 `;
@@ -188,7 +189,7 @@ const InfoBox = styled.div`
     display: flex;
     height: 92px;
     background-color: white;
-    padding: 26px 16px 20px 16px;
+    padding: 0 16px 20px 16px;
     margin-bottom: 14px;
     flex-direction: column;
 `;
@@ -231,7 +232,7 @@ const AddBtn = styled.div`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
-    max-width: 464px;
+    max-width: 564px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
@@ -246,4 +247,15 @@ const AddBtn = styled.div`
     margin: 0 16px;
     bottom: 16px;
     z-index: 10000;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 568px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

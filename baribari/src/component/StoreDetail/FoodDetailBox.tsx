@@ -28,15 +28,29 @@ export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean;
                 <StoreBox>
                     <StoreImageBox src={dosirakData?.data.mainImageUrl} />
                     <StoreNameBox>
+
                         <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
                             {dosirakData?.data.storeName}
                         </div>
-                        <div style={{ fontSize: '12px', fontWeight: '400' }}>별점 4.4</div>
+
+                        <div
+                            style={{
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                height: '21px',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                        >
+                            4.4
+                            <SmallStar style={{ display: 'flex', width: '89.4px', marginLeft: '12px' }} />
+                        </div>
                     </StoreNameBox>
-                    <Heart />
+                    <Heart style={{ padding: '3px', marginRight: '0' }} />
                 </StoreBox>
             </MainBox>
             <SubBox>
+
                 {dosirakData?.data.banchanList?.map((banchan: any) => (
                     <RawFoodBox key={banchan.banchanName}>
                         <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>
@@ -62,7 +76,7 @@ const MainBox = styled.div`
     padding: 20px 0 20px 0;
     background-color: white;
     width: 100%;
-    height: 138px;
+    height: 120px;
 `;
 const TitleBox = styled.div`
     display: flex;
@@ -75,17 +89,18 @@ const TitleBox = styled.div`
 `;
 const StoreBox = styled.div`
     display: flex;
-    height: 70px;
+    height: 52px;
     margin: 24px 12px 0 12px;
     padding: 8px 12px 8px 8px;
     background-color: #f9f9f9;
     border-radius: 8px;
+    align-items: center;
 `;
 
 const StoreImageBox = styled.img`
     width: 52px;
     height: 52px;
-    margin: 8px 16px 8px 12px;
+    margin-right: 16px;
     background-color: grey;
     border-radius: 8px;
 `;
@@ -93,28 +108,37 @@ const StoreImageBox = styled.img`
 const StoreNameBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 8px auto auto 0;
+    gap: 4px;
+    margin-right: auto;
 `;
 
-const IconHeart = styled.div`
-    display: flex;
-    align-items: center;
-    margin-right: 12px;
-    font-size: 24px;
+const FoodTag = styled.div`
+    margin-right: auto;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 130%;
+    padding: 7.354px 14.709px;
+    border-radius: 14.709px;
+    background-color: #f9f9f9;
 `;
 const SubBox = styled.div`
     display: flex;
-    min-height: 320px;
     background-color: white;
     margin-top: 14px;
-    padding-top: 20px;
+    padding: 20px 0;
+`;
+const InfoBox = styled.div`
+    width: 100%;
+    font-size: 16px;
+    width: calc(100% - 32px);
+    margin: auto;
 `;
 
 const RawFoodBox = styled.div`
     display: flex;
-    width: 100%;
-    height: 52px;
-    margin: 0 16px 0 16px;
+
+    height: 33.7px;
+    padding: 12px 16px;
     align-items: center;
     border-bottom: solid 1px #efefef;
     color: #504e5f;

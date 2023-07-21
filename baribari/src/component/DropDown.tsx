@@ -35,8 +35,8 @@ export default function DropDown({ onSelectSortOption }: { onSelectSortOption: (
     return (
         <DropDownContainer>
             <DropDownButton type="button" onClick={onClickDropDownButton}>
-                {selectedValue}
-                {viewOpen ? <DPointerIcon /> : <UPointerIcon />}
+                <div style={{ width: '96px', textAlign: 'left' }}>{selectedValue}</div>
+                <div style={{ marginRight: '0', padding: '2px' }}>{viewOpen ? <DPointerIcon /> : <UPointerIcon />}</div>
             </DropDownButton>
             {viewOpen && (
                 <DropDownList>
@@ -54,26 +54,24 @@ export default function DropDown({ onSelectSortOption }: { onSelectSortOption: (
 const DropDownContainer = styled.div`
     position: relative;
     margin: 20px 0px 16px 0px;
-    padding-right: 16px;
 `;
 
 const DropDownButton = styled.button`
     width: 112px;
     height: 36px;
+    padding: 8px 8px 8px 12px;
     display: flex;
-    padding: 0 0 0 0;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    border: 1px solid #767676;
+    border: none;
     background: #f9f9f9;
     text-align: center;
     font-size: 14px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 700;
     color: #767676;
-    line-height: normal;
-    font-family: Pretendard-Regular;
+    line-height: 16px;
     gap: 8px;
 `;
 
@@ -87,16 +85,19 @@ const DropDownList = styled.div`
 
     border-radius: 8px;
     background: #f9f9f9;
-    font-weight: 600;
     z-index: 1000;
     box-shadow: 0px 2px 4px 0px rgba(33, 33, 33, 0.15);
 `;
 
 const DropDownListItem = styled.div`
     text-align: center;
-    padding: 8px 16px;
+    padding: 8px 12px;
     cursor: pointer;
     color: #aaaaaa;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
     &:hover {
         color: #767676;
     }

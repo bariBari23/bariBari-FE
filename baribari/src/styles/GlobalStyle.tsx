@@ -1,18 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
-
 export const GlobalStyle = createGlobalStyle`
 
   @font-face {
-      font-family: 'Pretendard-Regular';
-      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
+      font-family: 'Pretendard Variable';
+      src: url('./PretendardVariable.ttf') format('truetype');
   }  
 
   
   body {
-    font-family: 'Pretendard-Regular';
-    line-height: 1.5;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   }
   
   
