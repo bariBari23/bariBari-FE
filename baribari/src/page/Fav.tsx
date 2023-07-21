@@ -8,7 +8,7 @@ import { StoreLikedItem } from '../utils/interface';
 
 export default function Fav() {
     const { status, data, refetch } = useQuery(['likedStoreInfo'], getLikedStoreInfo);
-
+    console.log(data);
     const { mutate: likeStore } = useMutation(clickStoreLike, {
         onSuccess: () => {
             refetch(); // API 호출 성공 시 데이터를 리프레시합니다.
@@ -71,6 +71,7 @@ const StoreTab = styled.div`
     display: flex;
     margin: 8px 16px 20px 16px;
     gap: 16px;
+    justify-content: space-between;
     align-items: center;
 `;
 

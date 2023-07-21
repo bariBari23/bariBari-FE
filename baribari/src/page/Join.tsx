@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
 import { useReducer } from 'react';
+import { registerUser } from '../apis/api/user';
 
 interface JoinData {
     name: string;
@@ -38,11 +39,23 @@ export default function Join() {
 
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<JoinData> = (data) => {
+    const onSubmit: SubmitHandler<JoinData> = async (data) => {
         if (isValid) {
-            //굳이 isValid 체크를 안해줘도 될 것 같긴 한데..?
-            console.log(data);
-            navigate('/signUp3');
+            try {
+                // 회원가입 API 호출
+                const response = await registerUser(data.name, data.email, data.password, data.phone);
+                // 성공 처리
+                console.log('response:', response);
+
+                // 회원가입 성공 시 처리
+                alert('회원가입이 완료되었습니다!');
+                // navigate('/'); // 회원가입 완료 후 이동할 페이지 설정
+            } catch (error) {
+                // 실패 처리
+                // 회원가입 실패 시 처리
+                alert('회원가입에 실패하였습니다!');
+                console.log('Error:', error);
+            }
         } else {
             alert('유효한 정보를 입력했는지 다시 확인해주세요!');
         }

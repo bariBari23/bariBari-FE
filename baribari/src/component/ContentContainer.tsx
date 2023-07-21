@@ -53,7 +53,7 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
                 </FoodCard>
             ))}
             <RotateFloatingRefreshBtn
-                style={{ position: 'absolute', bottom: '16px', right: '16px' }}
+                style={{ position: 'absolute', bottom: '0px', right: '0px' }}
                 onClick={() => refetch()}
             />
         </Container>
