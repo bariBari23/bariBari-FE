@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { createUserLocation } from '../../apis/api/location';
 import { getUserInfo } from '../../apis/api/user';
+import axios from 'axios';
 
 declare global {
     interface Window {
@@ -21,9 +22,12 @@ export default function MapContainer(props: {
     const { size, userAddress, isSearched, userPosition } = props;
     const [kakaoMap, setKakaoMap] = useState<any>(null);
     const [marker, setMarkers] = useState<any>(null);
+    // 도로명 주소 저장해주는 userStringAddress
+    const [userStringAddress, setUserStringAddress] = useState<string>('');
 
     // 유저의 위치 정보를 createUserLocation api 활용해 보냄
     const callCreateUserLocation = async () => {
+        console.log('이야양');
         if (marker) {
             try {
                 const userInfo = await getUserInfo();
@@ -45,7 +49,7 @@ export default function MapContainer(props: {
     const createCustomMarkerImage = () => {
         if (kakaoMap) {
             // assets/markerHome.svg의 상대 경로를 지정
-            const imageUrl = 'https://ibb.co/K6VZjBY';
+            const imageUrl = 'https://i.ibb.co/7vrcJBH/marker-Home.png';
             // 커스텀 마커 이미지 생성
             const icon = new kakao.maps.MarkerImage(imageUrl, new kakao.maps.Size(31, 35), {
                 offset: new kakao.maps.Point(16, 34),
@@ -75,6 +79,7 @@ export default function MapContainer(props: {
             });
         };
     }, []);
+
     // 마이페이지에서 받은 좌표를 도로명 주소로 바꾸는 부분
     // useEffect(() => {
     //     if (!kakaoMap) {
@@ -83,18 +88,72 @@ export default function MapContainer(props: {
     //     } else {
     //         if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
     //             var geocoder = new kakao.maps.services.Geocoder();
+    //             console.log('geocoder', geocoder);
     //             var coord = new kakao.maps.LatLng(userPosition.latitude, userPosition.longitude);
+    //             console.log('coord.latitude', userPosition.latitude);
+    //             //b62851b76cdbc3677a83b681f53c79fb
+    //             axios
+    //                 .get(`https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${x}&y=${y}`, {
+    //                     headers: { Authorization: `KakaoAK b62851b76cdbc3677a83b681f53c79fb` },
+    //                 })
+    //                 .then((result: any) => {
+    //                     //법정동 기준으로 동단위의 값을 가져온다
+    //                     let location = result.documents[0].region_3depth_name;
+    //                     console.log('location', location);
+    //                 });
     //             var callback = function (result: any, status: any) {
-    //                 console.log('result', result);
+    //                 console.log('status', status);
+    //                 console.log(kakao.maps.services.Status);
     //                 if (status === kakao.maps.services.Status.OK) {
-    //                     // userAddress를 변경
+    //                     console.log('reuslt', result);
+    //                     const address = result[0].address_name; // 주소 정보에서 도로명 주소를 가져옴
+    //                     setUserStringAddress(address); // 주소 업데이트
     //                 }
     //             };
 
-    //             geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    //             geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), callback);
     //         }
     //     }
     // }, [kakaoMap]);
+
+    // useEffect(() => {
+    //     if (!kakaoMap) {
+    //         console.log('야');
+    //         return;
+    //     } else {
+    //         if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+    //             var geocoder = new kakao.maps.services.Geocoder();
+    //             console.log('geocoder', geocoder);
+    //             var coord = new kakao.maps.LatLng(userPosition.latitude, userPosition.longitude);
+    //             console.log('이이', coord.getLng());
+    //             console.log('이이', coord.getLat());
+
+    //             axios
+    //                 .get(
+    //                     `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${coord.getLng()}&y=${coord.getLat()}`,
+    //                     {
+    //                         headers: { Authorization: `KakaoAK b62851b76cdbc3677a83b681f53c79fb` },
+    //                     },
+    //                 )
+    //                 .then((response: any) => {
+    //                     console.log('dldidid');
+    //                     const documents = response.data.documents;
+    //                     console.log('documents', documents);
+    //                     if (documents && documents.length > 0) {
+    //                         const location = documents[0].address_name; // 주소 정보를 documents 배열에서 가져옴
+    //                         console.log('location', location);
+    //                         setUserStringAddress(location); // 주소 업데이트
+    //                     } else {
+    //                         console.log('No address information found.');
+    //                     }
+    //                 })
+    //                 .catch((error) => {
+    //                     console.log('Error fetching address:', error);
+    //                 });
+    //         }
+    //     }
+    // }, [kakaoMap]);
+
     useEffect(() => {
         if (!kakaoMap || !userAddress) {
             return;
@@ -122,7 +181,7 @@ export default function MapContainer(props: {
                 const newMarker = new kakao.maps.Marker({
                     map: kakaoMap,
                     position: new kakao.maps.LatLng(latitude, longitude),
-                    // image: customMarkerImage,
+                    image: customMarkerImage,
                 });
                 setMarkers(newMarker);
                 console.log(result);

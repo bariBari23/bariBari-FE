@@ -19,9 +19,9 @@ export default function MyPage() {
     const callUserInfo = async () => {
         try {
             const userInfo = await getUserInfo();
-            // console.log(userInfo);
             setNickname(userInfo.data.nickname);
             setUserPosition(userInfo.data.position);
+            console.log('userpos', userInfo.data.position);
         } catch (error) {
             console.log('Error', error);
         }

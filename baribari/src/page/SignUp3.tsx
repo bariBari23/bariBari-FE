@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 
 import styled from 'styled-components';
@@ -64,14 +63,17 @@ export default function SignUp3() {
                         value={userAddress}
                         onChange={handleAddressChange}
                     />
-                    <SearchIcon onClick={() => setIsSearched(!isSearched)} />
+                    <SearchIcon
+                        onClick={() => setIsSearched(!isSearched)}
+                        style={{ border: 'none', backgroundColor: '#ff000000' }}
+                    />
                 </SearchTab>
                 <MapContainer
                     size={mapSize}
                     userAddress={userAddress}
                     userPosition={userPosition}
                     isSearched={isSearched}
-                />{' '}
+                />
                 <AddBtn onClick={onSubmit}>다음</AddBtn>
             </InsideBox>
         </Container>
