@@ -3,7 +3,10 @@ import { axiosInstance } from '..';
 // 도시락 id로 검색 api
 export async function searchById(id: number) {
     try {
+        const endpoint = `/v1/dosirak/${id}`;
+        console.log('Sending request to:', endpoint);
         const response = await axiosInstance.get(`/v1/dosirak/${id}`);
+        console.log('Response:', response.data);
         return response.data;
     } catch (error) {
         console.log('Error:', error);

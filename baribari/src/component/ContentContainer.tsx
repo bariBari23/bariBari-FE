@@ -10,8 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function ContentContainer({ keyword, filterLiked, sort }: ContentContainerProps) {
     const navigate = useNavigate();
-    const handleCardClick = () => {
-        navigate('/detail'); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
+    const handleCardClick = (id: number) => {
+        navigate(`/detail/${id}`); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
     };
 
     // React Query를 사용하여 API 데이터 가져오기
@@ -29,7 +29,7 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
     return (
         <Container>
             {dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
-                <FoodCard key={dosirak.id} onClick={handleCardClick}>
+                <FoodCard key={dosirak.id} onClick={() => handleCardClick(dosirak.id)}>
                     <ImgWrapper>
                         {!dosirak.mainImageUrl || dosirak.mainImageUrl === ' ' || dosirak.mainImageUrl === '  ' ? (
                             <FoodImg src={defaultImg} alt="Default Food" />

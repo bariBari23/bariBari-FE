@@ -40,7 +40,7 @@ export default function App() {
                         <Route path="/order" element={<Order />} />
                         <Route path="/orderlist" element={<OrderList />} />
                         <Route path="/search" element={<Search />} />
-                        <Route path="/detail" element={<StoreDetail />} />
+                        <Route path="/detail/:id" element={<StoreDetail />} />
                         <Route path="/uploadReview" element={<UploadReview />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/fav" element={<Fav />} />
