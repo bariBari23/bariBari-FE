@@ -1,19 +1,35 @@
 import styled from 'styled-components';
 import { ReactComponent as Heart } from '../../assets/heart.svg';
+import { useQuery } from 'react-query';
+import { searchById } from '../../apis/api/search';
 
-export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
+export default function FoodDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
+    const { data: dosirakData, isLoading, error } = useQuery(['dosirak', id], () => searchById(id));
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error occurred</div>;
+    }
+
     return (
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
-                    <div style={{ marginRight: 'auto' }}>명절 반찬 박스 세트</div>
-                    <div style={{ marginRight: '0' }}>18,000원</div>
+                    <div style={{ marginRight: 'auto', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
+                        {dosirakData?.data.name}
+                    </div>
+                    <div style={{ marginRight: '0', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
+                        {dosirakData?.data.price}
+                    </div>
                 </TitleBox>
                 <StoreBox>
-                    <StoreImageBox />
+                    <StoreImageBox src={dosirakData?.data.mainImageUrl} />
                     <StoreNameBox>
                         <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
-                            반찬가게 이름 철산래미안점
+                            {dosirakData?.data.storeName}
                         </div>
                         <div style={{ fontSize: '12px', fontWeight: '400' }}>별점 4.4</div>
                     </StoreNameBox>
@@ -21,10 +37,14 @@ export default function FoodDetailBox({ isSelected }: { isSelected: boolean }) {
                 </StoreBox>
             </MainBox>
             <SubBox>
-                <RawFoodBox>
-                    <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>시금치 나물</div>
-                    <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>60g</div>
-                </RawFoodBox>
+                {dosirakData?.data.banchanList?.map((banchan: any) => (
+                    <RawFoodBox key={banchan.banchanName}>
+                        <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>
+                            {banchan.banchanName}
+                        </div>
+                        <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>{banchan.gram}g</div>
+                    </RawFoodBox>
+                ))}
             </SubBox>
         </Container>
     );
@@ -62,7 +82,7 @@ const StoreBox = styled.div`
     border-radius: 8px;
 `;
 
-const StoreImageBox = styled.div`
+const StoreImageBox = styled.img`
     width: 52px;
     height: 52px;
     margin: 8px 16px 8px 12px;

@@ -24,7 +24,7 @@ export default function Search() {
             <Header showPageName={false} pageTitle="" showSearchBar={true} />
             <Wrapper>
                 <Container>
-                    <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
+                    <HeartList /*filterLiked={filterLiked}*/ /*onFilterLikedChange={setFilterLiked}*/ />
                     <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
                 <ContentContainer keyword={debouncedSearchText} filterLiked={filterLiked} sort={selectedSortOption} />

@@ -1,12 +1,24 @@
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
+import { searchById } from '../../apis/api/search';
+import { getStoreInfo } from '../../apis/api/store';
 
-export default function StoreDetailBox({ isSelected }: { isSelected: boolean }) {
+export default function StoreDetailBox({ isSelected, id }: { isSelected: boolean; id: number }) {
+    const { data: storeData, isLoading, error } = useQuery(['store', id], () => getStoreInfo(id));
+    const { data: dosirakData } = useQuery(['dosirak', id], () => searchById(id));
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error occurred</div>;
+    }
     return (
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
                     <div style={{ height: '21px', marginRight: 'auto', marginBottom: '11px' }}>
-                        반찬가게 이름 철산래미안점
+                        {storeData.data.storeName}
                     </div>
                     <div style={{ height: '21px' }}>4.4</div>
                 </TitleBox>
@@ -18,35 +30,35 @@ export default function StoreDetailBox({ isSelected }: { isSelected: boolean }) 
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {storeData.data.storeAddress}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {storeData.data.businessNumber}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {storeData.data.dayList}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {storeData.data.offDay}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>도보 거리</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            걸어서 5분 {/*여기 수정*/}
                         </div>{' '}
                     </div>
                 </InfoBox>
@@ -58,28 +70,24 @@ export default function StoreDetailBox({ isSelected }: { isSelected: boolean }) 
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {dosirakData.data.fromWhere}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>중량/용량</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>500g {/*수정*/}</div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>끼니</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
-                        </div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>2끼 {/*수정*/}</div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
                         <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
                         <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
-                            서울특별시 은평구 어쩌구 무슨로
+                            {storeData.data.description}
                         </div>{' '}
                     </div>
                 </InfoBox>

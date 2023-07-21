@@ -9,9 +9,9 @@ interface CartItem {
 }
 
 // 카트에 있는 목록을 불러올 수 있는 api
-export async function getCartItems(): Promise<CartItem[]> {
+export async function getCartItems(cartItems: object) {
     try {
-        const response = await axiosInstance.get('/v1/cart');
+        const response = await axiosInstance.get('/v1/cart', cartItems);
         return response.data;
     } catch (error) {
         console.log('Error:', error);

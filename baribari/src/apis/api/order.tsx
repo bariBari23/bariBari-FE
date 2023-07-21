@@ -1,9 +1,12 @@
 import { axiosInstance } from '..';
+import { getAccessToken } from '../cookie';
 
 // 주문 api
-export async function createOrder() {
+export async function createOrder(orderData: object) {
     try {
-        const response = await axiosInstance.post(`/v1/orders`, {});
+        const token = getAccessToken();
+        console.log(token);
+        const response = await axiosInstance.post(`/v1/order`, orderData);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
@@ -32,9 +35,10 @@ export async function cancelOrder(orderId: number) {
 }
 
 // 주문 조회 api
-export async function getOrder() {
+export async function getOrder(orderList: object) {
     try {
-        const response = await axiosInstance.get(`/v1/orderItem`);
+        const response = await axiosInstance.get(`/v1/order`, orderList);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log('Error:', error);

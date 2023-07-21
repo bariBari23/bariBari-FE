@@ -49,7 +49,7 @@ export default function Home() {
             </WrapperTab>
             <WrapperList>
                 <Container>
-                    <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
+                    <HeartList /*filterLiked={filterLiked} onFilterLikedChange={setFilterLiked}*/ />
                     <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
                 <ContentContainer keyword={null} filterLiked={filterLiked} sort={selectedSortOption} />

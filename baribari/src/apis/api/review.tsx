@@ -1,9 +1,12 @@
 import { axiosInstance } from '..';
+import { getAccessToken } from '../cookie';
 
 // 리뷰 작성 api
-export async function postReview() {
+export async function postReview(data: object) {
     try {
-        const response = await axiosInstance.post(`/v1/review`, {});
+        const token = getAccessToken();
+        console.log(token);
+        const response = await axiosInstance.post(`/v1/review`, data);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
