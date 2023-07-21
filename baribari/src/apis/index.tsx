@@ -15,7 +15,6 @@ axiosInstance.interceptors.request.use(
         // accessToken이 존재하고 만료되지 않은 경우 헤더에 추가합니다.
         if (accessToken && !isTokenExpired()) {
             config.headers['Authorization'] = `Bearer ${accessToken}`;
-            console.log(accessToken);
         }
 
         return config;
