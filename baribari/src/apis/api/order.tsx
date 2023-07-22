@@ -55,8 +55,8 @@ export async function cancelOrder(orderId: number) {
 export async function getOrder(orderList: object) {
     try {
         const response = await axiosInstance.get(`/v1/order`, orderList);
-        console.log(response.data);
-        return response.data;
+        console.log('api' + response.data);
+        return response.data.data.orderList;
     } catch (error) {
         console.log('Error:', error);
         throw error;
