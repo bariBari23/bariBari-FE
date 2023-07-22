@@ -8,7 +8,6 @@ import { StoreLikedItem } from '../utils/interface';
 
 export default function Fav() {
     const { status, data, refetch } = useQuery(['likedStoreInfo'], getLikedStoreInfo);
-    console.log(data);
     const { mutate: likeStore } = useMutation(clickStoreLike, {
         onSuccess: () => {
             refetch(); // API 호출 성공 시 데이터를 리프레시합니다.

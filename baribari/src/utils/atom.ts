@@ -4,3 +4,11 @@ export const keywordsState = atom({
     key: 'keywordsState',
     default: '',
 });
+export const userAddressState = atom({
+    key: 'userAddressState',
+    default: [],
+});
+export const storeAddressState = atom({
+    key: 'storeAddressState',
+    default: [],
+});
