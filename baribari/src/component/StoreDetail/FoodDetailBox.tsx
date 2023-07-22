@@ -5,6 +5,7 @@ import { searchById } from '../../apis/api/search';
 import { ReactComponent as SmallStar } from '../../assets/star.svg';
 
 export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected: boolean; dosirakData: any }) {
+    console.log('dosirak여기요' + dosirakData.data.mainImageUrl);
     return (
         <Container isSelected={isSelected}>
             <MainBox>
