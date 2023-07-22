@@ -22,7 +22,7 @@ export default function Home() {
     return (
         <div>
             <HeaderHome>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/home" style={{ textDecoration: 'none' }}>
                     <Logo />
                 </Link>
                 <RightSideHeader>

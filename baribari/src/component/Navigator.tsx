@@ -20,11 +20,13 @@ export default function Navigator() {
     useEffect(() => {
         // currentPage가 변경될 때마다 페이지 이동 처리
         if (currentPage === 'home') {
-            navigate('/');
-        } else {
-            navigate(`/${currentPage}`);
+            navigate('/home');
+        } else if (currentPage === 'myPage') {
+            navigate(`/myPage`);
+        } else if (currentPage === 'orderlist') {
+            navigate(`/orderlist`);
         }
-    }, [currentPage, navigate]);
+    }, [currentPage]);
 
     return (
         <NavContainer>

@@ -36,8 +36,9 @@ export default function LogIn() {
             // 로그인 API 호출
             const response = await loginUser(data.email, data.password);
             // 로그인 성공 시 처리
+            navigate('/home');
             alert('로그인 성공!');
-            navigate('/');
+            //navigate('/home');
         } catch (error) {
             // 로그인실패 처리
             alert('로그인 실패!');

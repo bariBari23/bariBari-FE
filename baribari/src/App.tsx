@@ -34,9 +34,9 @@ export default function App() {
                 <GlobalStyle />
                 <InsideContainer>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Login />} />
                         <Route path="/join" element={<Join />} />
-                        <Route path="/login" element={<Login />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/order" element={<Order />} />
                         <Route path="/orderlist" element={<OrderList />} />
                         <Route path="/search" element={<Search />} />

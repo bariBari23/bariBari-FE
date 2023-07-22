@@ -29,7 +29,6 @@ export default function Search() {
                 </Container>
                 <ContentContainer keyword={debouncedSearchText} filterLiked={filterLiked} sort={selectedSortOption} />
             </Wrapper>
-            <Navigator />
         </div>
     );
 }
