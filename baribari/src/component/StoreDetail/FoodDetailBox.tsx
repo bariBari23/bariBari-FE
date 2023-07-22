@@ -13,7 +13,7 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
                         {dosirakData?.data.name}
                     </div>
                     <div style={{ marginRight: '0', fontSize: '24px', fontWeight: '700', lineHeight: '28px' }}>
-                        {dosirakData?.data.price}
+                        {dosirakData?.data.price}원
                     </div>
                 </TitleBox>
                 <StoreBox>

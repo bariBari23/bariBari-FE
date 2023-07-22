@@ -4,12 +4,14 @@ import FoodDetailBox from '../component/StoreDetail/FoodDetailBox';
 import { useState, useEffect } from 'react';
 import StoreDetailBox from '../component/StoreDetail/StoreDetailBox';
 import ReviewBox from '../component/StoreDetail/ReviewBox';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
 import { getStoreInfo } from '../apis/api/store';
+import { addCartItem } from '../apis/api/cart';
 
 export default function StoreDetail() {
+    const navigate = useNavigate();
     const [active, setActive] = useState('반찬 상세');
     const changeDetailBox = (value: string) => {
         setActive(value);
@@ -36,6 +38,14 @@ export default function StoreDetail() {
     }
     console.log('dosirakdata' + dosirakData);
 
+    const addToCart = () => {
+        addCartItem(dosirakData.data.id)
+            .then(() => {
+                console.log('Items added successfully');
+                navigate('/cart');
+            })
+            .catch((error) => console.log('Error:', error));
+    };
     return (
         <Container>
             <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={false} />
@@ -55,7 +65,7 @@ export default function StoreDetail() {
                 <FoodDetailBox isSelected={active === '반찬 상세'} dosirakData={dosirakData} />
                 <StoreDetailBox isSelected={active === '가게 정보'} storeId={storeId} />
                 <ReviewBox isSelected={active === '리뷰'} id={storeId} />
-                <AddBtn>장바구니에 넣기</AddBtn>
+                <AddBtn onClick={addToCart}>장바구니에 넣기</AddBtn>
                 <BackSquare />
             </InsideBox>
         </Container>

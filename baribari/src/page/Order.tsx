@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../apis/api/order';
 import { useLocation } from 'react-router-dom';
 import { CartItem } from '../utils/interface';
+import { deleteAllCartItem } from '../apis/api/cart';
 
 const timeSlots = [
     '8:00 ~ 9:00',
@@ -50,6 +51,7 @@ export default function Order() {
             console.log(orderData);
 
             const response = await createOrder(orderData);
+            await deleteAllCartItem();
             console.log(response);
             navigate('/orderlist');
         } catch (error) {

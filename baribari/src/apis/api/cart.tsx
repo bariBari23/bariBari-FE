@@ -40,8 +40,16 @@ export async function deleteSingleCartItem(itemId: number): Promise<void> {
 }
 
 // 카트에 품목을 추가할 수 있는 api
-export async function addCartItem(item: CartItem): Promise<void> {
+export async function addCartItem(itemId: number): Promise<void> {
     try {
+        const item = {
+            items: [
+                {
+                    dosirakId: itemId,
+                    amount: 1,
+                },
+            ],
+        };
         await axiosInstance.post('/v1/cart', item);
     } catch (error) {
         console.log('Error:', error);
