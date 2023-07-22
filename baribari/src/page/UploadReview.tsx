@@ -20,7 +20,7 @@ export default function UploadReview() {
 
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(5);
     const [reviewText, setReviewText] = useState('');
 
     // const reviewMutation = useMutation(postReview);

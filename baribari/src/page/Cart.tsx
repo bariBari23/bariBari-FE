@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { ReactComponent as XIcon } from '../assets/xIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import { getCartItems, updateCartItem } from '../apis/api/cart';
+import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
 import { useState, useEffect } from 'react';
 import { CartItem } from '../utils/interface';
 
@@ -58,6 +58,10 @@ export default function Cart() {
         });
         navigate('/order', { state: { cartItems: cartItemsState } });
     };
+    const deleteItem = (id: number) => {
+        deleteSingleCartItem(id);
+        window.location.reload();
+    };
 
     return (
         <div style={{ width: '100%', paddingTop: '70px' }}>
@@ -109,7 +113,7 @@ export default function Cart() {
                                     cursor: 'pointer',
                                 }}
                             >
-                                <XIcon />
+                                <XIcon onClick={() => deleteItem(item.id)} />
                             </button>
                         </FoodInfo>
                     </>
