@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
-import { SetStateAction, useReducer, useState } from 'react';
+import { SetStateAction, useEffect, useReducer, useState } from 'react';
 import CheckIcon from '../component/CheckIcon';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../apis/api/order';
+import { useLocation } from 'react-router-dom';
+import { CartItem } from '../utils/interface';
+import { deleteAllCartItem } from '../apis/api/cart';
 
 const timeSlots = [
     '8:00 ~ 9:00',
@@ -14,7 +17,7 @@ const timeSlots = [
     '13:00 ~ 14:00',
     '14:00 ~ 15:00',
 ];
-const paymentMethods = ['무통장 입금', '현장 결제'];
+const paymentMethods = ['CASH', 'CARD'];
 
 type State = {
     time: string;
@@ -24,23 +27,34 @@ type State = {
 type Action = { type: 'SET_TIME'; time: string } | { type: 'SET_PAY'; pay: string };
 
 export default function Order() {
+    const location = useLocation();
+    const { cartItems } = location.state || {};
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [sum, setSum] = useState(0);
+
+    useEffect(() => {
+        // cartItems 배열에서 item.total 값을 누적하여 주문 총 금액 계산
+        const total = cartItems.reduce((acc: number, item: CartItem) => acc + item.total, 0);
+        console.log(sum);
+        setSum(total); // 계산된 총 금액을 sum 변수에 설정
+    }, [cartItems]);
 
     const handleOrderClick = async () => {
         try {
-            const orderData = new FormData();
-            orderData.append('orderDemand', '잘부탁');
-            orderData.append('orderPhoneNumber', phoneNumber);
-            orderData.append('pickupTime', state.time);
-            orderData.append('payMethod', state.pay);
+            const orderData = {
+                orderDemand: '맛있게해주세요요',
+                orderPhoneNumber: phoneNumber,
+                estimatedPickUpTime: state.time,
+                payMethod: state.pay,
+            };
+            console.log(orderData);
 
             const response = await createOrder(orderData);
+            await deleteAllCartItem();
             console.log(response);
             navigate('/orderlist');
         } catch (error) {
-            console.log(phoneNumber);
-            console.log(state.time);
             console.log('Order failed: ', error);
         }
     };
@@ -63,7 +77,7 @@ export default function Order() {
     );
     return (
         <Container>
-            <AddBtn onClick={handleOrderClick}>19,000원 결제하기</AddBtn>
+            <AddBtn onClick={handleOrderClick}>{sum}원 결제하기</AddBtn>
             <Header showPageName={true} pageTitle={'주문하기'} showSearchBar={false} />
             <InsideBox>
                 <InfoBox>
@@ -136,12 +150,15 @@ export default function Order() {
                         ))}
                     </div>
                 </InfoBox>
+
                 <InfoBox style={{ padding: '24px 16px', paddingBottom: '120px', gap: '24px', marginBottom: '0' }}>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <SmallText style={{ marginRight: '20px' }}>반찬 박스 이름</SmallText>
-                        <SmallText style={{ marginRight: 'auto' }}>1개</SmallText>
-                        <SmallText style={{ marginRight: '0' }}>19,000원</SmallText>
-                    </div>
+                    {cartItems.map((item: CartItem) => (
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            <SmallText style={{ marginRight: '20px' }}>{item.name}</SmallText>
+                            <SmallText style={{ marginRight: 'auto' }}>{item.quantity}개</SmallText>
+                            <SmallText style={{ marginRight: '0' }}>{item.total}원</SmallText>
+                        </div>
+                    ))}
                     <div
                         style={{
                             paddingTop: '16px',
@@ -162,10 +179,11 @@ export default function Order() {
                                 color: '#FF7455',
                             }}
                         >
-                            19,000원
+                            {sum}원
                         </div>
                     </div>
                 </InfoBox>
+
                 <BackSquare />
             </InsideBox>
         </Container>

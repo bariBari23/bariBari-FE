@@ -3,6 +3,17 @@ export interface LoginData {
     password: string;
 }
 
+export interface CartItem {
+    id: number;
+    name: string;
+    price: number;
+    total: number;
+    quantity: number;
+    dosirakMainImageUrl: string;
+    storeName: string;
+    storeMainImageUrl: string;
+}
+
 export interface JoinData {
     name: string;
     password: string;

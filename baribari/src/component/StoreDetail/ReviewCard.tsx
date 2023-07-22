@@ -4,10 +4,9 @@ import { ReactComponent as Star } from '../../assets/star.svg';
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
 
-export default function ReviewCard({ id }: { id: number }) {
+export default function ReviewCard({ id }: { id: number | null }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
-
     useEffect(() => {
         if (textRef.current) {
             textRef.current.style.height = 'inherit';
@@ -59,9 +58,9 @@ export default function ReviewCard({ id }: { id: number }) {
                             <Star style={{ display: 'flex', width: '102px' }} />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <EvaluationTile>맛있어요</EvaluationTile>
-                            <EvaluationTile>양은 충분했어요</EvaluationTile>
-                            <EvaluationTile style={{ marginRight: '0px' }}>포장이 깔끔해요</EvaluationTile>
+                            <EvaluationTile>{review.tags[0]}</EvaluationTile>
+                            <EvaluationTile>{review.tags[1]}</EvaluationTile>
+                            <EvaluationTile style={{ marginRight: '0px' }}>{review.tags[2]}</EvaluationTile>
                         </div>
                         <ImageBox src={review.mainImageUrl} />
                         <ReviewText ref={textRef}>{review.content}</ReviewText>
@@ -74,7 +73,7 @@ export default function ReviewCard({ id }: { id: number }) {
 
 const Container = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     gap: 12px;
     padding: 0px 16px;

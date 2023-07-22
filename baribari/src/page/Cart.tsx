@@ -3,32 +3,78 @@ import { useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { ReactComponent as XIcon } from '../assets/xIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import { getCartItems } from '../apis/api/cart';
+import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
+import { useState, useEffect } from 'react';
+import { CartItem } from '../utils/interface';
 
 export default function Cart() {
     const navigate = useNavigate();
     const { data: cartItems, isLoading, error } = useQuery('cartItems', getCartItems);
+    const [cartItemsState, setCartItemsState] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        if (cartItems?.data?.items) {
+            const updatedItems = cartItems.data.items.map((item: CartItem) => ({ ...item, quantity: 1 }));
+            console.log(updatedItems);
+            setCartItemsState(updatedItems);
+        }
+    }, [cartItems]);
+
     if (error) {
         return <div>An error has occurred</div>;
     }
     if (isLoading) {
-        return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
+        return <div>Loading...</div>;
     }
-    const handleGoOrder = () => {
-        navigate('/order');
+
+    const increaseQuantity = (id: number) => {
+        setCartItemsState((prevState) =>
+            prevState.map((item) => {
+                if (item.id === id && item.quantity < 4) {
+                    return { ...item, quantity: item.quantity + 1 };
+                }
+                return item;
+            }),
+        );
     };
+
+    const decreaseQuantity = (id: number) => {
+        setCartItemsState((prevState) =>
+            prevState.map((item) => {
+                if (item.id === id && item.quantity > 1) {
+                    return { ...item, quantity: item.quantity - 1 };
+                }
+                return item;
+            }),
+        );
+    };
+    const handleGoOrder = () => {
+        cartItemsState.forEach(async (item) => {
+            try {
+                await updateCartItem(item.id, item.quantity, item);
+            } catch (error) {
+                console.error('Error updating cart item: ', error);
+            }
+        });
+        navigate('/order', { state: { cartItems: cartItemsState } });
+    };
+    const deleteItem = (id: number) => {
+        deleteSingleCartItem(id);
+        window.location.reload();
+    };
+
     return (
         <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
             <CartList>
-                {cartItems?.data?.items.map((item: any) => (
+                {cartItemsState.map((item: CartItem) => (
                     <>
                         <StoreInfo>
                             <StoreImg src={item.storeMainImageUrl} />
                             <span> {item.storeName}</span>
                         </StoreInfo>
                         <FoodInfo>
-                            <FoodImg />
+                            <FoodImg src={item.dosirakMainImageUrl} />
                             <FoodDetail>
                                 <span
                                     style={{
@@ -50,12 +96,12 @@ export default function Cart() {
                                         lineHeight: '32px',
                                     }}
                                 >
-                                    {item.total}원
+                                    {item.quantity * item.price}원
                                 </span>
                                 <FoodCount>
-                                    <CountButton>+</CountButton>
-                                    <span>2</span>
-                                    <CountButton>-</CountButton>
+                                    <CountButton onClick={() => increaseQuantity(item.id)}>+</CountButton>
+                                    <span>{item.quantity}</span>
+                                    <CountButton onClick={() => decreaseQuantity(item.id)}>-</CountButton>
                                 </FoodCount>
                             </FoodDetail>
                             <button
@@ -67,7 +113,7 @@ export default function Cart() {
                                     cursor: 'pointer',
                                 }}
                             >
-                                <XIcon />
+                                <XIcon onClick={() => deleteItem(item.id)} />
                             </button>
                         </FoodInfo>
                     </>
@@ -116,7 +162,7 @@ const FoodDetail = styled.div`
     flex: 1;
 `;
 
-const FoodImg = styled.div`
+const FoodImg = styled.img`
     width: 100px;
     height: 100px;
     background-color: lightgrey;
@@ -136,7 +182,7 @@ const FoodCount = styled.div`
     background: #fff;
     color: #767676;
 `;
-const CountButton = styled.div`
+const CountButton = styled.button`
     border: none;
     cursor: pointer;
 `;

@@ -2,11 +2,13 @@ import { axiosInstance } from '..';
 import { getAccessToken } from '../cookie';
 
 // 리뷰 작성 api
-export async function postReview(data: object) {
+export async function postReview(reviewData: object) {
     try {
+        console.log(reviewData);
         const token = getAccessToken();
         console.log(token);
-        const response = await axiosInstance.post(`/v1/review`, data);
+        const response = await axiosInstance.post(`/v1/review`, reviewData);
+
         return response.data;
     } catch (error) {
         console.log('Error:', error);
@@ -15,7 +17,7 @@ export async function postReview(data: object) {
 }
 
 // 상점 리뷰 전체 조회 api
-export async function getReview(storeId: number) {
+export async function getReview(storeId: number | null) {
     try {
         const response = await axiosInstance.get(`/v1/review/store/${storeId}`);
         return response.data;

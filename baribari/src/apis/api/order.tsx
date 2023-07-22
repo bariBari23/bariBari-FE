@@ -1,12 +1,29 @@
 import { axiosInstance } from '..';
 import { getAccessToken } from '../cookie';
+interface OrderData {
+    orderDemand: string;
+    orderPhoneNumber: string;
+    estimatedPickUpTime: string;
+    payMethod: string;
+}
 
 // 주문 api
-export async function createOrder(orderData: object) {
+export async function createOrder(orderData: OrderData) {
     try {
-        const token = getAccessToken();
-        console.log(token);
-        const response = await axiosInstance.post(`/v1/order`, orderData);
+        console.log(orderData);
+        const modifiedOrderData = {
+            orderDemand: '맛있게해주세요요',
+            orderPhoneNumber: '5555',
+            estimatedPickUpTime: '8:00 ~ 9:00',
+            payMethod: 'CARD',
+        };
+        console.log(modifiedOrderData);
+
+        const response = await axiosInstance.post(`/v1/order`, orderData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         return response.data;
     } catch (error) {
         console.log('Error:', error);
@@ -38,7 +55,19 @@ export async function cancelOrder(orderId: number) {
 export async function getOrder(orderList: object) {
     try {
         const response = await axiosInstance.get(`/v1/order`, orderList);
-        console.log(response.data);
+        console.log('api' + response.data);
+        return response.data.data.orderList;
+    } catch (error) {
+        console.log('Error:', error);
+        throw error;
+    }
+}
+
+// 주문 조회 api
+export async function getOrderItems(orderItems: object) {
+    try {
+        const response = await axiosInstance.get(`/v1/orderItem`, orderItems);
+        console.log('api' + response.data);
         return response.data;
     } catch (error) {
         console.log('Error:', error);
