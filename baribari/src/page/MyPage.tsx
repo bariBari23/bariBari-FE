@@ -7,13 +7,20 @@ import Navigator from '../component/Navigator';
 import { getUserInfo } from '../apis/api/user';
 import { useEffect, useState } from 'react';
 import MapContainer from '../component/Map/MapContainer';
+import { allStoreDistance } from '../apis/api/location';
+import { useRecoilState } from 'recoil';
+import { storeAddressState } from '../utils/atom';
 
 export default function MyPage() {
     const navigate = useNavigate();
     const [nickname, setNickname] = useState('');
     const userAddress = '';
     const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
-    const handleFavClick = () => {
+    const [storeAddress, setStoreAddress] = useRecoilState(storeAddressState);
+
+    const handleFavClick = (event: { stopPropagation: any; preventDefault: () => void }) => {
+        event.preventDefault();
+        event.stopPropagation();
         navigate('/fav');
     };
     const callUserInfo = async () => {
@@ -21,14 +28,28 @@ export default function MyPage() {
             const userInfo = await getUserInfo();
             setNickname(userInfo.data.nickname);
             setUserPosition(userInfo.data.position);
-            console.log('userpos', userInfo.data.position);
+        } catch (error) {
+            console.log('Error', error);
+        }
+    };
+    const callStoreLocation = async () => {
+        try {
+            const storeLocationData = await allStoreDistance();
+            const storeAddressData = storeLocationData.data.distanceList.map(
+                (item: { storeAddress: any }) => item.storeAddress,
+            );
+            setStoreAddress(storeAddressData); // Recoil 상태 업데이트
+            console.log('storeLocation', storeAddressData);
         } catch (error) {
             console.log('Error', error);
         }
     };
     useEffect(() => {
         callUserInfo();
+        callStoreLocation();
     }, []);
+
+    console.log('야양', userAddress);
     return (
         <Container>
             <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={false} />
