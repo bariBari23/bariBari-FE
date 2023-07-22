@@ -3,18 +3,16 @@ import Header from '../component/Header';
 import { useState, useEffect } from 'react';
 import { ReactComponent as Star } from '../assets/star.svg';
 import Photo from '../assets/photo.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { postReview } from '../apis/api/review';
 
-type SelectedValue = {
-    quantity: string;
-    flavor: string;
-    wrap: string;
-    [key: string]: string;
-};
+type SelectedValue = [quantity: string, flavor: string, wrap: string];
 
 export default function UploadReview() {
+    const location = useLocation();
+    const orderItem = location.state.item;
+    console.log(orderItem);
     let isSelected = false;
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);
@@ -25,7 +23,7 @@ export default function UploadReview() {
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
 
-    const reviewMutation = useMutation(postReview);
+    // const reviewMutation = useMutation(postReview);
 
     const handleSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
@@ -57,21 +55,30 @@ export default function UploadReview() {
     const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRating(/*e.target.value*/ 5);
     };
-
+    const selectedValue = [quantity, flavor, wrap];
     const onSubmitReview = async () => {
-        const reviewData = new FormData();
+        //reviewData.append('orderItemId', orderItem.orderItemId);
+        // reviewData.append('content', reviewText);
+        // reviewData.append('rating', String(rating));
+        // if (image) {
+        //     reviewData.append('mainImageUrl', image);
+        // }
 
-        reviewData.append('orderItemId', '2');
-        reviewData.append('content', reviewText);
-        reviewData.append('rating', String(rating));
-        if (image) {
-            reviewData.append('mainImageUrl', image);
-        }
-        const selectedValue = { quantity, flavor, wrap };
-        reviewData.append('tag', JSON.stringify(selectedValue));
+        // reviewData.append('tag', JSON.stringify(selectedValue));
 
         try {
-            await reviewMutation.mutateAsync(reviewData);
+            const cleanUrl = imageUrl!.replace('blob:', '');
+            const reviewData = {
+                orderItemId: orderItem.orderItemId,
+                content: reviewText,
+                rating: rating,
+                photoList: [],
+                mainImageUrl: cleanUrl,
+                tags: selectedValue,
+            };
+            console.log(reviewData.mainImageUrl);
+            const response = await postReview(reviewData);
+            console.log(response);
             navigate('/orderlist'); // If the mutation succeeds, navigate to the order list page.
         } catch (error) {
             // Handle the error here
@@ -111,7 +118,7 @@ export default function UploadReview() {
                     <StoreImageBox />
                     <StoreNameBox style={{ marginRight: 'auto' }}>
                         <div style={{ fontSize: '16px', fontWeight: '700', fontStyle: 'normal', lineHeight: '23px' }}>
-                            반찬가게 이름 철산래미안점
+                            {orderItem.storeName}
                         </div>
                         <div
                             style={{
@@ -139,7 +146,7 @@ export default function UploadReview() {
                                 marginLeft: 'auto',
                             }}
                         >
-                            7,000원
+                            {orderItem.total}원
                         </div>{' '}
                     </StoreNameBox>
                 </StoreBox>
@@ -152,38 +159,37 @@ export default function UploadReview() {
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <ClickBox name="quantity" value="less">
-
+                    <ClickBox name="quantity" value="smallAmount">
                         양이 적어요
                     </ClickBox>
-                    <ClickBox name="quantity" value="enough">
+                    <ClickBox name="quantity" value="averageAmount">
                         충분해요
                     </ClickBox>
-                    <ClickBox name="quantity" value="more">
+                    <ClickBox name="quantity" value="largeAmount">
                         너무 많아요
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 맛은 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <ClickBox name="flavor" value="less">
+                    <ClickBox name="flavor" value="badStatus">
                         별로예요
                     </ClickBox>
-                    <ClickBox name="flavor" value="enough">
+                    <ClickBox name="flavor" value="plainTaste">
                         보통이에요
                     </ClickBox>
-                    <ClickBox name="flavor" value="more">
+                    <ClickBox name="flavor" value="goodTaste">
                         맛있어요
                     </ClickBox>
                 </div>
                 <SubText>주문하신 반찬의 포장 상태는 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
-                    <ClickBox name="wrap" value="less">
+                    <ClickBox name="wrap" value="badStatus">
                         허술해요
                     </ClickBox>
-                    <ClickBox name="wrap" value="enough">
+                    <ClickBox name="wrap" value="plainStatus">
                         보통이에요
                     </ClickBox>
-                    <ClickBox name="wrap" value="more">
+                    <ClickBox name="wrap" value="goodStatus">
                         깔끔해요
                     </ClickBox>
                 </div>

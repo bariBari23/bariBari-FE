@@ -3,93 +3,68 @@ import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { getOrder } from '../apis/api/order';
+import { getOrderItems } from '../apis/api/order';
 import { Key } from 'react';
 
 export default function OrderList() {
     const navigate = useNavigate();
 
-    const handleUploadReviewClick = () => {
-        navigate('/uploadReview');
+    const handleUploadReviewClick = (item: any) => {
+        console.log(item);
+        navigate('/uploadReview', { state: { item } });
         //alert('여기도 나중에 버튼 "리뷰쓰기" 버튼만 눌리게 하기');
     };
-    const { data: orderList, isLoading, error } = useQuery('orderList', getOrder);
+    const { data: orderItems, isLoading, error } = useQuery('orderItems', getOrderItems);
     if (error) {
         return <div>An error has occurred</div>;
     }
     if (isLoading) {
         return <div>Loading...</div>;
     }
-    console.log(orderList);
+    console.log(orderItems);
 
     return (
         <div style={{ marginTop: '85px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
-            {orderList.map((orderItem: any, index: number) =>
-                orderItem.orderItemList.map((item: any, index: number) => (
-                    <Wrapper>
-                        <OrderStatus>
-                            {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                            <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
-                            <div style={{ marginBottom: '8px' }}>|</div>
-                            <div style={{ marginBottom: '8px' }}>{orderList.status}</div>
-                        </OrderStatus>
+            {orderItems.data.orderItems.map((item: any, index: number) => (
+                <Wrapper>
+                    <OrderStatus>
+                        {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
+                        <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
+                        <div style={{ marginBottom: '8px' }}>|</div>
+                        <div style={{ marginBottom: '8px' }}>{item.status}</div>
+                    </OrderStatus>
 
-                        <>
-                            <Separator />
-                            <FoodItem>
-                                <FoodImg />
-                                <FoodInfo>
-                                    {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                                    <p
-                                        style={{
-                                            margin: '0px',
-                                            fontSize: '16px',
-                                            fontWeight: '400',
-                                            lineHeight: '28px',
-                                            fontStyle: 'normal',
-                                        }}
-                                    >
-                                        {item.storeName}
-                                    </p>
-                                    <FoodOrderInfo>
-                                        <p style={{ margin: '0px' }}>{item.dosirakName}</p>
-                                        <p style={{ margin: '0px' }}>{item.count}개</p>
-                                        <p style={{ margin: '0px' }}>{item.total}원</p>
-                                    </FoodOrderInfo>
-                                </FoodInfo>
-                            </FoodItem>
-                        </>
-                        <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
-                    </Wrapper>
-                )),
-            )}
+                    <>
+                        <Separator />
+                        <FoodItem>
+                            <FoodImg />
+                            <FoodInfo>
+                                {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
+                                <p
+                                    style={{
+                                        margin: '0px',
+                                        fontSize: '16px',
+                                        fontWeight: '400',
+                                        lineHeight: '28px',
+                                        fontStyle: 'normal',
+                                    }}
+                                >
+                                    {item.storeName}
+                                </p>
+                                <FoodOrderInfo>
+                                    <p style={{ margin: '0px' }}>{item.dosirakName}</p>
+                                    <p style={{ margin: '0px' }}>{item.count}개</p>
+                                    <p style={{ margin: '0px' }}>{item.total}원</p>
+                                </FoodOrderInfo>
+                            </FoodInfo>
+                        </FoodItem>
+                    </>
+                    <ReviewButtonFirst onClick={() => handleUploadReviewClick(item)}>리뷰 쓰기</ReviewButtonFirst>
+                </Wrapper>
+            ))}
             ;
             <Navigator />
-            {/* {orderList.data.orderList.map((order: any) => (
-                <Wrapper key={order.orderId}>
-                    <OrderStatus> */}
-            {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-            {/* <p style={{ marginBottom: '8px' }}>5/16(화요일)</p>
-                        <p style={{ marginBottom: '8px' }}>|</p>
-                        <p style={{ marginBottom: '8px' }}>{order.status}</p>
-                    </OrderStatus>
-                    <Separator />
-                    <FoodItem>
-                        <FoodImg />
-                        <FoodInfo> */}
-            {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-            {/* <p style={{ margin: '0px' }}>{order.orderItemList.storeName}</p>
-                            <FoodOrderInfo>
-                                <p style={{ margin: '0px' }}>{order.orderItemList.dosirakName}</p>
-                                <p style={{ margin: '0px' }}>{order.orderItemList.count}개</p>
-                                <p style={{ margin: '0px' }}>{order.orderItemList.total}원</p>
-                            </FoodOrderInfo>
-                        </FoodInfo>
-                    </FoodItem>
-                    <ReviewButtonFirst onClick={handleUploadReviewClick}>리뷰 쓰기</ReviewButtonFirst>
-                </Wrapper>
-            ))} */}
         </div>
     );
 }

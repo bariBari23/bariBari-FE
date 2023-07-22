@@ -62,3 +62,15 @@ export async function getOrder(orderList: object) {
         throw error;
     }
 }
+
+// 주문 조회 api
+export async function getOrderItems(orderItems: object) {
+    try {
+        const response = await axiosInstance.get(`/v1/orderItem`, orderItems);
+        console.log('api' + response.data);
+        return response.data;
+    } catch (error) {
+        console.log('Error:', error);
+        throw error;
+    }
+}
