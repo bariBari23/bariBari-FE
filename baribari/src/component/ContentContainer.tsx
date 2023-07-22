@@ -53,7 +53,7 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
                 </FoodCard>
             ))}
             <RotateFloatingRefreshBtn
-                style={{ position: 'fixed', bottom: '95px', right: '170px' }}
+                style={{ position: 'absolute', bottom: '0px', right: '10px' }}
                 onClick={() => refetch()}
             />
         </Container>
@@ -176,7 +176,7 @@ const Price = styled.div`
 
 const RotateFloatingRefreshBtn = styled(FloatingRefreshBtn)`
     transition: transform 1s ease;
-    position: fixed;
+
     &:hover {
         transform: rotate(75deg);
     }
