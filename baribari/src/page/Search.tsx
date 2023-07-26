@@ -27,7 +27,12 @@ export default function Search() {
                     <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
                     <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
-                <ContentContainer keyword={debouncedSearchText} filterLiked={filterLiked} sort={selectedSortOption} />
+                <ContentContainer
+                    keyword={debouncedSearchText}
+                    filterLiked={filterLiked}
+                    sort={selectedSortOption}
+                    setRefresh={false}
+                />
             </Wrapper>
         </div>
     );

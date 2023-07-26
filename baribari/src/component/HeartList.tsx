@@ -25,6 +25,7 @@ const HeartListButton = styled.button<{ $isclicked: boolean }>`
     background: ${(props) => (props.$isclicked ? '#fff1ee' : '#F9F9F9')};
     color: ${(props) => (props.$isclicked ? '#FF7455' : '#767676')};
     text-align: center;
+    font-family: Pretendard Variable;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;

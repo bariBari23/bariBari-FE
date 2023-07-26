@@ -42,11 +42,10 @@ export default function Home() {
                 </InquiryTab>
                 <Link to="/search" style={{ textDecoration: 'none', width: 'calc(100% - 32px)' }}>
                     <SearchTab>
-                        <SearchText>반찬 이름을 검색해보세요</SearchText>
+                        <SearchText>반찬 메뉴를 검색해보세요</SearchText>
                         <SearchIcon
                             style={{
                                 display: 'flex',
-                                padding: '3px',
                                 alignContent: 'center',
                                 justifyContent: 'center',
                             }}
@@ -59,7 +58,12 @@ export default function Home() {
                     <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
                     <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
-                <ContentContainer keyword={null} filterLiked={filterLiked} sort={selectedSortOption} />
+                <ContentContainer
+                    keyword={null}
+                    filterLiked={filterLiked}
+                    sort={selectedSortOption}
+                    setRefresh={true}
+                />
             </WrapperList>
             <WrapperNav>
                 <Navigator />
@@ -149,6 +153,7 @@ const SearchTab = styled.button`
     border: none;
     background-color: #efefef;
     color: #949494;
+    font-family: Pretendard Variable;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

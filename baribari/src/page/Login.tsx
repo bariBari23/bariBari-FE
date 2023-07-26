@@ -36,9 +36,8 @@ export default function LogIn() {
             // 로그인 API 호출
             const response = await loginUser(data.email, data.password);
             // 로그인 성공 시 처리
+            alert('바리바리에 무사히 로그인하셨습니다:)');
             navigate('/home');
-            alert('로그인 성공!');
-            //navigate('/home');
         } catch (error) {
             // 로그인실패 처리
             alert('로그인 실패!');
@@ -138,7 +137,7 @@ const Input = styled.input`
     background: #fff;
     color: #504e5f;
     font-size: 16px;
-    font-family: 'Pretendard-Regular';
+    font-family: 'Pretendard Variable';
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
@@ -148,12 +147,10 @@ const Input = styled.input`
     }
     &.is-invalid {
         border-color: red;
-        box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.3);
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
     &.is-valid {
         border-color: blue;
-        box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.3);
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 `;
@@ -174,7 +171,7 @@ const SubmitButton = styled.button`
     background: #ff7455;
     color: #fff;
     font-size: 18px;
-    font-family: Pretendard-Regular;
+    font-family: 'Pretendard Variable';
     font-style: normal;
     font-weight: 700;
     line-height: 28px;

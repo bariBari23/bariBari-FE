@@ -8,7 +8,7 @@ import { ReactComponent as FloatingRefreshBtn } from '../assets/RefreshBtn.svg';
 import { ContentContainerProps, DosirakItem } from '../utils/interface';
 import { useQuery } from '@tanstack/react-query';
 
-export default function ContentContainer({ keyword, filterLiked, sort }: ContentContainerProps) {
+export default function ContentContainer({ keyword, filterLiked, sort, setRefresh }: ContentContainerProps) {
     const navigate = useNavigate();
     const handleCardClick = (id: number) => {
         navigate(`/detail/${id}`); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
@@ -52,10 +52,14 @@ export default function ContentContainer({ keyword, filterLiked, sort }: Content
                     <Price>{dosirak.price.toLocaleString()}원</Price>
                 </FoodCard>
             ))}
-            <RotateFloatingRefreshBtn
-                style={{ position: 'absolute', bottom: '0px', right: '10px' }}
-                onClick={() => refetch()}
-            />
+            {setRefresh ? (
+                <RotateFloatingRefreshBtn
+                    style={{ position: 'fixed', bottom: '90px', right: '12px' }}
+                    onClick={() => refetch()}
+                />
+            ) : (
+                ''
+            )}
         </Container>
     );
 }
@@ -75,6 +79,7 @@ const ImgWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 206px;
+    margin-bottom: 12px;
 `;
 
 const StockTag = styled.div`
@@ -109,7 +114,7 @@ const FoodCard = styled.div`
     flex-direction: column;
     align-items: flex-start;
     display: flex;
-    padding: 0 0 20px 0px;
+    padding: 0 0 20px 0;
     // 카드 폭을 100%로 맞춰보는 건 어떨까!
     @media (max-width: 365px) {
         width: 100%;

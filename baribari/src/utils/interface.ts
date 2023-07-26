@@ -30,6 +30,7 @@ export interface ContentContainerProps {
     keyword: string | null;
     filterLiked: boolean;
     sort: string | null;
+    setRefresh: boolean;
 }
 
 export interface DosirakItem {

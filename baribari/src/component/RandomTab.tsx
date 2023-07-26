@@ -22,7 +22,8 @@ export default function RandomTabs() {
                 <Container>
                     <Text>
                         <Header>
-                            매일 출석 체크하고 <Highlight>10%</Highlight> 할인 쿠폰 받아요!
+                            매일 출석 체크하고 <br />
+                            <Highlight>10%</Highlight> 할인 쿠폰 받아요!
                         </Header>
                         <SubHeader>
                             <LocaIcon />
@@ -35,7 +36,8 @@ export default function RandomTabs() {
                 <Container>
                     <Text>
                         <Header>
-                            바리바리에서 첫 구매시 <Highlight>15%</Highlight> 할인!
+                            건강한 한끼가 만드는 <br />
+                            <Highlight>행복</Highlight>을 느껴보세요!
                         </Header>
                         <SubHeader>
                             <LocaIcon />
