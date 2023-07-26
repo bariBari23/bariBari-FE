@@ -40,10 +40,19 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
                     <Heart style={{ padding: '3px', marginRight: '0' }} />
                 </StoreBox>
             </MainBox>
-            <SubBox>
+            <SubBox style={{ flexDirection: 'column' }}>
                 {dosirakData?.data.banchanList?.map((banchan: any) => (
                     <RawFoodBox key={banchan.banchanName}>
-                        <div style={{ marginRight: 'auto', fontSize: '16px', fontWeight: '600' }}>
+                        <div
+                            style={{
+                                marginRight: 'auto',
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                padding: '7.354px 14.709px',
+                                borderRadius: '14.709px',
+                                backgroundColor: '#F9F9F9',
+                            }}
+                        >
                             {banchan.banchanName}
                         </div>
                         <div style={{ marginRight: '0', fontSize: '14px', fontWeight: '500' }}>{banchan.gram}g</div>

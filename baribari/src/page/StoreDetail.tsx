@@ -85,6 +85,7 @@ const InsideBox = styled.div`
     justify-content: flex-start;
     align-items: center;
     background-color: #f9f9f9;
+    margin-bottom: 100px;
 `;
 const FoodImgBox = styled.img`
     display: flex;
