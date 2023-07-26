@@ -2,6 +2,7 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
+import Star from '../../assets/plainStar';
 
 export default function StoreDetailBox({ isSelected, storeId }: { isSelected: boolean; storeId: number | null }) {
     const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
@@ -15,10 +16,29 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
-                    <div style={{ height: '21px', marginRight: 'auto', marginBottom: '11px' }}>
+                    <div style={{ height: '21px', marginRight: 'auto', display: 'flex', flexDirection: 'column' }}>
                         {storeData.data.storeName}
+                        <div style={{ height: '21px', marginTop: '8px', display: 'flex', alignItems: 'center' }}>
+                            {parseFloat(storeData.data.reviewMean).toFixed(1)}
+                            <div
+                                style={{
+                                    marginLeft: '12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                {[1, 2, 3, 4, 5].map((starNumber) => (
+                                    <Star
+                                        width={14.3}
+                                        key={starNumber}
+                                        starNumber={starNumber}
+                                        selected={starNumber <= parseFloat(storeData.data.reviewMean)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ height: '21px' }}>4.4</div>
                 </TitleBox>
                 <CallBtn style={{ marginRight: '12px' }}>연락하기</CallBtn>
             </MainBox>

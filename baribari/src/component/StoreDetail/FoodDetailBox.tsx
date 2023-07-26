@@ -5,7 +5,7 @@ import { searchById } from '../../apis/api/search';
 import { ReactComponent as SmallStar } from '../../assets/star.svg';
 
 export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected: boolean; dosirakData: any }) {
-    console.log('dosirak여기요' + dosirakData.data.mainImageUrl);
+    console.log('dosirak여기요' + dosirakData.data.rating);
     return (
         <Container isSelected={isSelected}>
             <MainBox>
@@ -20,7 +20,7 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
                 <StoreBox>
                     <StoreImageBox src={dosirakData?.data.mainImageUrl} />
                     <StoreNameBox>
-                        <div style={{ marginBottom: '14px', fontSize: '14px', fontWeight: '600' }}>
+                        <div style={{ marginBottom: '4px', fontSize: '14px', fontWeight: '600' }}>
                             {dosirakData?.data.storeName}
                         </div>
 
