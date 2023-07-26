@@ -41,6 +41,11 @@ export default function Join() {
 
     const onSubmit: SubmitHandler<JoinData> = async (data) => {
         if (isValid) {
+            if (!state.all) {
+                alert('전체 동의를 확인해주세요!');
+                return;
+            }
+
             try {
                 // 회원가입 API 호출
                 const response = await registerUser(data.name, data.email, data.password, data.phone);
@@ -48,7 +53,7 @@ export default function Join() {
                 console.log('response:', response);
 
                 // 회원가입 성공 시 처리
-                alert('회원가입이 완료되었습니다!');
+                alert('회원가입이 완료되었습니다:)');
                 navigate('/'); // 회원가입 완료 후 이동할 페이지 설정
             } catch (error) {
                 // 실패 처리
@@ -178,12 +183,13 @@ const InputWrapper = styled.div`
 const Input = styled.input`
     height: 28px;
     padding: 8px 16px;
+    margin-bottom: 5px;
     border-radius: 8px;
     border: 0.75px solid #aaa;
     background: #fff;
     color: #504e5f;
     font-size: 16px;
-    font-family: 'Pretendard-Regular';
+    font-family: 'Pretendard Variable';
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
@@ -193,12 +199,10 @@ const Input = styled.input`
     }
     &.is-invalid {
         border-color: red;
-        box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.3);
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
     &.is-valid {
         border-color: blue;
-        box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.3);
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 `;
@@ -206,7 +210,7 @@ const Input = styled.input`
 const Label = styled.label`
     color: #767676;
     font-size: 12px;
-    font-family: Pretendard-Regular;
+    font-family: 'Pretendard Variable';
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
@@ -225,12 +229,11 @@ const SubmitButton = styled.button`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;
     justify-content: center;
-
     position: fixed;
     margin: 0 16px;
     bottom: 16px;

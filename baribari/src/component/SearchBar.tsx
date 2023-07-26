@@ -19,9 +19,8 @@ export default function SearchBar({ onKeywordChange }: { onKeywordChange: (keywo
 
     return (
         <SearchTab>
-
             <SearchInput
-                placeholder="반찬이름을 검색해보세요"
+                placeholder="반찬 메뉴를 검색해보세요"
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setKeyword(e.target.value)}
                 value={keyword}
             />
@@ -45,6 +44,7 @@ const SearchInput = styled.textarea`
     display: flex;
     color: #504e5f;
     align-items: center;
+    font-family: Pretendard Variable;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

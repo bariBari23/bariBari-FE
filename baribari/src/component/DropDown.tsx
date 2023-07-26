@@ -41,9 +41,9 @@ export default function DropDown({ onSelectSortOption }: { onSelectSortOption: (
             {viewOpen && (
                 <DropDownList>
                     <DropDownListItem onClick={() => handleSelectValue('최신순')}>최신순</DropDownListItem>
-                    <HorizontalLine />
+                    <HorizontalLine style={{ marginLeft: '12px' }} />
                     <DropDownListItem onClick={() => handleSelectValue('가격 낮은순')}>가격 낮은순</DropDownListItem>
-                    <HorizontalLine />
+                    <HorizontalLine style={{ marginLeft: '12px' }} />
                     <DropDownListItem onClick={() => handleSelectValue('가격 높은순')}>가격 높은순</DropDownListItem>
                 </DropDownList>
             )}
@@ -67,6 +67,7 @@ const DropDownButton = styled.button`
     border: none;
     background: #f9f9f9;
     text-align: center;
+    font-family: Pretendard Variable;
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
