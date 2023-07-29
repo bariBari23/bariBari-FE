@@ -72,7 +72,7 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                                 display: 'flex',
                                 paddingLeft: '12px',
                                 color: '#212121',
-                                fontWeight: '500',
+                                fontWeight: '400',
                                 flex: '1',
                             }}
                         >
@@ -81,29 +81,29 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.businessNumber}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.dayList}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.offDay}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>도보 거리</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>도보 거리</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             걸어서 5분 {/*여기 수정*/}
                         </div>{' '}
                     </div>
@@ -114,7 +114,7 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                 <InfoBox>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
                         <div
                             style={{
                                 width: 'calc(100% - 70px)',
@@ -123,18 +123,20 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                                 fontWeight: '500',
                             }}
                         >
-                            돼지고기 - 국내산, 돼지고기 - 국내산, 돼지고기 - 국내산
+                            {storeData.data.fromWhere}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>위생정보</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>꺠끗해요</div>{' '}
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>위생정보</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
+                            {storeData.data.clean}
+                        </div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.description}
                         </div>{' '}
                     </div>
@@ -192,6 +194,7 @@ const InfoBox = styled.div`
     height: 204px;
     width: 100%;
     font-size: 16px;
+    font-weight: 400;
 `;
 const MapBox = styled.div`
     display: flex;
