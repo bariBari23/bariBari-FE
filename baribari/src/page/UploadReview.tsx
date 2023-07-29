@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { useState, useEffect } from 'react';
-import { ReactComponent as Star } from '../assets/star.svg';
 import Photo from '../assets/photo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
@@ -20,10 +19,34 @@ export default function UploadReview() {
 
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const [rating, setRating] = useState(5);
+    const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
 
-    // const reviewMutation = useMutation(postReview);
+    const Star = ({
+        starNumber,
+        handleRatingChange,
+        selected,
+    }: {
+        starNumber: number;
+        handleRatingChange: any;
+        selected: boolean;
+    }) => (
+        <div style={{ paddingRight: '4px' }}>
+            <svg
+                width="26px"
+                height="26px"
+                viewBox="0 0 26 26"
+                onClick={() => handleRatingChange(starNumber)}
+                fill={selected ? '#FFBE58' : '#EFEFEF'}
+            >
+                <path
+                    id="Icon"
+                    d="M10.4562 0.343335C10.6821 -0.114445 11.3349 -0.114445 11.5608 0.343335L14.4855 6.26936C14.5752 6.45114 14.7486 6.57714 14.9493 6.60629L21.489 7.55657C21.9942 7.62998 22.1959 8.25081 21.8304 8.60715L17.0981 13.2199C16.953 13.3614 16.8867 13.5653 16.921 13.7651L18.0381 20.2784C18.1244 20.7816 17.5963 21.1653 17.1445 20.9277L11.2951 17.8525C11.1157 17.7582 10.9013 17.7582 10.7219 17.8525L4.87257 20.9277C4.42071 21.1653 3.8926 20.7816 3.9789 20.2784L5.09602 13.7651C5.13029 13.5653 5.06405 13.3614 4.91888 13.2199L0.186674 8.60715C-0.178886 8.25081 0.0228347 7.62998 0.528026 7.55657L7.06778 6.60629C7.26839 6.57714 7.44181 6.45114 7.53153 6.26936L10.4562 0.343335Z"
+                    fill={selected ? '#FFBE58' : '#EFEFEF'}
+                />
+            </svg>
+        </div>
+    );
 
     const handleSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
@@ -52,20 +75,11 @@ export default function UploadReview() {
         setReviewText(e.target.value);
     };
 
-    const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setRating(/*e.target.value*/ 5);
+    const handleRatingChange = (newRating: number) => {
+        setRating(newRating);
     };
     const selectedValue = [quantity, flavor, wrap];
     const onSubmitReview = async () => {
-        //reviewData.append('orderItemId', orderItem.orderItemId);
-        // reviewData.append('content', reviewText);
-        // reviewData.append('rating', String(rating));
-        // if (image) {
-        //     reviewData.append('mainImageUrl', image);
-        // }
-
-        // reviewData.append('tag', JSON.stringify(selectedValue));
-
         try {
             const cleanUrl = imageUrl!.replace('blob:', '');
             const reviewData = {
@@ -146,16 +160,25 @@ export default function UploadReview() {
                                 marginLeft: 'auto',
                             }}
                         >
-                            {orderItem.total}원
+                            {orderItem.total.toLocaleString()}원
                         </div>{' '}
                     </StoreNameBox>
                 </StoreBox>
                 <SubText>주문하신 반찬에 별점을 남겨주세요.</SubText>
                 <ScoreBox>
                     <ScoreStar>
-                        <Star style={{ width: '160px', height: '26px' }} />
+                        <div style={{ width: '160px', height: '26px', display: 'flex' }}>
+                            {[1, 2, 3, 4, 5].map((starNumber) => (
+                                <Star
+                                    key={starNumber}
+                                    starNumber={starNumber}
+                                    handleRatingChange={handleRatingChange}
+                                    selected={starNumber <= rating}
+                                />
+                            ))}
+                        </div>
+                        <ScoreText>{rating === 0 ? '별로' : `${rating}점`}</ScoreText>
                     </ScoreStar>
-                    <ScoreText>보통</ScoreText>
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '8px' }}>
@@ -263,6 +286,7 @@ const ScoreStar = styled.div`
 const ScoreText = styled.div`
     display: flex;
     text-align: center;
+    justify-content: center;
     margin: auto;
     font-size: 16px;
     font-style: normal;

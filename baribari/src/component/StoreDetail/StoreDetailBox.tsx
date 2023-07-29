@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
 import Star from '../../assets/plainStar';
+import { useState } from 'react';
 
 export default function StoreDetailBox({ isSelected, storeId }: { isSelected: boolean; storeId: number | null }) {
     const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
@@ -12,6 +13,7 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
     if (isLoading) {
         return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
     }
+
     return (
         <Container isSelected={isSelected}>
             <MainBox>
