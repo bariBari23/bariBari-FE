@@ -19,6 +19,7 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
         onSuccess: () => {
             setIsFilled(true);
             queryClient.invalidateQueries('onFav');
+            window.location.reload();
         },
     });
 
@@ -26,6 +27,7 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
         onSuccess: () => {
             setIsFilled(false);
             queryClient.invalidateQueries('outFav');
+            window.location.reload();
         },
     });
 
