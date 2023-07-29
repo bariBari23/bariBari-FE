@@ -11,7 +11,6 @@ type SelectedValue = [quantity: string, flavor: string, wrap: string];
 export default function UploadReview() {
     const location = useLocation();
     const orderItem = location.state.item;
-    console.log(orderItem);
     let isSelected = false;
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);

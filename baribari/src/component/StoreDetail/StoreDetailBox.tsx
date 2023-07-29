@@ -13,15 +13,31 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
     if (isLoading) {
         return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
     }
-
+    const onCall = () => {
+        document.location.href = `tel:${storeData.data.phoneNumber}`;
+    };
     return (
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
                     <div style={{ height: '21px', marginRight: 'auto', display: 'flex', flexDirection: 'column' }}>
                         {storeData.data.storeName}
-                        <div style={{ height: '21px', marginTop: '8px', display: 'flex', alignItems: 'center' }}>
-                            {parseFloat(storeData.data.reviewMean).toFixed(1)}
+                        <div
+                            style={{
+                                height: '21px',
+                                marginTop: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                fontSize: '18px',
+                                justifyContent: 'center',
+                                color: '#000',
+                                fontWeight: '700',
+                                lineHeight: '21px',
+                            }}
+                        >
+                            {isNaN(parseFloat(storeData.data.reviewMean))
+                                ? '정보 없음'
+                                : parseFloat(storeData.data.reviewMean).toFixed(1)}
                             <div
                                 style={{
                                     marginLeft: '12px',
@@ -42,14 +58,24 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                         </div>
                     </div>
                 </TitleBox>
-                <CallBtn style={{ marginRight: '12px' }}>연락하기</CallBtn>
+                <CallBtn style={{ marginRight: '12px' }} onClick={onCall}>
+                    연락하기
+                </CallBtn>
             </MainBox>
             <SubBox style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                 <InfoBox>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
+                        <div
+                            style={{
+                                display: 'flex',
+                                paddingLeft: '12px',
+                                color: '#212121',
+                                fontWeight: '500',
+                                flex: '1',
+                            }}
+                        >
                             {storeData.data.storeAddress}
                         </div>{' '}
                     </div>
@@ -145,7 +171,7 @@ const TitleBox = styled.div`
 const CallBtn = styled.button`
     display: flex;
     height: 33px;
-    width: 73px;
+    width: 80px;
     border: solid 1px #767676;
     background-color: #f9f9f9;
     color: #767676;
