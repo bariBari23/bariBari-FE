@@ -54,7 +54,7 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
             ))}
             {setRefresh ? (
                 <RotateFloatingRefreshBtn
-                    style={{ position: 'fixed', bottom: '90px', right: '12px' }}
+                    style={{ position: 'fixed', bottom: '100px', right: '12px' }}
                     onClick={() => refetch()}
                 />
             ) : (
@@ -91,7 +91,7 @@ const StockTag = styled.div`
     border-radius: 8px;
     background: #ff7455;
     color: #fff;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-size: 8px;
     font-style: normal;
     font-weight: 600;
