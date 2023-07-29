@@ -16,6 +16,7 @@ export default function UploadReview() {
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);
     const [wrap, setWrap] = useState<string | null>(null);
+    const [ratingText, setRatingText] = useState<string>('');
 
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -47,6 +48,21 @@ export default function UploadReview() {
             </svg>
         </div>
     );
+    useEffect(() => {
+        let displayText;
+
+        if (rating >= 1 && rating <= 2) {
+            displayText = '별로';
+        } else if (rating === 3) {
+            displayText = '보통';
+        } else if (rating >= 4 && rating <= 5) {
+            displayText = '좋아요';
+        } else {
+            displayText = '평가 없음';
+        }
+
+        setRatingText(displayText);
+    }, [rating]);
 
     const handleSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
         switch (e.target.name) {
@@ -177,7 +193,7 @@ export default function UploadReview() {
                                 />
                             ))}
                         </div>
-                        <ScoreText>{rating === 0 ? '별로' : `${rating}점`}</ScoreText>
+                        <ScoreText>{ratingText}</ScoreText>
                     </ScoreStar>
                 </ScoreBox>
                 <SubText>주문하신 반찬의 양은 어떠셨나요?</SubText>
