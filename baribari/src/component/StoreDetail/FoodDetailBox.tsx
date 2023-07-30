@@ -16,7 +16,6 @@ export default function FoodDetailBox({
     dosirakData: any;
     storeData: any;
 }) {
-    console.log('dosirak여기요' + dosirakData.data.rating);
     const [isFilled, setIsFilled] = useState(dosirakData.data.likedStore);
     const fillColor = isFilled ? '#FF7455' : 'none';
     useEffect(() => {
