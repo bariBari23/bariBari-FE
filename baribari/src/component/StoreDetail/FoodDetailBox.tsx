@@ -5,8 +5,17 @@ import { searchById } from '../../apis/api/search';
 import { ReactComponent as SmallStar } from '../../assets/star.svg';
 import { useEffect, useState } from 'react';
 import { cancelStoreLike, clickStoreLike } from '../../apis/api/store';
+import Star from '../../assets/plainStar';
 
-export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected: boolean; dosirakData: any }) {
+export default function FoodDetailBox({
+    isSelected,
+    dosirakData,
+    storeData,
+}: {
+    isSelected: boolean;
+    dosirakData: any;
+    storeData: any;
+}) {
     console.log('dosirak여기요' + dosirakData.data.rating);
     const [isFilled, setIsFilled] = useState(dosirakData.data.likedStore);
     const fillColor = isFilled ? '#FF7455' : 'none';
@@ -55,18 +64,31 @@ export default function FoodDetailBox({ isSelected, dosirakData }: { isSelected:
                         <div style={{ marginBottom: '4px', fontSize: '14px', fontWeight: '600' }}>
                             {dosirakData?.data.storeName}
                         </div>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            <div
+                                style={{
+                                    fontSize: '18px',
+                                    fontWeight: '700',
+                                    height: '21px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <div style={{ marginRight: '12px' }}>
+                                    {isNaN(parseFloat(storeData.data.reviewMean))
+                                        ? '정보 없음'
+                                        : parseFloat(storeData.data.reviewMean).toFixed(1)}
+                                </div>
 
-                        <div
-                            style={{
-                                fontSize: '18px',
-                                fontWeight: '700',
-                                height: '21px',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            4.4
-                            <SmallStar style={{ display: 'flex', width: '89.4px', marginLeft: '12px' }} />
+                                {[1, 2, 3, 4, 5].map((starNumber) => (
+                                    <Star
+                                        width={14.3}
+                                        key={starNumber}
+                                        starNumber={starNumber}
+                                        selected={starNumber <= parseFloat(storeData.data.reviewMean)}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </StoreNameBox>
                     <div style={{ padding: '3px', marginRight: '0' }} onClick={handleClick}>

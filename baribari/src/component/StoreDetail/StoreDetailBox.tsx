@@ -5,14 +5,14 @@ import { getStoreInfo } from '../../apis/api/store';
 import Star from '../../assets/plainStar';
 import { useState } from 'react';
 
-export default function StoreDetailBox({ isSelected, storeId }: { isSelected: boolean; storeId: number | null }) {
-    const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
-    if (error) {
-        return <div>An error has occurred</div>;
-    }
-    if (isLoading) {
-        return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
-    }
+export default function StoreDetailBox({ isSelected, storeData }: { isSelected: boolean; storeData: any }) {
+    // const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
+    // if (error) {
+    //     return <div>An error has occurred</div>;
+    // }
+    // if (isLoading) {
+    //     return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
+    // }
     const onCall = () => {
         document.location.href = `tel:${storeData.data.phoneNumber}`;
     };

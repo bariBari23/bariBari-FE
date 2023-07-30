@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
 import { getStoreInfo } from '../apis/api/store';
 import { addCartItem } from '../apis/api/cart';
+import { axiosInstance } from '../apis';
 
 export default function StoreDetail() {
     const navigate = useNavigate();
@@ -29,14 +30,23 @@ export default function StoreDetail() {
             setStoreId(data.data.storeId);
         },
     });
+
+    const {
+        data: storeData,
+        isLoading: storeIsLoading,
+        error: storeError,
+    } = useQuery(['storeData', storeId], () => getStoreInfo(storeId), {
+        enabled: !!storeId,
+    });
     console.log('바로 여기에요' + storeId);
-    if (error) {
+    if (error || storeError) {
         return <div>An error has occurred</div>;
     }
-    if (isLoading) {
-        return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
+    if (isLoading || storeIsLoading) {
+        return <div>Loading...</div>;
     }
     console.log('dosirakdata' + dosirakData);
+    console.log('storeData' + storeData);
 
     const addToCart = () => {
         addCartItem(dosirakData.data.id)
@@ -62,8 +72,8 @@ export default function StoreDetail() {
                         리뷰
                     </InformBtn>
                 </DetailNav>
-                <FoodDetailBox isSelected={active === '반찬 상세'} dosirakData={dosirakData} />
-                <StoreDetailBox isSelected={active === '가게 정보'} storeId={storeId} />
+                <FoodDetailBox isSelected={active === '반찬 상세'} dosirakData={dosirakData} storeData={storeData} />
+                <StoreDetailBox isSelected={active === '가게 정보'} storeData={storeData} />
                 <ReviewBox isSelected={active === '리뷰'} id={storeId} />
                 <AddBtn onClick={addToCart}>장바구니에 넣기</AddBtn>
                 <BackSquare />

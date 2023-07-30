@@ -1,5 +1,5 @@
 const Star = ({ starNumber, selected, width }: { starNumber: number; selected: boolean; width: number }) => (
-    <div style={{ paddingRight: '4px', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ paddingRight: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <svg width={width} height={width} viewBox="0 0 20 20" fill={selected ? '#FFBE58' : '#EFEFEF'}>
             <path
                 id="Icon"
