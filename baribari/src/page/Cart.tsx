@@ -96,12 +96,42 @@ export default function Cart() {
                                         lineHeight: '32px',
                                     }}
                                 >
-                                    {item.quantity * item.price}원
+                                    {(item.quantity * item.price).toLocaleString()}원
                                 </span>
                                 <FoodCount>
-                                    <CountButton onClick={() => increaseQuantity(item.id)}>+</CountButton>
+                                    <CountButton onClick={() => decreaseQuantity(item.id)}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M8.375 5L1.625 5"
+                                                stroke="#767676"
+                                                stroke-width="1.40625"
+                                                stroke-linecap="round"
+                                            />
+                                        </svg>
+                                    </CountButton>
                                     <span>{item.quantity}</span>
-                                    <CountButton onClick={() => decreaseQuantity(item.id)}>-</CountButton>
+                                    <CountButton onClick={() => increaseQuantity(item.id)}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                            fill="none"
+                                        >
+                                            <path
+                                                d="M5 1.625L5 8.375M8.375 5L1.625 5"
+                                                stroke="#767676"
+                                                stroke-width="1.40625"
+                                                stroke-linecap="round"
+                                            />
+                                        </svg>
+                                    </CountButton>
                                 </FoodCount>
                             </FoodDetail>
                             <button
@@ -185,6 +215,12 @@ const FoodCount = styled.div`
 const CountButton = styled.button`
     border: none;
     cursor: pointer;
+    background-color: transparent;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
 `;
 const SubmitButton = styled.div`
     display: flex;
