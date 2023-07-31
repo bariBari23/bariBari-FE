@@ -31,7 +31,7 @@ export default function Cart() {
     const increaseQuantity = (id: number) => {
         setCartItemsState((prevState) =>
             prevState.map((item) => {
-                if (item.id === id && item.quantity < 4) {
+                if (item.id === id && item.quantity < 3) {
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;
@@ -50,14 +50,17 @@ export default function Cart() {
         );
     };
     const handleGoOrder = () => {
-        cartItemsState.forEach(async (item) => {
-            try {
-                await updateCartItem(item.id, item.quantity, item);
-            } catch (error) {
-                console.error('Error updating cart item: ', error);
-            }
+        const promises = cartItemsState.map(async (item) => {
+            return updateCartItem(item.id, item.quantity, item);
         });
-        navigate('/order', { state: { cartItems: cartItemsState } });
+
+        Promise.all(promises)
+            .then(() => {
+                navigate('/order', { state: { cartItems: cartItemsState } });
+            })
+            .catch((error) => {
+                console.error('Error updating cart items: ', error);
+            });
     };
     const deleteItem = (id: number) => {
         deleteSingleCartItem(id);
