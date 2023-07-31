@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
-
+import MapCapture from '../../assets/MapCapture.png';
 import MapContainer from '../Map/MapContainer';
 
 import Star from '../../assets/plainStar';
@@ -116,13 +116,14 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                         </div>{' '}
                     </div>
                 </InfoBox>
-                <MapContainer
+                {/* <MapContainer
                     size={['93vw', 180]}
                     userAddress={storeAddress}
                     userPosition={userPosition}
                     isSearched={true}
                     isStoreLocation={true}
-                />
+                /> */}
+                <img src={MapCapture} style={{ height: '180px', borderRadius: '12px', objectFit: 'cover' }} />
             </SubBox>
             <SubBox style={{ height: '250px' }}>
                 <InfoBox>
