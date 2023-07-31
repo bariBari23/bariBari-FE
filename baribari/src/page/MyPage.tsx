@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
+import { ReactComponent as Profile } from '../assets/img-profile.svg';
 import { RPointerMedIcon } from '../component/IconFin';
 import { useNavigate } from 'react-router-dom';
 import Navigator from '../component/Navigator';
@@ -19,8 +20,6 @@ export default function MyPage() {
     const [storeAddress, setStoreAddress] = useRecoilState(storeAddressState);
 
     const handleFavClick = (event: { stopPropagation: any; preventDefault: () => void }) => {
-        event.preventDefault();
-        event.stopPropagation();
         navigate('/fav');
     };
     const callUserInfo = async () => {
@@ -49,13 +48,12 @@ export default function MyPage() {
         callStoreLocation();
     }, []);
 
-    console.log('야양', userAddress);
     return (
         <Container>
             <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={false} />
             <InsideBox>
                 <ProfileBox>
-                    <ProfileImage />
+                    <Profile />
                     <div style={{ fontSize: '22px', fontWeight: '700', lineHeight: '60px', marginRight: 'auto' }}>
                         {nickname} 님
                     </div>
@@ -66,12 +64,15 @@ export default function MyPage() {
                     <TextBox>내 위치</TextBox>
                     <Pencil style={{ marginRight: '0px', width: '24', height: '25' }} />
                 </KeywordBox>
+
                 <MapContainer
-                    size={[500, 300]}
+                    size={['95vw', 250]}
                     userAddress={userAddress}
                     userPosition={userPosition}
-                    isSearched={true}
+                    isSearched={false}
+                    isStoreLocation={false}
                 />
+
                 <KeywordBox style={{ padding: '20px 0', cursor: 'pointer' }} onClick={handleFavClick}>
                     <TextBox>즐겨찾는 가게</TextBox>
                     <div style={{ padding: '8.5px' }}>
@@ -113,14 +114,7 @@ const ProfileBox = styled.div`
     background-color: white;
     align-items: center;
     padding-bottom: 16px;
-`;
-
-const ProfileImage = styled.div`
-    width: 60px;
-    height: 60px;
-    border-radius: 100%;
-    background-color: grey;
-    margin-right: 15px;
+    gap: 12px;
 `;
 
 const KeywordBox = styled.div`

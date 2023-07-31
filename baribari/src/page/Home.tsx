@@ -1,14 +1,14 @@
 import { styled } from 'styled-components';
 import { ReactComponent as Logo } from '../assets/logo.svg';
-import { BellIcon, OrderIcon, RPointerBigIcon, SearchIcon } from '../component/IconFin';
+import { RPointerBigIcon, SearchIcon } from '../component/IconFin';
 import Navigator from '../component/Navigator';
 import ContentContainer from '../component/ContentContainer';
 import RandomTab from '../component/RandomTab';
 import DropDown from '../component/DropDown';
 import HeartList from '../component/HeartList';
 import { Link, useNavigate } from 'react-router-dom';
-import { searchByQuery } from '../apis/api/search';
 import { useEffect, useState } from 'react';
+import SvgSprite from '../component/Sprite';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -18,16 +18,24 @@ export default function Home() {
     const handleCartClick = () => {
         navigate('/cart'); // 장바구니 페이지로 이동
     };
+    const handleBellClick = () => {
+        alert('아직 알림이 온 게 없어요!');
+    };
 
     return (
         <div>
+            <SvgSprite />
             <HeaderHome>
                 <Link to="/home" style={{ textDecoration: 'none' }}>
                     <Logo />
                 </Link>
                 <RightSideHeader>
-                    <BellIcon />
-                    <OrderIcon onClick={handleCartClick} />
+                    <svg width="34" height="32" onClick={handleBellClick}>
+                        <use xlinkHref="#property-1-notification" />
+                    </svg>
+                    <svg width="32" height="32" onClick={handleCartClick}>
+                        <use xlinkHref="#property-1-cart" />
+                    </svg>
                 </RightSideHeader>
             </HeaderHome>
 
@@ -112,7 +120,7 @@ const HeaderHome = styled.div`
 
 const RightSideHeader = styled.div`
     display: flex;
-    gap: 15px;
+    gap: 4px;
 `;
 
 const InquiryTab = styled.div`
