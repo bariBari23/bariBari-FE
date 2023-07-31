@@ -4,6 +4,7 @@ import Navigator from '../component/Navigator';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getOrderItems } from '../apis/api/order';
+import SearchSkeleton from '../assets/3dSearch.png';
 import { Key } from 'react';
 
 export default function OrderList() {
@@ -22,53 +23,88 @@ export default function OrderList() {
         return <div>Loading...</div>;
     }
     console.log(orderItems);
+    const handleClickNavButton = () => {
+        navigate(`/cart`);
+    };
 
     return (
         <div style={{ marginTop: '85px', width: '100vw' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
-            {orderItems.data.orderItems.map((item: any, index: number) => (
-                <Wrapper>
-                    <OrderStatus>
-                        {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                        <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
-                        <div style={{ marginBottom: '8px' }}>|</div>
-                        <div style={{ marginBottom: '8px' }}>{item.status}</div>
-                    </OrderStatus>
+            {orderItems.data.orderItems.length === 0 ? (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignContent: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                >
+                    <img src={SearchSkeleton} alt="돋보기" style={{ width: '210px', height: '210px' }} />
+                    <span
+                        style={{
+                            fontSize: '14px',
+                            fontStyle: 'normal',
+                            fontWeight: '700',
+                            lineHeight: '16px',
+                            color: '#D3D3D3',
+                        }}
+                    >
+                        주문 내역이 없어요
+                    </span>
+                    <NavButton onClick={handleClickNavButton}>반찬박스 주문하러 가기</NavButton>
+                </div>
+            ) : (
+                <>
+                    {orderItems.data.orderItems.map((item: any, index: number) => (
+                        <Wrapper key={index}>
+                            <OrderStatus>
+                                {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
+                                <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
+                                <div style={{ marginBottom: '8px' }}>|</div>
+                                <div style={{ marginBottom: '8px' }}>{item.status}</div>
+                            </OrderStatus>
 
-                    <>
-                        <Separator />
-                        <FoodItem>
-                            <FoodImg />
-                            <FoodInfo>
-                                {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                                <p
-                                    style={{
-                                        margin: '0px',
-                                        fontSize: '16px',
-                                        fontWeight: '400',
-                                        lineHeight: '28px',
-                                        fontStyle: 'normal',
-                                    }}
-                                >
-                                    {item.storeName}
-                                </p>
-                                <FoodOrderInfo>
-                                    <p style={{ margin: '0px' }}>{item.dosirakName}</p>
-                                    <p style={{ margin: '0px' }}>{item.count}개</p>
-                                    <p style={{ margin: '0px' }}>{item.total}원</p>
-                                </FoodOrderInfo>
-                            </FoodInfo>
-                        </FoodItem>
-                    </>
-                    <ReviewButtonFirst onClick={() => handleUploadReviewClick(item)}>리뷰 쓰기</ReviewButtonFirst>
-                </Wrapper>
-            ))}
-            ;
-            <Navigator />
+                            <>
+                                <Separator />
+                                <FoodItem>
+                                    <FoodImg />
+                                    <FoodInfo>
+                                        {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
+                                        <p
+                                            style={{
+                                                margin: '0px',
+                                                fontSize: '16px',
+                                                fontWeight: '400',
+                                                lineHeight: '28px',
+                                                fontStyle: 'normal',
+                                            }}
+                                        >
+                                            {item.storeName}
+                                        </p>
+                                        <FoodOrderInfo>
+                                            <p style={{ margin: '0px' }}>{item.dosirakName}</p>
+                                            <p style={{ margin: '0px' }}>{item.count}개</p>
+                                            <p style={{ margin: '0px' }}>{item.total}원</p>
+                                        </FoodOrderInfo>
+                                    </FoodInfo>
+                                </FoodItem>
+                            </>
+                            <ReviewButtonFirst onClick={() => handleUploadReviewClick(item)}>
+                                리뷰 쓰기
+                            </ReviewButtonFirst>
+                        </Wrapper>
+                    ))}
+                    <Navigator />
+                </>
+            )}
         </div>
     );
 }
-
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -172,4 +208,26 @@ const ReviewButtonLast = styled.button`
     font-weight: 700;
     line-height: 20px;
     letter-spacing: 0.1px;
+`;
+
+const NavButton = styled.button`
+    border: none;
+    width: 208px;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #ff7455;
+    color: #fff;
+    font-family: Pretendard Variable;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    margin-top: 40px;
 `;

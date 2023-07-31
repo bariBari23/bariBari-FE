@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
 import { useState, useEffect } from 'react';
 import { CartItem } from '../utils/interface';
+import CartSkeleton from '../assets/3dCart.png';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -62,63 +63,96 @@ export default function Cart() {
         deleteSingleCartItem(id);
         window.location.reload();
     };
-
+    const handleClickNavButton = () => {
+        navigate(`/home`);
+    };
     return (
         <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
-            <CartList>
-                {cartItemsState.map((item: CartItem) => (
-                    <>
-                        <StoreInfo>
-                            <StoreImg src={item.storeMainImageUrl} />
-                            <span> {item.storeName}</span>
-                        </StoreInfo>
-                        <FoodInfo>
-                            <FoodImg src={item.dosirakMainImageUrl} />
-                            <FoodDetail>
-                                <span
+            {cartItemsState.length === 0 ? (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignContent: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                >
+                    <img src={CartSkeleton} alt="장바구니" style={{ width: '210px', height: '210px' }} />
+                    <span
+                        style={{
+                            fontSize: '14px',
+                            fontStyle: 'normal',
+                            fontWeight: '700',
+                            lineHeight: '16px',
+                            color: '#D3D3D3',
+                        }}
+                    >
+                        장바구니에 담은 상품이 없어요
+                    </span>
+                    <NavButton onClick={handleClickNavButton}>반찬박스 담으러 가기</NavButton>
+                </div>
+            ) : (
+                <CartList>
+                    {cartItemsState.map((item: CartItem) => (
+                        <>
+                            <StoreInfo>
+                                <StoreImg src={item.storeMainImageUrl} />
+                                <span> {item.storeName}</span>
+                            </StoreInfo>
+                            <FoodInfo>
+                                <FoodImg src={item.dosirakMainImageUrl} />
+                                <FoodDetail>
+                                    <span
+                                        style={{
+                                            color: '#212121',
+                                            fontSize: '18px',
+                                            fontStyle: 'normal',
+                                            fontWeight: '700',
+                                            lineHeight: '21px',
+                                        }}
+                                    >
+                                        {item.name}
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#FF7455',
+                                            fontSize: '24px',
+                                            fontStyle: 'normal',
+                                            fontWeight: '700',
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        {item.quantity * item.price}원
+                                    </span>
+                                    <FoodCount>
+                                        <CountButton onClick={() => increaseQuantity(item.id)}>+</CountButton>
+                                        <span>{item.quantity}</span>
+                                        <CountButton onClick={() => decreaseQuantity(item.id)}>-</CountButton>
+                                    </FoodCount>
+                                </FoodDetail>
+                                <button
                                     style={{
-                                        color: '#212121',
-                                        fontSize: '18px',
-                                        fontStyle: 'normal',
-                                        fontWeight: '700',
-                                        lineHeight: '21px',
+                                        background: 'none',
+                                        border: 'none',
+                                        display: 'flex',
+                                        alignSelf: 'flex-start',
+                                        cursor: 'pointer',
                                     }}
                                 >
-                                    {item.name}
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#FF7455',
-                                        fontSize: '24px',
-                                        fontStyle: 'normal',
-                                        fontWeight: '700',
-                                        lineHeight: '32px',
-                                    }}
-                                >
-                                    {item.quantity * item.price}원
-                                </span>
-                                <FoodCount>
-                                    <CountButton onClick={() => increaseQuantity(item.id)}>+</CountButton>
-                                    <span>{item.quantity}</span>
-                                    <CountButton onClick={() => decreaseQuantity(item.id)}>-</CountButton>
-                                </FoodCount>
-                            </FoodDetail>
-                            <button
-                                style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    display: 'flex',
-                                    alignSelf: 'flex-start',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                <XIcon onClick={() => deleteItem(item.id)} />
-                            </button>
-                        </FoodInfo>
-                    </>
-                ))}
-            </CartList>
+                                    <XIcon onClick={() => deleteItem(item.id)} />
+                                </button>
+                            </FoodInfo>
+                        </>
+                    ))}
+                </CartList>
+            )}
+
             <SubmitButton onClick={handleGoOrder}>구매하기</SubmitButton>
             <BackSquare />
         </div>
@@ -216,4 +250,24 @@ const BackSquare = styled.div`
     position: fixed;
     bottom: 0;
     z-index: 5000;
+`;
+
+const NavButton = styled.button`
+    border: none;
+    width: 208px;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: #ff7455;
+    color: #fff;
+    font-family: Pretendard Variable;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    margin-top: 20px;
 `;
