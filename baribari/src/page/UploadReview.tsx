@@ -108,6 +108,7 @@ export default function UploadReview() {
             console.log(reviewData.mainImageUrl);
             const response = await postReview(reviewData);
             console.log(response);
+            alert('리뷰가 성공적으로 작성되었습니다.');
             navigate('/orderlist'); // If the mutation succeeds, navigate to the order list page.
         } catch (error) {
             // Handle the error here
@@ -337,6 +338,7 @@ const TextReviewBox = styled.textarea`
     color: #212121;
     font-size: 16px;
     font-weight: 600;
+    font-family: Pretendard Variable;
     line-height: 28px;
     &::placeholder {
         color: #aaa;
@@ -362,7 +364,7 @@ const AddBtn = styled.div`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;
