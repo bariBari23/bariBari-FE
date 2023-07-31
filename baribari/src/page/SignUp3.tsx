@@ -5,29 +5,17 @@ import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
 import { useNavigate } from 'react-router-dom';
 import MapContainer from '../component/Map/MapContainer';
-import { useRecoilState } from 'recoil';
 
 export default function SignUp3() {
     const navigate = useNavigate();
-
-    const [mapSize, setMapSize] = useState<[number, number]>([400, 400]);
     const insideBoxRef = useRef<HTMLDivElement>(null);
     const containerBoxRef = useRef<HTMLDivElement>(null);
     const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
 
-    //mapSize의 너비, 높이
-    useEffect(() => {
-        if (insideBoxRef.current && containerBoxRef.current) {
-            const width = insideBoxRef.current.clientWidth;
-            const height = containerBoxRef.current.clientHeight;
-            setMapSize([width, height]);
-        }
-    }, [insideBoxRef, containerBoxRef]);
-
     const onSubmit = () => {
         // navigate('/signUp4') 나중에 수정 예정
         alert('나중에 signUp4로 루트 수정 예정');
-        navigate('/login');
+        navigate('/home');
     };
     const [isSearched, setIsSearched] = useState(false);
     const [userAddress, setUserAddress] = useState('');
@@ -35,6 +23,13 @@ export default function SignUp3() {
     // Function to handle address input change
     const handleAddressChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserAddress(event.target.value);
+    };
+
+    const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            setIsSearched(!isSearched);
+        }
     };
 
     return (
@@ -46,6 +41,7 @@ export default function SignUp3() {
                         placeholder="도로명 주소로 집 주소를 설정하면, 주변 가게를 알려드려요."
                         value={userAddress}
                         onChange={handleAddressChange}
+                        onKeyDown={handleEnterKeyPress}
                     />
                     <SearchIcon
                         onClick={() => setIsSearched(!isSearched)}
@@ -53,10 +49,11 @@ export default function SignUp3() {
                     />
                 </SearchTab>
                 <MapContainer
-                    size={mapSize}
+                    size={['100vw', '70vh']}
                     userAddress={userAddress}
                     userPosition={userPosition}
                     isSearched={isSearched}
+                    isStoreLocation={false}
                 />
                 <AddBtn onClick={onSubmit}>다음</AddBtn>
             </InsideBox>
@@ -83,7 +80,6 @@ const SearchTab = styled.button`
     width: calc(100% - 32px);
     display: flex;
     margin: 16px 16px 30px 16px;
-    margin-top: 
     padding: 8px 16px;
     justify-content: space-between;
     align-items: center;
@@ -91,6 +87,7 @@ const SearchTab = styled.button`
     border: none;
     background-color: #efefef;
     color: #949494;
+    font-family: Pretendard Variable;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
@@ -101,7 +98,7 @@ const SearchInput = styled.textarea`
     color: #504e5f;
     width: 465px;
     font-size: 16px;
-    font-family: Pretendard-Regular;
+    font-family: Pretendard Variable;
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
@@ -113,11 +110,6 @@ const SearchInput = styled.textarea`
     &::placeholder {
         color: #949494;
     }
-`;
-const MapBox = styled.div`
-    width: 100%;
-    height: 500px;
-    background-color: grey;
 `;
 
 const AddBtn = styled.div`
@@ -134,7 +126,6 @@ const AddBtn = styled.div`
     border: none;
     align-items: center;
     justify-content: center;
-
     position: fixed;
     margin: 0 16px;
     bottom: 16px;

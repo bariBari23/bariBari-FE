@@ -1,11 +1,28 @@
 import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { LocaIcon } from './IconFin';
 import FoodPic1 from '../assets/FoodPic1.svg';
 import FoodPic2 from '../assets/FoodPic2.svg';
+import SvgSprite from './Sprite';
+import { getUserLocation } from '../apis/api/location';
 
 export default function RandomTabs() {
     const [randomTab, setRandomTab] = useState(0);
+    const [userLocation, setUserLocation] = useState<[number, number]>([0, 0]);
+
+    useEffect(() => {
+        const showUserLocation = async () => {
+            try {
+                const { latitude, longitude } = await getUserLocation(); // getUserLocation() 함수로 경도와 위도 정보를 얻어옴
+                setUserLocation([latitude, longitude]);
+                console.log('메롱', userLocation);
+            } catch (error) {
+                console.log('Error', error);
+            }
+        };
+
+        // showUserLocation 함수 호출
+        showUserLocation();
+    }, []);
 
     useEffect(() => {
         const intervalId = setTimeout(() => {
@@ -18,6 +35,7 @@ export default function RandomTabs() {
     }, [randomTab]);
     return (
         <div>
+            <SvgSprite />
             {randomTab === 0 ? (
                 <Container>
                     <Text>
@@ -26,8 +44,11 @@ export default function RandomTabs() {
                             <Highlight>10%</Highlight> 할인 쿠폰 받아요!
                         </Header>
                         <SubHeader>
-                            <LocaIcon />
-                            서울특별시 서대문구 대신동 125-16
+                            <svg width="20" height="20">
+                                <use xlinkHref="#property-1-map-1" />
+                            </svg>
+                            {/* <CoordinateToAddressConverter latitude={userLocation[0]} longitude={userLocation[1]} /> */}
+                            서울 서대문구 이화여대길 52
                         </SubHeader>
                     </Text>
                     <img src={FoodPic1} alt="FoodPic1" />
@@ -40,8 +61,11 @@ export default function RandomTabs() {
                             <Highlight>행복</Highlight>을 느껴보세요!
                         </Header>
                         <SubHeader>
-                            <LocaIcon />
-                            서울특별시 서대문구 대신동 125-16
+                            <svg width="20" height="20">
+                                <use xlinkHref="#property-1-map-1" />
+                            </svg>
+                            {/* <CoordinateToAddressConverter latitude={userLocation[0]} longitude={userLocation[1]} /> */}
+                            서울 서대문구 이화여대길 52
                         </SubHeader>
                     </Text>
                     <img src={FoodPic2} alt="FoodPic2" />
@@ -86,6 +110,6 @@ const SubHeader = styled.div`
     line-height: normal;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     margin-top: 0px;
 `;

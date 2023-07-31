@@ -64,10 +64,7 @@ const Container = styled.div`
 `;
 
 const InsideContainer = styled.div`
-    display: flex;
     width: 100%;
     height: 100vh;
-    align-items: flex-start;
-    justify-content: flex-start;
     margin: 8px 0;
 `;

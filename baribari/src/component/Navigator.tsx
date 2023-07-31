@@ -3,30 +3,17 @@ import { useEffect, useState } from 'react';
 import { OrderListIcon, HomeIcon, MyPageIcon } from './IconFin';
 import { useNavigate } from 'react-router';
 import { atom, useRecoilState } from 'recoil';
-// Recoil atom으로 현재 페이지 상태 정의
-const currentPageState = atom<string>({
-    key: 'currentpage',
-    default: 'home',
-});
+import { currentPageState } from '../utils/atom';
 
 export default function Navigator() {
     const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+
     const navigate = useNavigate();
 
     const handlePageChange = (page: string) => {
         setCurrentPage(page);
+        navigate(`/${page}`);
     };
-
-    useEffect(() => {
-        // currentPage가 변경될 때마다 페이지 이동 처리
-        if (currentPage === 'home') {
-            navigate('/home');
-        } else if (currentPage === 'myPage') {
-            navigate(`/myPage`);
-        } else if (currentPage === 'orderlist') {
-            navigate(`/orderlist`);
-        }
-    }, [currentPage]);
 
     return (
         <NavContainer>

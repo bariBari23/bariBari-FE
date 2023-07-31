@@ -5,9 +5,12 @@ import { styled } from 'styled-components';
 import { cancelStoreLike, clickStoreLike, getLikedStoreInfo } from '../apis/api/store';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { StoreLikedItem } from '../utils/interface';
+import StoreImage from '../assets/storeImg.png';
+import SvgSprite from '../component/Sprite';
 
 export default function Fav() {
     const { status, data, refetch } = useQuery(['likedStoreInfo'], getLikedStoreInfo);
+    console.log('likedStoreInfo', data);
     const { mutate: likeStore } = useMutation(clickStoreLike, {
         onSuccess: () => {
             refetch(); // API 호출 성공 시 데이터를 리프레시합니다.
@@ -30,7 +33,7 @@ export default function Fav() {
 
     const handleLikeToggle = (storeId: number) => {
         // 해당 storeId가 이미 즐겨찾기에 있는지 확인
-        const isLiked = data.data.likeList.some((item: any) => item.storeId === storeId);
+        const isLiked = data.likeList.some((item: any) => item.storeId === storeId);
 
         if (isLiked) {
             // 이미 즐겨찾기에 있는 경우, 취소
@@ -45,9 +48,9 @@ export default function Fav() {
         <div>
             <Wrapper>
                 <Header showPageName={true} pageTitle="즐겨찾기" showSearchBar={false} />
-                {data.data.likeList.map((item: StoreLikedItem) => (
+                {data.likeList.map((item: StoreLikedItem) => (
                     <StoreTab key={item.storeId}>
-                        <StoreImg />
+                        <StoreImg src={StoreImage} />
                         <StoreInfo>
                             <p style={{ margin: '0px' }}>{item.storeName}</p>
                         </StoreInfo>
@@ -74,7 +77,7 @@ const StoreTab = styled.div`
     align-items: center;
 `;
 
-const StoreImg = styled.div`
+const StoreImg = styled.img`
     width: 52px;
     height: 52px;
     background: lightgrey;

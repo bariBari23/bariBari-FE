@@ -23,12 +23,23 @@ export async function allStoreDistance() {
 }
 
 //유저 거리 수정하기 api
-export async function createUserLocation(latitude: number, longitude: number, username: string) {
+export async function createUserLocation(latitude: number, longitude: number) {
     try {
-        const response = await axiosInstance.put(
-            `/v1/my/location?latitude=${latitude}&longitude=${longitude}&username=${username}`,
-            {},
-        );
+        const response = await axiosInstance.put(`/v1/my/location`, {
+            latitude: latitude,
+            longitude: longitude,
+        });
+        return response.data;
+    } catch (error) {
+        console.log('Error:', error);
+        throw error;
+    }
+}
+
+// 유저 위치 받는 api
+export async function getUserLocation() {
+    try {
+        const response = await axiosInstance.get(`/v1/my/location`);
         return response.data;
     } catch (error) {
         console.log('Error:', error);

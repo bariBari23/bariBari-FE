@@ -6,9 +6,14 @@ export const keywordsState = atom({
 });
 export const userAddressState = atom({
     key: 'userAddressState',
-    default: [],
+    default: '',
 });
 export const storeAddressState = atom({
     key: 'storeAddressState',
     default: [],
+});
+
+export const currentPageState = atom<string>({
+    key: 'currentpage',
+    default: 'home',
 });

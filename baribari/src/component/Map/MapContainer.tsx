@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { createUserLocation } from '../../apis/api/location';
-import { getUserInfo } from '../../apis/api/user';
-import axios from 'axios';
+import { createUserLocation, getUserLocation } from '../../apis/api/location';
 import { useRecoilValue } from 'recoil';
 import { storeAddressState } from '../../utils/atom';
 
@@ -13,54 +11,59 @@ declare global {
 }
 
 export default function MapContainer(props: {
-    size: [number, number];
+    size: [any, any];
     userAddress: string;
     isSearched: boolean;
+    isStoreLocation: boolean;
     userPosition: {
         latitude: number;
         longitude: number;
     };
 }): JSX.Element {
-    const { size, userAddress, isSearched, userPosition } = props;
+    const { size, userAddress, isSearched, userPosition, isStoreLocation } = props;
     const [kakaoMap, setKakaoMap] = useState<any>(null);
     const [marker, setMarkers] = useState<any>(null);
     const [storeMarkers, setStoreMarkers] = useState<any[]>([]);
     const storeAddress = useRecoilValue(storeAddressState);
     // 도로명 주소 저장해주는 userStringAddress
     const [userStringAddress, setUserStringAddress] = useState<string>('');
-
     // 유저의 위치 정보를 createUserLocation api 활용해 보냄
     const callCreateUserLocation = async () => {
-        if (marker) {
-            try {
-                const userInfo = await getUserInfo();
-                const email = userInfo.data.email;
-                const latitude = marker.n.La;
-                const longitude = marker.n.Ma;
-                try {
-                    const result = await createUserLocation(latitude, longitude, email);
-                    console.log('API 호출 결과:', result);
-                } catch (error) {
-                    console.log('API 호출 중 에러 발생:', error);
+        if (isSearched) {
+            const geocoder = new kakao.maps.services.Geocoder();
+            // 주소를 검색하여 위도와 경도를 얻음
+            geocoder.addressSearch(userAddress, async (result: any, status: any) => {
+                if (status === kakao.maps.services.Status.OK) {
+                    const latitude = result[0].y;
+                    const longitude = result[0].x;
+
+                    try {
+                        // 위도와 경도를 서버로 전송하여 createUserLocation api를 호출
+                        const response = await createUserLocation(latitude, longitude);
+                        console.log('API 호출 결과는', response);
+                    } catch (error) {
+                        console.log('에러 발생', error);
+                    }
+                } else {
+                    console.log('주소를 찾을 수 없습니다.');
                 }
-            } catch (error) {
-                console.log('Error fetching user info:', error);
-            }
+            });
         }
     };
+
     // 마커 이미지 커스텀
     const createCustomMarkerImage = () => {
         if (kakaoMap) {
             const imageUrl = 'https://i.ibb.co/7vrcJBH/marker-Home.png';
             const imageUrlTwo = 'https://i.ibb.co/8KFW6rw/marker-Store.png';
             // 커스텀 마커 이미지 생성
-            const icon = new kakao.maps.MarkerImage(imageUrl, new kakao.maps.Size(31, 35), {
+            const icon = new kakao.maps.MarkerImage(imageUrl, new kakao.maps.Size(35, 35), {
                 offset: new kakao.maps.Point(16, 34),
                 alt: '내 위치 마커 이미지 예제',
                 shape: 'poly',
                 coords: '1,20,1,9,5,2,10,0,21,0,27,3,30,9,30,20,17,33,14,33',
             });
-            const iconTwo = new kakao.maps.MarkerImage(imageUrlTwo, new kakao.maps.Size(31, 35), {
+            const iconTwo = new kakao.maps.MarkerImage(imageUrlTwo, new kakao.maps.Size(35, 35), {
                 offset: new kakao.maps.Point(16, 34),
                 alt: '상점 마커 이미지 예제',
                 shape: 'poly',
@@ -91,149 +94,74 @@ export default function MapContainer(props: {
         };
     }, []);
 
-    //테스트
-    // useEffect(() => {
-    //     if (!kakaoMap || !userAddress) {
-    //         return;
-    //     }
-    //     // 전의 마커 지우기
-    //     if (userAddress.length === 0) {
-    //         marker.setMap(null);
-    //         setMarkers(null);
-    //     }
-    //     // 전의 마커 지우기
-    //     if (marker) {
-    //         marker.setMap(null);
-    //         setMarkers(null);
-    //     }
-    //     // 상점 주소가 표시가 될까낭
-    //     // 각 상점의 주소로 마커 표시
-    //     const geocoderTest = new kakao.maps.services.Geocoder();
-    //     storeLocation.forEach((address: any) => {
-    //         geocoderTest.addressSearch(address, (result: any, status: any) => {
-    //             if (status === kakao.maps.services.Status.OK) {
-    //                 const latitude = result[0].y;
-    //                 const longitude = result[0].x;
-    //                 // 새로운 마커 이미지 생성
-    //                 const customMarkerImage = createCustomMarkerImage();
-    //                 // 새로운 위도, 경도로 마커 생성
-    //                 const newMarker = new kakao.maps.Marker({
-    //                     map: kakaoMap,
-    //                     position: new kakao.maps.LatLng(latitude, longitude),
-    //                     image: customMarkerImage,
-    //                 });
-    //                 setStoreMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-    //             }
-    //         });
-    //     });
+    //회원가입 시 처음 위치 검색 후 설정할 때
+    useEffect(() => {
+        if (!kakaoMap || !userAddress) {
+            return;
+        }
+        // 전의 마커 지우기
+        if (userAddress.length === 0) {
+            marker.setMap(null);
+            setMarkers(null);
+        }
+        // 전의 마커 지우기
+        if (marker) {
+            marker.setMap(null);
+            setMarkers(null);
+        }
 
-    //     // Use the geocoder to get the location data based on the userAddress
-    //     const geocoder = new kakao.maps.services.Geocoder();
-    //     const callback = function (result: any, status: any) {
-    //         if (status === kakao.maps.services.Status.OK) {
-    //             // result로 받은 주소가 많을 경우 result[0]에 있는 위도, 경도 사용
-    //             console.log('4');
+        // Use the geocoder to get the location data based on the userAddress
+        const geocoder = new kakao.maps.services.Geocoder();
+        const callback = function (result: any, status: any) {
+            if (status === kakao.maps.services.Status.OK) {
+                // result로 받은 주소가 많을 경우 result[0]에 있는 위도, 경도 사용
+                const latitude = result[0].y;
+                const longitude = result[0].x;
+                //새로운 마커 이미지 생성
+                const customMarkerImage = createCustomMarkerImage();
+                // 새로운 위도, 경도로 마커 생성
+                const newMarker = new kakao.maps.Marker({
+                    map: kakaoMap,
+                    position: new kakao.maps.LatLng(latitude, longitude),
+                    image: isStoreLocation ? customMarkerImage?.iconTwo : customMarkerImage?.icon,
+                });
+                setMarkers(newMarker);
+                console.log(result);
+            } else {
+                // 주소가 아예 존재하지 않을 때
+                setMarkers(null);
+            }
+        };
+        geocoder.addressSearch(userAddress, callback);
+    }, [kakaoMap, isSearched]);
 
-    //             const latitude = result[0].y;
-    //             const longitude = result[0].x;
-    //             //새로운 마커 이미지 생성
-    //             const customMarkerImage = createCustomMarkerImage();
-    //             // 새로운 위도, 경도로 마커 생성
-    //             const newMarker = new kakao.maps.Marker({
-    //                 map: kakaoMap,
-    //                 position: new kakao.maps.LatLng(latitude, longitude),
-    //                 image: customMarkerImage,
-    //             });
-    //             setMarkers(newMarker);
-    //             console.log(result);
-    //         } else {
-    //             // 주소가 아예 존재하지 않을 때
-    //             setMarkers(null);
-    //         }
-    //     };
-    //     geocoder.addressSearch(userAddress, callback);
-    // }, [kakaoMap, isSearched]);
+    useEffect(() => {
+        if (isSearched) {
+            callCreateUserLocation();
+        }
+    }, [isSearched, marker]);
 
-    // useEffect(() => {
-    //     if (!kakaoMap || !userAddress) {
-    //         return;
-    //     }
-
-    //     // 이전에 있던 상점 마커들 삭제
-    //     if (storeMarkers.length > 0) {
-    //         storeMarkers.forEach((marker) => marker.setMap(null));
-    //     }
-    //     console.log('bari2');
-
-    //     // 각 상점의 주소로 마커 표시
-    //     const geocoder = new kakao.maps.services.Geocoder();
-    //     console.log('bari2');
-
-    //     storeAddress.forEach((address) => {
-    //         geocoder.addressSearch(address, (result: any, status: any) => {
-    //             console.log('bari');
-    //             if (status === kakao.maps.services.Status.OK) {
-    //                 const latitude = result[0].y;
-    //                 const longitude = result[0].x;
-    //                 // 새로운 마커 이미지 생성 (유저 위치에는 icon, 상점 위치에는 iconTwo를 사용)
-    //                 const customMarkerImage = createCustomMarkerImage();
-    //                 console.log('customMarkerImage', customMarkerImage);
-
-    //                 // 새로운 위도, 경도로 마커 생성
-    //                 const newMarker = new kakao.maps.Marker({
-    //                     map: kakaoMap,
-    //                     position: new kakao.maps.LatLng(latitude, longitude),
-    //                     image: customMarkerImage?.iconTwo, // iconTwo를 사용하여 상점 위치에 대한 마커 생성
-    //                 });
-    //                 setStoreMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-    //             }
-    //         });
-    //     });
-    // }, [kakaoMap]);
-
+    // 마이페이지에서 상점 이미지 띄우기 + 내 장소 띄우기
     useEffect(() => {
         if (!kakaoMap) {
             return;
         }
+        const geocoder = new kakao.maps.services.Geocoder();
 
-        if (userAddress && isSearched) {
-            // 전의 마커 지우기
-            if (userAddress.length === 0) {
-                setMarkers(null);
-            }
-            // 전의 마커 지우기
-            if (marker) {
-                marker.setMap(null);
-                setMarkers(null);
-            }
-
-            // 사용자 주소에 따라 마커 띄우기 at SignUp3
-            const geocoderTest = new kakao.maps.services.Geocoder();
-            const callback = function (result: any, status: any) {
-                if (status === kakao.maps.services.Status.OK) {
-                    // result로 받은 주소가 많을 경우 result[0]에 있는 위도, 경도 사용
-                    const latitude = result[0].y;
-                    const longitude = result[0].x;
-                    //새로운 마커 이미지 생성
-                    const customMarkerImage = createCustomMarkerImage();
-                    // 새로운 위도, 경도로 마커 생성
-                    const newMarker = new kakao.maps.Marker({
-                        map: kakaoMap,
-                        position: new kakao.maps.LatLng(latitude, longitude),
-                        image: customMarkerImage?.icon,
-                    });
-                    setMarkers(newMarker);
-                } else {
-                    // 주소가 아예 존재하지 않을 때
-                    setMarkers(null);
-                }
-            };
-            geocoderTest.addressSearch(userAddress, callback);
-        }
-
-        //마이페이지 위 상점 마커들 띄우기
-        if (!userAddress) {
-            const geocoder = new kakao.maps.services.Geocoder();
+        if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+            // 내 위치 띄우기
+            const latitude = userPosition.latitude;
+            const longitude = userPosition.longitude;
+            const customMarkerImage = createCustomMarkerImage();
+            // 새로운 위도, 경도로 마커 생성
+            const newMarker = new kakao.maps.Marker({
+                map: kakaoMap,
+                position: new kakao.maps.LatLng(latitude, longitude),
+                image: customMarkerImage?.icon,
+            });
+            setMarkers(newMarker);
+            console.log(newMarker);
+            // 상점 위치들 띄우기
             storeAddress.forEach((address) => {
                 geocoder.addressSearch(address, (result: any, status: any) => {
                     if (status === kakao.maps.services.Status.OK) {
@@ -251,12 +179,7 @@ export default function MapContainer(props: {
                 });
             });
         }
-    }, [kakaoMap, userAddress, isSearched]);
+    }, [kakaoMap, userAddress]);
 
-    useEffect(() => {
-        if (isSearched) {
-            callCreateUserLocation();
-        }
-    }, [isSearched, marker]);
-    return <div id="container" style={{ width: '100vw', height: '50vh' }} />;
+    return <div id="container" style={{ width: size[0], height: size[1], borderRadius: '12px' }} />;
 }
