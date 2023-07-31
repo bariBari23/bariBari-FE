@@ -42,7 +42,7 @@ export default function Order() {
         const total = cartItems.reduce((acc: number, item: CartItem) => acc + item.total, 0);
         console.log(sum);
         setSum(total); // 계산된 총 금액을 sum 변수에 설정
-    }, [cartItems]);
+    }, []);
 
     const handleOrderClick = async () => {
         try {

@@ -69,7 +69,7 @@ export default function OrderList() {
                                     <FoodOrderInfo>
                                         <p style={{ margin: '0px' }}>{item.dosirakName}</p>
                                         <p style={{ margin: '0px' }}>{item.count}개</p>
-                                        <p style={{ margin: '0px' }}>{item.total}원</p>
+                                        <p style={{ margin: '0px' }}>{item.total.toLocaleString()}원</p>
                                     </FoodOrderInfo>
                                 </FoodInfo>
                             </FoodItem>
