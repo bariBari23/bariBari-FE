@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
 import { useState, useEffect } from 'react';
 import { CartItem } from '../utils/interface';
-import CartImage from '../assets/CartImage.png';
+
+import CartSkeleton from '../assets/3dCart.png';
+
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -66,7 +68,9 @@ export default function Cart() {
         deleteSingleCartItem(id);
         window.location.reload();
     };
-
+    const handleClickNavButton = () => {
+        navigate(`/home`);
+    };
     return (
         <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
@@ -74,17 +78,33 @@ export default function Cart() {
                 <div
                     style={{
                         display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+
                         flexDirection: 'column',
-                        marginTop: 'calc(50% - 150px)',
+                        alignContent: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <img src={CartImage} alt="Empty cart" style={{ width: '300px', height: '300px' }} />
-                    장바구니에 담은 상품이 없어요
+                    <img src={CartSkeleton} alt="장바구니" style={{ width: '210px', height: '210px' }} />
+                    <span
+                        style={{
+                            fontSize: '14px',
+                            fontStyle: 'normal',
+                            fontWeight: '700',
+                            lineHeight: '16px',
+                            color: '#D3D3D3',
+                        }}
+                    >
+                        장바구니에 담은 상품이 없어요
+                    </span>
+                    <NavButton onClick={handleClickNavButton}>반찬박스 담으러 가기</NavButton>
                 </div>
             ) : (
-                <CartList>
+               <CartList>
                     {cartItemsState.map((item: CartItem) => (
                         <>
                             <StoreInfo>
@@ -271,4 +291,24 @@ const BackSquare = styled.div`
     position: fixed;
     bottom: 0;
     z-index: 5000;
+`;
+
+const NavButton = styled.button`
+    border: none;
+    width: 208px;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: #ff7455;
+    color: #fff;
+    font-family: Pretendard Variable;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    margin-top: 20px;
 `;

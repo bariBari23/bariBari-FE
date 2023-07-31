@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { keywordsState } from '../utils/atom';
 import useDebounce from '../utils/useDebounce';
+import SearchSkeleton from '../assets/3dSearch.png';
 
 export default function Search() {
     const [filterLiked, setFilterLiked] = useState(false);
@@ -27,12 +28,16 @@ export default function Search() {
                     <HeartList filterLiked={filterLiked} onFilterLikedChange={setFilterLiked} />
                     <DropDown onSelectSortOption={(option) => setSelectedSortOption(option)} />
                 </Container>
-                <ContentContainer
-                    keyword={debouncedSearchText}
-                    filterLiked={filterLiked}
-                    sort={selectedSortOption}
-                    setRefresh={false}
-                />
+                {keyword === '' ? (
+                    <div></div>
+                ) : (
+                    <ContentContainer
+                        keyword={debouncedSearchText}
+                        filterLiked={filterLiked}
+                        sort={selectedSortOption}
+                        setRefresh={false}
+                    />
+                )}
             </Wrapper>
         </div>
     );
