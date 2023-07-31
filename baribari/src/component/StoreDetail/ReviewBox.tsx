@@ -1,10 +1,19 @@
 import styled from 'styled-components';
 import ReviewCard from './ReviewCard';
-import { ReactComponent as Star } from '../../assets/star.svg';
+
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
+import Star from '../../assets/plainStar';
 
-export default function ReviewBox({ isSelected, id }: { isSelected: boolean; id: number | null }) {
+export default function ReviewBox({
+    isSelected,
+    id,
+    rating,
+}: {
+    isSelected: boolean;
+    id: number | null;
+    rating: number | any;
+}) {
     return (
         <Container isSelected={isSelected}>
             <ScoreBox>
@@ -15,12 +24,21 @@ export default function ReviewBox({ isSelected, id }: { isSelected: boolean; id:
                         fontStyle: 'normal',
                         fontWeight: '700',
                         lineHeight: '32px',
+                        display: 'flex',
+                        gap: '18px',
                     }}
                 >
-                    4.4
-                </div>
-                <div>
-                    <Star />
+                    {isNaN(parseFloat(rating)) ? '정보 없음' : parseFloat(rating).toFixed(1)}
+                    <div style={{ display: 'flex', width: '137px', justifyContent: 'space-between' }}>
+                        {[1, 2, 3, 4, 5].map((starNumber) => (
+                            <Star
+                                width={21}
+                                key={starNumber}
+                                starNumber={starNumber}
+                                selected={starNumber <= parseFloat(rating)}
+                            />
+                        ))}
+                    </div>
                 </div>
             </ScoreBox>
             <ReviewCard id={id} />

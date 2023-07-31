@@ -2,60 +2,108 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
+import Star from '../../assets/plainStar';
+import { useState } from 'react';
 
-export default function StoreDetailBox({ isSelected, storeId }: { isSelected: boolean; storeId: number | null }) {
-    const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
-    if (error) {
-        return <div>An error has occurred</div>;
-    }
-    if (isLoading) {
-        return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
-    }
+export default function StoreDetailBox({ isSelected, storeData }: { isSelected: boolean; storeData: any }) {
+    // const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
+    // if (error) {
+    //     return <div>An error has occurred</div>;
+    // }
+    // if (isLoading) {
+    //     return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
+    // }
+    const onCall = () => {
+        document.location.href = `tel:${storeData.data.phoneNumber}`;
+    };
     return (
         <Container isSelected={isSelected}>
             <MainBox>
                 <TitleBox>
-                    <div style={{ height: '21px', marginRight: 'auto', marginBottom: '11px' }}>
+                    <div style={{ height: '21px', marginRight: 'auto', display: 'flex', flexDirection: 'column' }}>
                         {storeData.data.storeName}
+                        <div
+                            style={{
+                                height: '21px',
+                                marginTop: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                fontSize: '18px',
+                                justifyContent: 'center',
+                                color: '#000',
+                                fontWeight: '700',
+                                lineHeight: '21px',
+                            }}
+                        >
+                            {isNaN(parseFloat(storeData.data.reviewMean))
+                                ? '정보 없음'
+                                : parseFloat(storeData.data.reviewMean).toFixed(1)}
+                            <div
+                                style={{
+                                    marginLeft: '12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                {[1, 2, 3, 4, 5].map((starNumber) => (
+                                    <Star
+                                        width={14.3}
+                                        key={starNumber}
+                                        starNumber={starNumber}
+                                        selected={starNumber <= parseFloat(storeData.data.reviewMean)}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ height: '21px' }}>4.4</div>
                 </TitleBox>
-                <CallBtn style={{ marginRight: '12px' }}>연락하기</CallBtn>
+                <CallBtn style={{ marginRight: '12px' }} onClick={onCall}>
+                    연락하기
+                </CallBtn>
             </MainBox>
             <SubBox style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                 <InfoBox>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>가게 위치</div>{' '}
+                        <div
+                            style={{
+                                display: 'flex',
+                                paddingLeft: '12px',
+                                color: '#212121',
+                                fontWeight: '400',
+                                flex: '1',
+                            }}
+                        >
                             {storeData.data.storeAddress}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>연락처</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.businessNumber}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>운영시간</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.dayList}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>휴무일</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.offDay}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>도보 거리</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>도보 거리</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             걸어서 5분 {/*여기 수정*/}
                         </div>{' '}
                     </div>
@@ -66,7 +114,7 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                 <InfoBox>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>원산지</div>{' '}
                         <div
                             style={{
                                 width: 'calc(100% - 70px)',
@@ -75,18 +123,20 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
                                 fontWeight: '500',
                             }}
                         >
-                            돼지고기 - 국내산, 돼지고기 - 국내산, 돼지고기 - 국내산
+                            {storeData.data.fromWhere}
                         </div>{' '}
                     </div>
                     <div style={{ display: 'flex', paddingBottom: '16px' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>위생정보</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>꺠끗해요</div>{' '}
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>위생정보</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
+                            {storeData.data.clean}
+                        </div>{' '}
                     </div>
                     <div style={{ display: 'flex' }}>
                         {' '}
-                        <div style={{ width: '70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
-                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '500' }}>
+                        <div style={{ flex: '0 0 70px', color: '#949494', fontWeight: '400' }}>안내사항</div>{' '}
+                        <div style={{ paddingLeft: '12px', color: '#212121', fontWeight: '400' }}>
                             {storeData.data.description}
                         </div>{' '}
                     </div>
@@ -123,7 +173,7 @@ const TitleBox = styled.div`
 const CallBtn = styled.button`
     display: flex;
     height: 33px;
-    width: 73px;
+    width: 80px;
     border: solid 1px #767676;
     background-color: #f9f9f9;
     color: #767676;
@@ -144,6 +194,7 @@ const InfoBox = styled.div`
     height: 204px;
     width: 100%;
     font-size: 16px;
+    font-weight: 400;
 `;
 const MapBox = styled.div`
     display: flex;

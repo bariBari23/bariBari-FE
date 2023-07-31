@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
 import { useState, useEffect } from 'react';
 import { CartItem } from '../utils/interface';
+import CartImage from '../assets/CartImage.png';
 
 export default function Cart() {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function Cart() {
     const increaseQuantity = (id: number) => {
         setCartItemsState((prevState) =>
             prevState.map((item) => {
-                if (item.id === id && item.quantity < 4) {
+                if (item.id === id && item.quantity < 3) {
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;
@@ -49,14 +50,17 @@ export default function Cart() {
         );
     };
     const handleGoOrder = () => {
-        cartItemsState.forEach(async (item) => {
-            try {
-                await updateCartItem(item.id, item.quantity, item);
-            } catch (error) {
-                console.error('Error updating cart item: ', error);
-            }
+        const promises = cartItemsState.map(async (item) => {
+            return updateCartItem(item.id, item.quantity, item);
         });
-        navigate('/order', { state: { cartItems: cartItemsState } });
+
+        Promise.all(promises)
+            .then(() => {
+                navigate('/order', { state: { cartItems: cartItemsState } });
+            })
+            .catch((error) => {
+                console.error('Error updating cart items: ', error);
+            });
     };
     const deleteItem = (id: number) => {
         deleteSingleCartItem(id);
@@ -66,59 +70,104 @@ export default function Cart() {
     return (
         <div style={{ width: '100%', paddingTop: '70px' }}>
             <Header showPageName={true} pageTitle="장바구니" showSearchBar={false} />
-            <CartList>
-                {cartItemsState.map((item: CartItem) => (
-                    <>
-                        <StoreInfo>
-                            <StoreImg src={item.storeMainImageUrl} />
-                            <span> {item.storeName}</span>
-                        </StoreInfo>
-                        <FoodInfo>
-                            <FoodImg src={item.dosirakMainImageUrl} />
-                            <FoodDetail>
-                                <span
+            {cartItemsState.length === 0 ? (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        marginTop: 'calc(50% - 150px)',
+                    }}
+                >
+                    <img src={CartImage} alt="Empty cart" style={{ width: '300px', height: '300px' }} />
+                    장바구니에 담은 상품이 없어요
+                </div>
+            ) : (
+                <CartList>
+                    {cartItemsState.map((item: CartItem) => (
+                        <>
+                            <StoreInfo>
+                                <StoreImg src={item.storeMainImageUrl} />
+                                <span> {item.storeName}</span>
+                            </StoreInfo>
+                            <FoodInfo>
+                                <FoodImg src={item.dosirakMainImageUrl} />
+                                <FoodDetail>
+                                    <span
+                                        style={{
+                                            color: '#212121',
+                                            fontSize: '18px',
+                                            fontStyle: 'normal',
+                                            fontWeight: '700',
+                                            lineHeight: '21px',
+                                        }}
+                                    >
+                                        {item.name}
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#FF7455',
+                                            fontSize: '24px',
+                                            fontStyle: 'normal',
+                                            fontWeight: '700',
+                                            lineHeight: '32px',
+                                        }}
+                                    >
+                                        {(item.quantity * item.price).toLocaleString()}원
+                                    </span>
+                                    <FoodCount>
+                                        <CountButton onClick={() => decreaseQuantity(item.id)}>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="10"
+                                                height="10"
+                                                viewBox="0 0 10 10"
+                                                fill="none"
+                                            >
+                                                <path
+                                                    d="M8.375 5L1.625 5"
+                                                    stroke="#767676"
+                                                    stroke-width="1.40625"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </CountButton>
+                                        <span>{item.quantity}</span>
+                                        <CountButton onClick={() => increaseQuantity(item.id)}>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="10"
+                                                height="10"
+                                                viewBox="0 0 10 10"
+                                                fill="none"
+                                            >
+                                                <path
+                                                    d="M5 1.625L5 8.375M8.375 5L1.625 5"
+                                                    stroke="#767676"
+                                                    stroke-width="1.40625"
+                                                    stroke-linecap="round"
+                                                />
+                                            </svg>
+                                        </CountButton>
+                                    </FoodCount>
+                                </FoodDetail>
+                                <button
                                     style={{
-                                        color: '#212121',
-                                        fontSize: '18px',
-                                        fontStyle: 'normal',
-                                        fontWeight: '700',
-                                        lineHeight: '21px',
+                                        background: 'none',
+                                        border: 'none',
+                                        display: 'flex',
+                                        alignSelf: 'flex-start',
+                                        cursor: 'pointer',
                                     }}
                                 >
-                                    {item.name}
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#FF7455',
-                                        fontSize: '24px',
-                                        fontStyle: 'normal',
-                                        fontWeight: '700',
-                                        lineHeight: '32px',
-                                    }}
-                                >
-                                    {item.quantity * item.price}원
-                                </span>
-                                <FoodCount>
-                                    <CountButton onClick={() => increaseQuantity(item.id)}>+</CountButton>
-                                    <span>{item.quantity}</span>
-                                    <CountButton onClick={() => decreaseQuantity(item.id)}>-</CountButton>
-                                </FoodCount>
-                            </FoodDetail>
-                            <button
-                                style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    display: 'flex',
-                                    alignSelf: 'flex-start',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                <XIcon onClick={() => deleteItem(item.id)} />
-                            </button>
-                        </FoodInfo>
-                    </>
-                ))}
-            </CartList>
+                                    <XIcon onClick={() => deleteItem(item.id)} />
+                                </button>
+                            </FoodInfo>
+                        </>
+                    ))}
+                </CartList>
+            )}
             <SubmitButton onClick={handleGoOrder}>구매하기</SubmitButton>
             <BackSquare />
         </div>
@@ -185,6 +234,12 @@ const FoodCount = styled.div`
 const CountButton = styled.button`
     border: none;
     cursor: pointer;
+    background-color: transparent;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
 `;
 const SubmitButton = styled.div`
     display: flex;
