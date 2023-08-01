@@ -181,5 +181,5 @@ export default function MapContainer(props: {
         }
     }, [kakaoMap, userAddress]);
 
-    return <div id="container" style={{ width: size[0], height: size[1], borderRadius: '12px' }} />;
+    return <div id="container" style={{ width: '100%', height: size[1], borderRadius: '12px' }} />;
 }
