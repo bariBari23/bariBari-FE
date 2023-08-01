@@ -5,7 +5,7 @@ export async function loginUser(email: string, password: string) {
     try {
         // 로그인 API 호출
         const response = await axiosInstance.post(
-            'https://baribari.store/api/v1/auth/login',
+            'https://www.baribari.store/api/v1/auth/login',
             {
                 email,
                 password,
