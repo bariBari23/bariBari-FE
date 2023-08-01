@@ -7,6 +7,8 @@ import { useMutation, useQuery } from 'react-query';
 import { postReview } from '../apis/api/review';
 import { getFileUrl } from '../apis/api/util';
 import { axiosInstance } from '../apis';
+import { format, parseISO } from 'date-fns';
+import ko from 'date-fns/locale/ko';
 
 type SelectedValue = [quantity: string, flavor: string, wrap: string];
 
@@ -24,7 +26,11 @@ export default function UploadReview() {
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [imageUrl, setUrl] = useState('');
-    
+
+    function convertDate(dateString: string) {
+        const date = parseISO(dateString);
+        return format(date, 'yyyy. MM. dd', { locale: ko });
+    }
 
     const Star = ({
         starNumber,
@@ -87,7 +93,6 @@ export default function UploadReview() {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
             setImageUrl(URL.createObjectURL(e.target.files[0]));
-            
         }
     };
 
@@ -99,7 +104,7 @@ export default function UploadReview() {
         setRating(newRating);
     };
     const selectedValue = [quantity, flavor, wrap];
-    const onRealSubmit = async() =>{
+    const onRealSubmit = async () => {
         try {
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
@@ -118,21 +123,20 @@ export default function UploadReview() {
             // Handle the error here
             console.error('Failed to submit review:', error);
         }
-    }
+    };
     const onSubmitReview = async () => {
-
         const reader = new FileReader();
 
-        reader.onload = async function(event: ProgressEvent<FileReader>){
+        reader.onload = async function (event: ProgressEvent<FileReader>) {
             const data = await axiosInstance.get(`/v1/file/presign`);
             setUrl(data?.data.data);
-            console.log( 'url: ' + data?.data.data);
+            console.log('url: ' + data?.data.data);
             const binaryData = event.target?.result;
             // console.log(binaryData);
             const response = await axiosInstance.put(`${data?.data.data}`, binaryData);
             console.log(response);
             onRealSubmit();
-        }
+        };
 
         reader.readAsBinaryString(image!);
     };
@@ -180,7 +184,7 @@ export default function UploadReview() {
                                 color: '#949494',
                             }}
                         >
-                            주문일자: 2023. 05. 14
+                            주문일자: {convertDate(orderItem.orderCreatedAt)}
                         </div>
                     </StoreNameBox>
                     <StoreNameBox style={{ alignItems: 'flex-end' }}>
