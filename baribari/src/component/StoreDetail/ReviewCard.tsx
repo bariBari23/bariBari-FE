@@ -3,10 +3,19 @@ import styled from 'styled-components';
 import Star from '../../assets/plainStar';
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
+import { format, parseISO } from 'date-fns';
+import ko from 'date-fns/locale/ko';
 
 export default function ReviewCard({ id }: { id: number | null }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
+    console.log(reviewData);
+
+    function convertDate(dateString: string) {
+        const date = parseISO(dateString);
+        return format(date, 'yyyy.MM.dd', { locale: ko });
+    }
+
     useEffect(() => {
         if (textRef.current) {
             textRef.current.style.height = 'inherit';
@@ -27,18 +36,6 @@ export default function ReviewCard({ id }: { id: number | null }) {
     // let dateFormatted = '';
     // if (reviewData && reviewData.data) {
     //     const recordDate = reviewData.data.createdAt;
-    //     console.log('record' + recordDate);
-    //     const dateOnly = recordDate.slice(0, 10);
-    //     dateFormatted = dateOnly.replace(/-/g, '.');
-    // }
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (error) {
-    //     return <div>An error occurred</div>;
-    // }
 
     return (
         <Container>
@@ -67,7 +64,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
                                     color: '#AAA',
                                 }}
                             >
-                                {review.createdAt}
+                                {convertDate(review.reviewCreatedAt)}
                             </div>
                         </div>
                         <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
@@ -109,6 +106,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
 
 const Container = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
