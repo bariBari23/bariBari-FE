@@ -19,9 +19,11 @@ export default function OrderList() {
     }
 
     const handleUploadReviewClick = (item: any) => {
-        console.log(item);
-        navigate('/uploadReview', { state: { item } });
-        //alert('여기도 나중에 버튼 "리뷰쓰기" 버튼만 눌리게 하기');
+        if (item.isReviewed) {
+            alert('이미 작성한 리뷰입니다.');
+        } else {
+            navigate('/uploadReview', { state: { item } });
+        }
     };
     const { data: orderItems, isLoading, error } = useQuery('orderItems', getOrderItems);
     if (error) {
@@ -101,7 +103,9 @@ export default function OrderList() {
                                 </FoodInfo>
                             </FoodItem>
                         </>
-                        <ReviewButtonFirst onClick={() => handleUploadReviewClick(item)}>리뷰 쓰기</ReviewButtonFirst>
+                        <ReviewButtonFirst isReviewed={item.isReviewed} onClick={() => handleUploadReviewClick(item)}>
+                            {item.isReviewed ? '리뷰 작성 완료' : '리뷰 쓰기'}
+                        </ReviewButtonFirst>
                     </Wrapper>
                 ))
             )}
@@ -162,11 +166,11 @@ const Separator = styled.div`
 `;
 // 리뷰 버튼 스타일링은 디자인팀에게 보여주는 용도로 First, Second, Last 지정함.
 // 추후에는 하나의 버튼으로 통일 예정.
-const ReviewButtonFirst = styled.button`
+const ReviewButtonFirst = styled.button<{ isReviewed: boolean }>`
     width: 100%;
     height: 40px;
     border-radius: 12px;
-    background: #ff7455;
+    background: ${(props) => (props.isReviewed ? '#efefef' : '#ff7455')};
     border: none;
     color: #fff;
     text-align: center;
