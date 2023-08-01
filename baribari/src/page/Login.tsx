@@ -37,7 +37,7 @@ export default function LogIn() {
             const response = await loginUser(data.email, data.password);
             // 로그인 성공 시 처리
             alert('바리바리에 무사히 로그인하셨습니다:)');
-            navigate('/home');
+            // navigate('/home');
         } catch (error) {
             // 로그인실패 처리
             alert('로그인 실패!');
