@@ -99,7 +99,7 @@ export default function OrderList() {
                     </Wrapper>
                 ))
             )}
-            ;
+        
             <Navigator />
         </div>
     );

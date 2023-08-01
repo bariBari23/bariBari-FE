@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { CartItem } from '../utils/interface';
 import { deleteAllCartItem } from '../apis/api/cart';
 
+
 const timeSlots = [
     '8:00 ~ 9:00',
     '9:00 ~ 10:00',
@@ -36,6 +37,8 @@ export default function Order() {
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [sum, setSum] = useState(0);
+
+
 
     useEffect(() => {
         // cartItems 배열에서 item.total 값을 누적하여 주문 총 금액 계산

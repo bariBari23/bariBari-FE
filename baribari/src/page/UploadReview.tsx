@@ -3,8 +3,10 @@ import Header from '../component/Header';
 import { useState, useEffect } from 'react';
 import Photo from '../assets/photo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { postReview } from '../apis/api/review';
+import { getFileUrl } from '../apis/api/util';
+import { axiosInstance } from '../apis';
 
 type SelectedValue = [quantity: string, flavor: string, wrap: string];
 
@@ -18,9 +20,11 @@ export default function UploadReview() {
     const [ratingText, setRatingText] = useState<string>('');
 
     const [image, setImage] = useState<File | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [imageFileUrl, setImageUrl] = useState<string | null>(null);
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
+    const [imageUrl, setUrl] = useState('');
+    
 
     const Star = ({
         starNumber,
@@ -83,6 +87,7 @@ export default function UploadReview() {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
             setImageUrl(URL.createObjectURL(e.target.files[0]));
+            
         }
     };
 
@@ -94,15 +99,14 @@ export default function UploadReview() {
         setRating(newRating);
     };
     const selectedValue = [quantity, flavor, wrap];
-    const onSubmitReview = async () => {
+    const onRealSubmit = async() =>{
         try {
-            const cleanUrl = imageUrl!.replace('blob:', '');
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,
                 rating: rating,
                 photoList: [],
-                mainImageUrl: cleanUrl,
+                mainImageUrl: imageUrl,
                 tags: selectedValue,
             };
             console.log(reviewData.mainImageUrl);
@@ -114,6 +118,23 @@ export default function UploadReview() {
             // Handle the error here
             console.error('Failed to submit review:', error);
         }
+    }
+    const onSubmitReview = async () => {
+
+        const reader = new FileReader();
+
+        reader.onload = async function(event: ProgressEvent<FileReader>){
+            const data = await axiosInstance.get(`/v1/file/presign`);
+            setUrl(data?.data.data);
+            console.log( 'url: ' + data?.data.data);
+            const binaryData = event.target?.result;
+            // console.log(binaryData);
+            const response = await axiosInstance.put(`${data?.data.data}`, binaryData);
+            console.log(response);
+            onRealSubmit();
+        }
+
+        reader.readAsBinaryString(image!);
     };
 
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {
@@ -234,7 +255,7 @@ export default function UploadReview() {
                 </div>
                 <SubText>주문하신 반찬은 어떠셨나요?</SubText>
                 <TextReviewBox placeholder="후기를 입력해주세요." onChange={handleReviewTextChange}></TextReviewBox>
-                <UploadPhoto htmlFor="upload" image={imageUrl}>
+                <UploadPhoto htmlFor="upload" image={imageFileUrl}>
                     <input type="file" id="upload" onChange={handleFileChange} style={{ display: 'none' }} />
                 </UploadPhoto>
             </InsideBox>
