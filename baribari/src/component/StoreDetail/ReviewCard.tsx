@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
 import { format, parseISO } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import { ReactComponent as Profile } from '../../assets/img-profile.svg';
 
 export default function ReviewCard({ id }: { id: number | null }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
@@ -41,7 +42,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
         <Container>
             {reviewData?.data?.reviewList.map((review: any) => (
                 <>
-                    <CircleProfile src={review.reviewWriterProfileImageUrl} />
+                    <Profile style={{ width: '44px', height: '44px' }} />
                     <SubReviewCard key={review.reviewId}>
                         <div
                             style={{
@@ -114,7 +115,7 @@ const Container = styled.div`
     margin-bottom: 20px;
 `;
 
-const CircleProfile = styled.img`
+const CircleProfile = styled.div`
     width: 44px;
     height: 44px;
     background-color: grey;
