@@ -7,7 +7,6 @@ import MapContainer from '../Map/MapContainer';
 import { useState } from 'react';
 
 import Star from '../../assets/plainStar';
-import { useState } from 'react';
 
 export default function StoreDetailBox({ isSelected, storeId }: { isSelected: boolean; storeId: number | null }) {
     const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
@@ -22,16 +21,6 @@ export default function StoreDetailBox({ isSelected, storeId }: { isSelected: bo
     const userPosition = { latitude: 0, longitude: 0 };
     // const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
 
-
-
-export default function StoreDetailBox({ isSelected, storeData }: { isSelected: boolean; storeData: any }) {
-    // const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
-    // if (error) {
-    //     return <div>An error has occurred</div>;
-    // }
-    // if (isLoading) {
-    //     return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
-    // }
     const onCall = () => {
         document.location.href = `tel:${storeData.data.phoneNumber}`;
     };
