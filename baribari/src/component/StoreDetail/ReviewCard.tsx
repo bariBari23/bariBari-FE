@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Star } from '../../assets/star.svg';
+import Star from '../../assets/plainStar';
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
 
@@ -13,6 +13,33 @@ export default function ReviewCard({ id }: { id: number | null }) {
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }
     }, []);
+    const tagMap: { [key: string]: string } = {
+        smallAmount: '양이 적어요',
+        averageAmount: '충분해요',
+        largeAmount: '너무 많아요',
+        badTaste: '별로예요',
+        plainTaste: '보통이에요',
+        goodTaste: '맛있어요',
+        badStatus: '허술해요',
+        plainStatus: '보통이에요',
+        goodStatus: '깔끔해요',
+    };
+    // let dateFormatted = '';
+    // if (reviewData && reviewData.data) {
+    //     const recordDate = reviewData.data.createdAt;
+    //     console.log('record' + recordDate);
+    //     const dateOnly = recordDate.slice(0, 10);
+    //     dateFormatted = dateOnly.replace(/-/g, '.');
+    // }
+
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (error) {
+    //     return <div>An error occurred</div>;
+    // }
+
     return (
         <Container>
             {reviewData?.data?.reviewList.map((review: any) => (
@@ -55,12 +82,21 @@ export default function ReviewCard({ id }: { id: number | null }) {
                             >
                                 {review.orderItem.dosirakName}
                             </div>
-                            <Star style={{ display: 'flex', width: '102px' }} />
+                            <div style={{ display: 'flex', width: '102px' }}>
+                                {[1, 2, 3, 4, 5].map((starNumber) => (
+                                    <Star
+                                        width={16}
+                                        key={starNumber}
+                                        starNumber={starNumber}
+                                        selected={starNumber <= parseFloat(review.rating)}
+                                    />
+                                ))}
+                            </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <EvaluationTile>{review.tags[0]}</EvaluationTile>
-                            <EvaluationTile>{review.tags[1]}</EvaluationTile>
-                            <EvaluationTile style={{ marginRight: '0px' }}>{review.tags[2]}</EvaluationTile>
+                            <EvaluationTile>{tagMap[review.tags[0]]}</EvaluationTile>
+                            <EvaluationTile>{tagMap[review.tags[1]]}</EvaluationTile>
+                            <EvaluationTile style={{ marginRight: '0px' }}>{tagMap[review.tags[2]]}</EvaluationTile>
                         </div>
                         <ImageBox src={review.mainImageUrl} />
                         <ReviewText ref={textRef}>{review.content}</ReviewText>

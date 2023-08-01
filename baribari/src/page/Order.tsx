@@ -17,6 +17,10 @@ const timeSlots = [
     '13:00 ~ 14:00',
     '14:00 ~ 15:00',
 ];
+const paymentMethodMap: { [key: string]: string } = {
+    CASH: '무통장 입금',
+    CARD: '현장 결제',
+};
 const paymentMethods = ['CASH', 'CARD'];
 
 type State = {
@@ -77,7 +81,7 @@ export default function Order() {
     );
     return (
         <Container>
-            <AddBtn onClick={handleOrderClick}>{sum}원 결제하기</AddBtn>
+            <AddBtn onClick={handleOrderClick}>{sum.toLocaleString()}원 결제하기</AddBtn>
             <Header showPageName={true} pageTitle={'주문하기'} showSearchBar={false} />
             <InsideBox>
                 <InfoBox>
@@ -145,7 +149,9 @@ export default function Order() {
                                     }
                                     isAll={false}
                                 />
-                                <TimeBox style={{ lineHeight: '28px', width: '95px' }}>{method}</TimeBox>
+                                <TimeBox style={{ lineHeight: '28px', width: '95px' }}>
+                                    {paymentMethodMap[method]}
+                                </TimeBox>
                             </div>
                         ))}
                     </div>
@@ -156,7 +162,7 @@ export default function Order() {
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <SmallText style={{ marginRight: '20px' }}>{item.name}</SmallText>
                             <SmallText style={{ marginRight: 'auto' }}>{item.quantity}개</SmallText>
-                            <SmallText style={{ marginRight: '0' }}>{item.total}원</SmallText>
+                            <SmallText style={{ marginRight: '0' }}>{item.total.toLocaleString()}원</SmallText>
                         </div>
                     ))}
                     <div
@@ -179,7 +185,7 @@ export default function Order() {
                                 color: '#FF7455',
                             }}
                         >
-                            {sum}원
+                            {sum.toLocaleString()}원
                         </div>
                     </div>
                 </InfoBox>
