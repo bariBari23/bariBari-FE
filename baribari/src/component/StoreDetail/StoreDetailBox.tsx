@@ -106,14 +106,14 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                         </div>{' '}
                     </div>
                 </InfoBox>
-                {/* <MapContainer
+                <MapContainer
                     size={['93vw', 180]}
                     userAddress={storeAddress}
                     userPosition={userPosition}
                     isSearched={false}
                     isStoreLocation={true}
-                /> */}
-                <img src={MapCapture} style={{ height: '180px', borderRadius: '12px', objectFit: 'cover' }} />
+                />
+                {/* <img src={MapCapture} style={{ height: '180px', borderRadius: '12px', objectFit: 'cover' }} /> */}
             </SubBox>
             <SubBox style={{ height: '250px' }}>
                 <InfoBox>
