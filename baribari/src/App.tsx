@@ -57,22 +57,8 @@ export default function App() {
                 <GlobalStyle />
                 <InsideContainer>
                     <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <CheckLogout>
-                                    <Login />
-                                </CheckLogout>
-                            }
-                        />
-                        <Route
-                            path="/join"
-                            element={
-                                <CheckLogout>
-                                    <Join />
-                                </CheckLogout>
-                            }
-                        />
+                        <Route path="/" element={<Login />} />
+                        <Route path="/join" element={<Join />} />
                         <Route path="/home" element={<Home />} />
                         <Route
                             path="/order"

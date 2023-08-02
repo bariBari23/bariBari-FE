@@ -104,14 +104,16 @@ export default function UploadReview() {
         setRating(newRating);
     };
     const selectedValue = [quantity, flavor, wrap];
-    const onRealSubmit = async () => {
+    const onRealSubmit = async (rawUrl: string) => {
+        const url = new URL(rawUrl);
+        url.search = '';
         try {
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,
                 rating: rating,
                 photoList: [],
-                mainImageUrl: imageUrl,
+                mainImageUrl: url.toString(),
                 tags: selectedValue,
             };
             console.log(reviewData.mainImageUrl);
@@ -124,21 +126,52 @@ export default function UploadReview() {
             console.error('Failed to submit review:', error);
         }
     };
+    // const onSubmitReview = async () => {
+    //     const reader = new FileReader();
+
+    //     reader.onload = async function (event: ProgressEvent<FileReader>) {
+    //         const data = await axiosInstance.get(`/v1/file/presign`);
+    //         setUrl(data?.data.data);
+    //         console.log('url: ' + data?.data.data);
+    //         const binaryData = event.target?.result;
+    //         console.log(binaryData);
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'image/png', // replace with actual content type
+    //             },
+    //         };
+    //         const response = await axiosInstance.put(`${data?.data.data}`, binaryData, config);
+    //         console.log(response);
+    //         onRealSubmit();
+    //     };
+
+    //     reader.readAsBinaryString(image!);
+    // };
     const onSubmitReview = async () => {
         const reader = new FileReader();
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'image/png');
 
         reader.onload = async function (event: ProgressEvent<FileReader>) {
             const data = await axiosInstance.get(`/v1/file/presign`);
             setUrl(data?.data.data);
             console.log('url: ' + data?.data.data);
-            const binaryData = event.target?.result;
-            // console.log(binaryData);
-            const response = await axiosInstance.put(`${data?.data.data}`, binaryData);
-            console.log(response);
-            onRealSubmit();
+            const binaryData = event.target?.result as ArrayBuffer;
+            console.log(binaryData);
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: binaryData,
+                redirect: 'follow' as RequestRedirect,
+            };
+            fetch(`${data?.data.data}`, requestOptions);
+
+            // Here you set the Content-Type header, ideally this should match the type of the file being uploaded.
+
+            onRealSubmit(data?.data.data);
         };
 
-        reader.readAsBinaryString(image!);
+        reader.readAsArrayBuffer(image!); // changed from readAsBinaryString
     };
 
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {

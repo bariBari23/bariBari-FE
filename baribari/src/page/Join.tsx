@@ -6,7 +6,7 @@ import Header from '../component/Header';
 import { useNavigate } from 'react-router';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { registerUser } from '../apis/api/user';
 
 interface JoinData {
@@ -87,8 +87,14 @@ export default function Join() {
         },
     );
 
+    useEffect(() => {
+        if (!state.service || !state.usage || !state.third) {
+            dispatch({ type: 'all' });
+        }
+    }, [state.service, state.usage, state.third]);
+
     return (
-        <div style={{ padding: '110px 16px 0px 16px', width: '100vw' }}>
+        <div style={{ padding: '110px 16px 0px 16px', width: '100%' }}>
             <Header showPageName={true} pageTitle="회원가입" showSearchBar={false} />
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <InputWrapper>
@@ -141,7 +147,7 @@ export default function Join() {
                 <AgreeBox>
                     <AllAgree>
                         <BigTextBox>전체 동의</BigTextBox>
-                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={true} />
+                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={false} />
                     </AllAgree>
                     <SubAgree>
                         <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
@@ -251,6 +257,8 @@ const AllAgree = styled.div`
     flex-direction: row;
     width: 100%;
     border-bottom: solid 1px #ececec;
+    align-items: center;
+    justify-content: center;
 `;
 
 const SubAgree = styled.div`

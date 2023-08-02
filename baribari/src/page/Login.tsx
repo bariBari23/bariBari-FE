@@ -50,7 +50,7 @@ export default function LogIn() {
     };
 
     return (
-        <div style={{ width: '100vw' }}>
+        <div style={{ width: '100%' }}>
             <Wrapper>
                 <LogoBig />
                 <SubTitle>자취생을 위한 건강한 식사 방법</SubTitle>
