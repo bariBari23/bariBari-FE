@@ -1,5 +1,5 @@
 import { axiosInstance } from '..';
-import { removeAccessToken, setAccessToken } from '../cookie';
+import { getRefreshToken, removeAccessToken, setAccessToken, setRefreshToken } from '../cookie';
 
 export async function loginUser(email: string, password: string) {
     try {
@@ -51,4 +51,7 @@ export async function getUserInfo() {
         console.log('Error:', error);
         throw error;
     }
+}
+function getExpirationTimeFromToken(accessToken: any): any {
+    throw new Error('Function not implemented.');
 }

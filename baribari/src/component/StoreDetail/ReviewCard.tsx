@@ -34,9 +34,6 @@ export default function ReviewCard({ id }: { id: number | null }) {
         plainStatus: '보통이에요',
         goodStatus: '깔끔해요',
     };
-    // let dateFormatted = '';
-    // if (reviewData && reviewData.data) {
-    //     const recordDate = reviewData.data.createdAt;
 
     return (
         <Container>

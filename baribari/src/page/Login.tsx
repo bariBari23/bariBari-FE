@@ -4,11 +4,7 @@ import { ReactComponent as VerticalLine } from '../assets/verticalLine.svg';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import Header from '../component/Header';
 import { useNavigate } from 'react-router';
-import { axiosInstance } from '../apis';
-import axios, { AxiosError } from 'axios';
-import { useEffect } from 'react';
 import { loginUser } from '../apis/api/user';
 import { LoginData } from '../utils/interface';
 

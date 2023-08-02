@@ -38,7 +38,6 @@ export default function MyPage() {
                 (item: { storeAddress: any }) => item.storeAddress,
             );
             setStoreAddress(storeAddressData); // Recoil 상태 업데이트
-            console.log('storeLocation', storeAddressData);
         } catch (error) {
             console.log('Error', error);
         }

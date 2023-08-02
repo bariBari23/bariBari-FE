@@ -1,4 +1,4 @@
-import { setAccessToken, getAccessToken, removeAccessToken } from './cookie';
+import { setAccessToken, getAccessToken, removeAccessToken, removeRefreshToken } from './cookie';
 import { axiosInstance } from '.';
 
 export function getToken(): string | undefined {
@@ -20,35 +20,35 @@ export function isTokenExpired(): boolean {
     const currentTime = Math.floor(Date.now() / 1000);
     return expirationTime === undefined || expirationTime < currentTime;
 }
-// 토큰을 갱신하는 함수
-export async function refreshToken(): Promise<void> {
-    try {
-        // 토큰 갱신에 필요한 요청을 서버에 보내고 새로운 토큰을 받아옵니다.
-        const newToken = await fetchTokenRefreshFromServer();
-        // 새로운 토큰을 쿠키에 저장합니다.
-        setAccessToken(newToken);
-    } catch (error) {
-        console.log('토큰 갱신에 실패했습니다:', error);
-        removeAccessToken(); // 토큰 갱신 실패 시, 로그인 상태를 해제할 수 있습니다.
-        throw error;
-    }
-}
 
 function getExpirationTimeFromToken(token: string): number {
     const payload = token.split('.')[1];
     const decodedPayload = JSON.parse(atob(payload));
     const { exp } = decodedPayload;
+    const expirationDate = new Date(exp * 1000);
     return exp;
 }
 
-// 서버로부터 토큰 갱신 요청을 보내는 함수 (예시용으로 비동기로 처리)
-async function fetchTokenRefreshFromServer(): Promise<string> {
+export async function fetchTokenRefreshFromServer(): Promise<string> {
     // 서버로 토큰 갱신 요청을 보내고 새로운 토큰을 받아옵니다.
     try {
-        const response = await axiosInstance.post('/v1/auth/refresh');
+        const response = await axiosInstance.get('/v1/auth/refresh');
         return response.data.data.accessToken;
     } catch (error) {
-        console.log('토큰 갱신에 실패했습니다:', error);
+        throw error;
+    }
+}
+
+// 토큰을 갱신하는 함수
+export async function refreshToken(): Promise<void> {
+    try {
+        const newToken = await fetchTokenRefreshFromServer();
+        setAccessToken(newToken);
+    } catch (error) {
+        // 리프레시 토큰이 만료된 경우
+        removeAccessToken();
+        removeRefreshToken();
+        alert('로그인 정보가 만료되었습니다. 다시 로그인 해주세요.');
         throw error;
     }
 }

@@ -14,7 +14,6 @@ export default function RandomTabs() {
             try {
                 const { latitude, longitude } = await getUserLocation(); // getUserLocation() 함수로 경도와 위도 정보를 얻어옴
                 setUserLocation([latitude, longitude]);
-                console.log('메롱', userLocation);
             } catch (error) {
                 console.log('Error', error);
             }

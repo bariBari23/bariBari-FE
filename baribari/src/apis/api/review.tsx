@@ -4,11 +4,7 @@ import { getAccessToken } from '../cookie';
 // 리뷰 작성 api
 export async function postReview(reviewData: object) {
     try {
-        console.log(reviewData);
-        const token = getAccessToken();
-        console.log(token);
         const response = await axiosInstance.post(`/v1/review`, reviewData);
-
         return response.data;
     } catch (error) {
         console.log('Error:', error);

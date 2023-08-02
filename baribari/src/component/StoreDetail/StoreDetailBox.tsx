@@ -4,22 +4,12 @@ import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
 import MapCapture from '../../assets/MapCapture.png';
 import MapContainer from '../Map/MapContainer';
-
-import Star from '../../assets/plainStar';
 import { useState } from 'react';
+import Star from '../../assets/plainStar';
 
 export default function StoreDetailBox({ isSelected, storeData }: { isSelected: boolean; storeData: any }) {
-    // const { data: storeData, isLoading, error } = useQuery(['dosirakData', storeId], () => getStoreInfo(storeId), {});
-    // if (error) {
-    //     return <div>An error has occurred</div>;
-    // }
-    // if (isLoading) {
-    //     return <div>Loading...</div>; //로딩되는 시간 동안 뭐 띄우고 싶으면 사용
-    // }
-
-    const storeAddress = '서울특별시 마포구 신촌로24길 4';
-    const userPosition = { latitude: 0, longitude: 0 };
-    // const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
+    const storeAddress = '';
+    const userPosition = { latitude: storeData.data.position.latitude, longitude: storeData.data.position.longitude };
     const onCall = () => {
         document.location.href = `tel:${storeData.data.phoneNumber}`;
     };
@@ -120,7 +110,7 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                     size={['93vw', 180]}
                     userAddress={storeAddress}
                     userPosition={userPosition}
-                    isSearched={true}
+                    isSearched={false}
                     isStoreLocation={true}
                 /> */}
                 <img src={MapCapture} style={{ height: '180px', borderRadius: '12px', objectFit: 'cover' }} />
