@@ -40,7 +40,6 @@ export default function Order() {
     useEffect(() => {
         // cartItems 배열에서 item.total 값을 누적하여 주문 총 금액 계산
         const total = cartItems.reduce((acc: number, item: CartItem) => acc + item.total, 0);
-        console.log(sum);
         setSum(total); // 계산된 총 금액을 sum 변수에 설정
     }, [cartItems]);
 

@@ -73,7 +73,7 @@ export default function StoreDetail() {
                     </InformBtn>
                 </DetailNav>
                 <FoodDetailBox isSelected={active === '반찬 상세'} dosirakData={dosirakData} storeData={storeData} />
-                {/* <StoreDetailBox isSelected={active === '가게 정보'} storeData={storeData} /> */}
+                <StoreDetailBox isSelected={active === '가게 정보'} storeData={storeData} />
                 <ReviewBox isSelected={active === '리뷰'} id={storeId} rating={storeData.data.reviewMean} />
                 <AddBtn onClick={addToCart}>장바구니에 넣기</AddBtn>
                 <BackSquare />
