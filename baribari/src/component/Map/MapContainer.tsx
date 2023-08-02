@@ -20,6 +20,8 @@ export default function MapContainer(props: {
         longitude: number;
     };
 }): JSX.Element {
+    const kakaoMapRef = useRef<any | null>(null);
+
     const { size, userAddress, isSearched, userPosition, isStoreLocation } = props;
     const [kakaoMap, setKakaoMap] = useState<any>(null);
     const [marker, setMarkers] = useState<any>(null);
@@ -82,23 +84,30 @@ export default function MapContainer(props: {
 
         script.onload = () => {
             kakao.maps.load(() => {
-                const center = new kakao.maps.LatLng(37.56137355770315, 126.94500188216101);
+                const center = new kakao.maps.LatLng(37.556735973773996, 126.93661051346454);
                 const options = {
                     center,
                     level: 5,
                 };
 
                 const map = new kakao.maps.Map(container, options);
-                setKakaoMap(map); // map 인스턴스 생성 후 state에 저장
+                setKakaoMap(map);
+                kakaoMapRef.current = map; // map 인스턴스를 kakaoMapRef.current에 할당
             });
         };
     }, []);
+
+    const map = kakaoMapRef.current;
+    if (map) {
+        map.relayout();
+    }
 
     //회원가입 시 처음 위치 검색 후 설정할 때
     useEffect(() => {
         if (!kakaoMap || !userAddress) {
             return;
         }
+
         // 전의 마커 지우기
         if (userAddress.length === 0) {
             marker.setMap(null);
@@ -141,14 +150,33 @@ export default function MapContainer(props: {
         }
     }, [isSearched, marker]);
 
+    // 상점 세부 페이지에서 지도 띄우기
+    useEffect(() => {
+        if (!kakaoMap) {
+            return;
+        }
+        if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+            // 내 위치 띄우기
+            const latitude = userPosition.latitude;
+            const longitude = userPosition.longitude;
+            const customMarkerImage = createCustomMarkerImage();
+            // 새로운 위도, 경도로 마커 생성
+            const newMarker = new kakao.maps.Marker({
+                map: kakaoMap,
+                position: new kakao.maps.LatLng(latitude, longitude),
+                image: customMarkerImage?.iconTwo,
+            });
+            setMarkers(newMarker);
+        }
+    }, [kakaoMap, userPosition]);
+
     // 마이페이지에서 상점 이미지 띄우기 + 내 장소 띄우기
     useEffect(() => {
         if (!kakaoMap) {
             return;
         }
         const geocoder = new kakao.maps.services.Geocoder();
-
-        if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+        if (userPosition.latitude !== 0 && userPosition.longitude !== 0 && isStoreLocation === false) {
             // 내 위치 띄우기
             const latitude = userPosition.latitude;
             const longitude = userPosition.longitude;
@@ -179,7 +207,7 @@ export default function MapContainer(props: {
                 });
             });
         }
-    }, [kakaoMap, userAddress]);
+    }, [kakaoMap, userPosition]);
 
     return <div id="container" style={{ width: size[0], height: size[1], borderRadius: '12px' }} />;
 }
