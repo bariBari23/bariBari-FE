@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import styled from 'styled-components';
 import Header from '../component/Header';
@@ -13,8 +13,6 @@ export default function SignUp3() {
     const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
 
     const onSubmit = () => {
-        // navigate('/signUp4') 나중에 수정 예정
-        alert('나중에 signUp4로 루트 수정 예정');
         navigate('/home');
     };
     const [isSearched, setIsSearched] = useState(false);
@@ -121,7 +119,7 @@ const AddBtn = styled.div`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;
