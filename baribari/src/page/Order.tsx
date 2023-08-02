@@ -32,16 +32,21 @@ type Action = { type: 'SET_TIME'; time: string } | { type: 'SET_PAY'; pay: strin
 
 export default function Order() {
     const location = useLocation();
-    const { cartItems } = location.state || {};
+    const { preCartItems } = location.state || {};
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [sum, setSum] = useState(0);
+    console.log('여기' + preCartItems);
+    const cartItems = preCartItems.map((item: CartItem) => {
+        const total = item.quantity * item.price;
+        return { ...item, total };
+    });
 
     useEffect(() => {
         // cartItems 배열에서 item.total 값을 누적하여 주문 총 금액 계산
         const total = cartItems.reduce((acc: number, item: CartItem) => acc + item.total, 0);
         setSum(total); // 계산된 총 금액을 sum 변수에 설정
-    }, [cartItems]);
+    }, []);
 
     const handleOrderClick = async () => {
         try {

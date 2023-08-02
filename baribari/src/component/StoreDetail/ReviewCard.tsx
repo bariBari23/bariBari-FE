@@ -3,10 +3,20 @@ import styled from 'styled-components';
 import Star from '../../assets/plainStar';
 import { useQuery } from 'react-query';
 import { getReview } from '../../apis/api/review';
+import { format, parseISO } from 'date-fns';
+import ko from 'date-fns/locale/ko';
+import { ReactComponent as Profile } from '../../assets/img-profile.svg';
 
 export default function ReviewCard({ id }: { id: number | null }) {
     const textRef = useRef<HTMLTextAreaElement | null>(null);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
+    console.log(reviewData);
+
+    function convertDate(dateString: string) {
+        const date = parseISO(dateString);
+        return format(date, 'yyyy.MM.dd', { locale: ko });
+    }
+
     useEffect(() => {
         if (textRef.current) {
             textRef.current.style.height = 'inherit';
@@ -29,7 +39,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
         <Container>
             {reviewData?.data?.reviewList.map((review: any) => (
                 <>
-                    <CircleProfile src={review.reviewWriterProfileImageUrl} />
+                    <Profile style={{ width: '44px', height: '44px' }} />
                     <SubReviewCard key={review.reviewId}>
                         <div
                             style={{
@@ -52,7 +62,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
                                     color: '#AAA',
                                 }}
                             >
-                                {review.createdAt}
+                                {convertDate(review.reviewCreatedAt)}
                             </div>
                         </div>
                         <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
@@ -94,6 +104,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
 
 const Container = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -101,7 +112,7 @@ const Container = styled.div`
     margin-bottom: 20px;
 `;
 
-const CircleProfile = styled.img`
+const CircleProfile = styled.div`
     width: 44px;
     height: 44px;
     background-color: grey;

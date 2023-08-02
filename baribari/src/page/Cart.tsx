@@ -9,7 +9,6 @@ import { CartItem } from '../utils/interface';
 
 import CartSkeleton from '../assets/3dCart.png';
 
-
 export default function Cart() {
     const navigate = useNavigate();
     const { data: cartItems, isLoading, error } = useQuery('cartItems', getCartItems);
@@ -53,12 +52,16 @@ export default function Cart() {
     };
     const handleGoOrder = () => {
         const promises = cartItemsState.map(async (item) => {
-            return updateCartItem(item.id, item.quantity, item);
+            const response = await updateCartItem(item.id, item.quantity, item);
+            console.log(response);
+            console.log('item: ' + item.quantity * item.price);
+            return { ...item, quantity: response, total: item.quantity * item.price };
         });
 
         Promise.all(promises)
             .then(() => {
-                navigate('/order', { state: { cartItems: cartItemsState } });
+                console.log(cartItemsState);
+                navigate('/order', { state: { preCartItems: cartItemsState } });
             })
             .catch((error) => {
                 console.error('Error updating cart items: ', error);
@@ -104,7 +107,7 @@ export default function Cart() {
                     <NavButton onClick={handleClickNavButton}>반찬박스 담으러 가기</NavButton>
                 </div>
             ) : (
-               <CartList>
+                <CartList>
                     {cartItemsState.map((item: CartItem) => (
                         <>
                             <StoreInfo>

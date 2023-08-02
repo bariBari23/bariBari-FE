@@ -4,18 +4,26 @@ import Navigator from '../component/Navigator';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getOrderItems } from '../apis/api/order';
+import { format, parseISO } from 'date-fns';
+import ko from 'date-fns/locale/ko';
 
 import SearchSkeleton from '../assets/3dSearch.png';
 import { Key } from 'react';
 
-
 export default function OrderList() {
     const navigate = useNavigate();
 
+    function convertDate(dateString: string) {
+        const date = parseISO(dateString);
+        return format(date, 'M/dd (EEEE)', { locale: ko });
+    }
+
     const handleUploadReviewClick = (item: any) => {
-        console.log(item);
-        navigate('/uploadReview', { state: { item } });
-        //alert('여기도 나중에 버튼 "리뷰쓰기" 버튼만 눌리게 하기');
+        if (item.isReviewed) {
+            alert('이미 작성한 리뷰입니다.');
+        } else {
+            navigate('/uploadReview', { state: { item } });
+        }
     };
     const { data: orderItems, isLoading, error } = useQuery('orderItems', getOrderItems);
     if (error) {
@@ -30,7 +38,7 @@ export default function OrderList() {
     };
 
     return (
-        <div style={{ marginTop: '85px', width: '100vw' }}>
+        <div style={{ marginTop: '85px' }}>
             <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
             {orderItems.data.orderItems.length === 0 ? (
                 <div
@@ -61,11 +69,11 @@ export default function OrderList() {
                     <NavButton onClick={handleClickNavButton}>반찬박스 주문하러 가기</NavButton>
                 </div>
             ) : (
-               orderItems.data.orderItems.map((item: any, index: number) => (
+                orderItems.data.orderItems.map((item: any, index: number) => (
                     <Wrapper>
                         <OrderStatus>
                             {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                            <div style={{ marginBottom: '8px' }}>5/16(화요일)</div>
+                            <div style={{ marginBottom: '8px' }}>{convertDate(item.orderCreatedAt)}</div>
                             <div style={{ marginBottom: '8px' }}>|</div>
                             <div style={{ marginBottom: '8px' }}>{item.status}</div>
                         </OrderStatus>
@@ -73,7 +81,7 @@ export default function OrderList() {
                         <>
                             <Separator />
                             <FoodItem>
-                                <FoodImg />
+                                <FoodImg src={item.dosirakImage} />
                                 <FoodInfo>
                                     {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
                                     <p
@@ -90,16 +98,18 @@ export default function OrderList() {
                                     <FoodOrderInfo>
                                         <p style={{ margin: '0px' }}>{item.dosirakName}</p>
                                         <p style={{ margin: '0px' }}>{item.count}개</p>
-                                        <p style={{ margin: '0px' }}>{item.total}원</p>
+                                        <p style={{ margin: '0px' }}>{item.total.toLocaleString()}원</p>
                                     </FoodOrderInfo>
                                 </FoodInfo>
                             </FoodItem>
                         </>
-                        <ReviewButtonFirst onClick={() => handleUploadReviewClick(item)}>리뷰 쓰기</ReviewButtonFirst>
+                        <ReviewButtonFirst isReviewed={item.isReviewed} onClick={() => handleUploadReviewClick(item)}>
+                            {item.isReviewed ? '리뷰 작성 완료' : '리뷰 쓰기'}
+                        </ReviewButtonFirst>
                     </Wrapper>
                 ))
             )}
-            ;
+
             <Navigator />
         </div>
     );
@@ -156,11 +166,11 @@ const Separator = styled.div`
 `;
 // 리뷰 버튼 스타일링은 디자인팀에게 보여주는 용도로 First, Second, Last 지정함.
 // 추후에는 하나의 버튼으로 통일 예정.
-const ReviewButtonFirst = styled.button`
+const ReviewButtonFirst = styled.button<{ isReviewed: boolean }>`
     width: 100%;
     height: 40px;
     border-radius: 12px;
-    background: #ff7455;
+    background: ${(props) => (props.isReviewed ? '#efefef' : '#ff7455')};
     border: none;
     color: #fff;
     text-align: center;

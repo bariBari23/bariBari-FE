@@ -1,9 +1,9 @@
 import './App.css';
-import { useEffect } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './page/Home';
 import Join from './page/Join';
 import Login from './page/Login';
@@ -18,8 +18,32 @@ import MyPage from './page/MyPage';
 import SignUp3 from './page/SignUp3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SignUp4 from './page/SignUp4';
+import { getAccessToken } from './apis/cookie';
+
 
 const queryClient = new QueryClient();
+
+function CheckLogin({ children }: { children: ReactNode }): ReactElement | null {
+    const token = getAccessToken();
+
+    if (!token) {
+        alert('로그인이 필요합니다.');
+        return <Navigate to="/" replace />;
+    }
+
+    return <>{children}</>;
+}
+
+function CheckLogout({ children }: { children: ReactNode }): ReactElement | null {
+    const token = getAccessToken();
+
+    if (token) {
+        alert('로그아웃 후 사용 가능한 서비스입니다.');
+        return <Navigate to="/" replace />;
+    }
+
+    return <>{children}</>;
+}
 
 export default function App() {
     function setScreenSize() {
@@ -38,14 +62,56 @@ export default function App() {
                         <Route path="/" element={<Login />} />
                         <Route path="/join" element={<Join />} />
                         <Route path="/home" element={<Home />} />
-                        <Route path="/order" element={<Order />} />
-                        <Route path="/orderlist" element={<OrderList />} />
+                        <Route
+                            path="/order"
+                            element={
+                                <CheckLogin>
+                                    <Order />
+                                </CheckLogin>
+                            }
+                        />
+                        <Route
+                            path="/orderlist"
+                            element={
+                                <CheckLogin>
+                                    <OrderList />
+                                </CheckLogin>
+                            }
+                        />
                         <Route path="/search" element={<Search />} />
                         <Route path="/detail/:id" element={<StoreDetail />} />
-                        <Route path="/uploadReview" element={<UploadReview />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/fav" element={<Fav />} />
-                        <Route path="/myPage" element={<MyPage />} />
+                        <Route
+                            path="/uploadReview"
+                            element={
+                                <CheckLogin>
+                                    <UploadReview />
+                                </CheckLogin>
+                            }
+                        />
+                        <Route
+                            path="/cart"
+                            element={
+                                <CheckLogin>
+                                    <Cart />
+                                </CheckLogin>
+                            }
+                        />
+                        <Route
+                            path="/fav"
+                            element={
+                                <CheckLogin>
+                                    <Fav />
+                                </CheckLogin>
+                            }
+                        />
+                        <Route
+                            path="/myPage"
+                            element={
+                                <CheckLogin>
+                                    <MyPage />
+                                </CheckLogin>
+                            }
+                        />
                         <Route path="/signUp3" element={<SignUp3 />} />
                         <Route path="/signUp4" element={<SignUp4 />} />
                     </Routes>
