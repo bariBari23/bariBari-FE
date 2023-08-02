@@ -131,7 +131,7 @@ const AddBtn = styled.div`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;

@@ -142,7 +142,7 @@ const FoodImg = styled.img`
 const FoodInfo = styled.div`
     color: #212121;
     font-size: 16px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
@@ -212,7 +212,7 @@ const ReviewButtonLast = styled.button`
     margin: 24px 0px 20px 0px;
     // font
     font-size: 14px;
-    font-family: Pretendard-Regular;
+    font-family: Pretendard Variable;
     font-style: normal;
     font-weight: 700;
     line-height: 20px;

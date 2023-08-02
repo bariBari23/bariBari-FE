@@ -258,7 +258,7 @@ const CountButton = styled.button`
     border: none;
     cursor: pointer;
     background-color: transparent;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -273,7 +273,7 @@ const SubmitButton = styled.div`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;
