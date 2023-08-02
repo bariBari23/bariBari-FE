@@ -17,6 +17,7 @@ import UploadReview from './page/UploadReview';
 import MyPage from './page/MyPage';
 import SignUp3 from './page/SignUp3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SignUp4 from './page/SignUp4';
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ export default function App() {
                         <Route path="/fav" element={<Fav />} />
                         <Route path="/myPage" element={<MyPage />} />
                         <Route path="/signUp3" element={<SignUp3 />} />
+                        <Route path="/signUp4" element={<SignUp4 />} />
                     </Routes>
                 </InsideContainer>
             </Container>
