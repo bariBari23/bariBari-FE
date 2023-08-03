@@ -15,6 +15,7 @@ type SelectedValue = [quantity: string, flavor: string, wrap: string];
 export default function UploadReview() {
     const location = useLocation();
     const orderItem = location.state.item;
+    console.log('orderItem : ' + orderItem);
     let isSelected = false;
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);
@@ -126,38 +127,23 @@ export default function UploadReview() {
             console.error('Failed to submit review:', error);
         }
     };
-    // const onSubmitReview = async () => {
-    //     const reader = new FileReader();
 
-    //     reader.onload = async function (event: ProgressEvent<FileReader>) {
-    //         const data = await axiosInstance.get(`/v1/file/presign`);
-    //         setUrl(data?.data.data);
-    //         console.log('url: ' + data?.data.data);
-    //         const binaryData = event.target?.result;
-    //         console.log(binaryData);
-    //         const config = {
-    //             headers: {
-    //                 'Content-Type': 'image/png', // replace with actual content type
-    //             },
-    //         };
-    //         const response = await axiosInstance.put(`${data?.data.data}`, binaryData, config);
-    //         console.log(response);
-    //         onRealSubmit();
-    //     };
-
-    //     reader.readAsBinaryString(image!);
-    // };
     const onSubmitReview = async () => {
         const reader = new FileReader();
         var myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'image/png');
 
         reader.onload = async function (event: ProgressEvent<FileReader>) {
             const data = await axiosInstance.get(`/v1/file/presign`);
             setUrl(data?.data.data);
             console.log('url: ' + data?.data.data);
             const binaryData = event.target?.result as ArrayBuffer;
-            console.log(binaryData);
+            let mimeType = image!.type; // this can be image.type in your case
+            let fileType = mimeType.split('/')[1];
+            console.log('type: ' + fileType);
+
+            // Use the file type as the Content-Type
+            myHeaders.append('Content-Type', fileType);
+
             var requestOptions = {
                 method: 'PUT',
                 headers: myHeaders,
@@ -166,12 +152,10 @@ export default function UploadReview() {
             };
             fetch(`${data?.data.data}`, requestOptions);
 
-            // Here you set the Content-Type header, ideally this should match the type of the file being uploaded.
-
             onRealSubmit(data?.data.data);
         };
 
-        reader.readAsArrayBuffer(image!); // changed from readAsBinaryString
+        reader.readAsArrayBuffer(image!);
     };
 
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {
@@ -203,7 +187,7 @@ export default function UploadReview() {
             <Header showPageName={true} pageTitle={'리뷰 쓰기'} showSearchBar={false} />
             <InsideBox>
                 <StoreBox>
-                    <StoreImageBox />
+                    <StoreImageBox src={orderItem.dosirakImage} />
                     <StoreNameBox style={{ marginRight: 'auto' }}>
                         <div style={{ fontSize: '16px', fontWeight: '700', fontStyle: 'normal', lineHeight: '23px' }}>
                             {orderItem.storeName}
@@ -324,7 +308,7 @@ const StoreBox = styled.div`
     border-radius: 12px;
 `;
 
-const StoreImageBox = styled.div`
+const StoreImageBox = styled.img`
     width: 65px;
     height: 65px;
     margin-right: 18px;

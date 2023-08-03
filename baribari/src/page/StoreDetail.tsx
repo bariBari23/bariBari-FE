@@ -125,7 +125,7 @@ const InformBtn = styled.button<{ isSelected: boolean }>`
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 32px);
+    width: calc(100% - 48px);
     max-width: 568px;
     border-radius: 12px;
     background: #ff7455;

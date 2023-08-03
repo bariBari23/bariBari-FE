@@ -21,6 +21,8 @@ export default function OrderList() {
     const handleUploadReviewClick = (item: any) => {
         if (item.isReviewed) {
             alert('이미 작성한 리뷰입니다.');
+        } else if (item.status != 'PICKED_UP') {
+            alert('반찬 수령 완료 후 리뷰 ₩작성이 가능합니다.');
         } else {
             navigate('/uploadReview', { state: { item } });
         }
@@ -104,7 +106,11 @@ export default function OrderList() {
                             </FoodItem>
                         </>
                         <ReviewButtonFirst isReviewed={item.isReviewed} onClick={() => handleUploadReviewClick(item)}>
-                            {item.isReviewed ? '리뷰 작성 완료' : '리뷰 쓰기'}
+                            {item.status !== 'picked_up'
+                                ? `${item.estimatedPickUpTime} 수령 예정`
+                                : item.isReviewed
+                                ? '리뷰 작성 완료'
+                                : '리뷰 쓰기'}
                         </ReviewButtonFirst>
                     </Wrapper>
                 ))
