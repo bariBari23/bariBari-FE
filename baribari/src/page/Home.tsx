@@ -21,7 +21,10 @@ export default function Home() {
     const handleBellClick = () => {
         alert('아직 알림이 온 게 없어요!');
     };
-
+    const handleInquiryClick = () => {
+        const url = 'https://towering-porch-7d9.notion.site/045d3fc7c49d4cddb2eaed7f64b59f44?pvs=4';
+        window.open(url, '_blank');
+    };
     return (
         <div>
             <SvgSprite />
@@ -41,7 +44,7 @@ export default function Home() {
 
             <RandomTab />
             <WrapperTab>
-                <InquiryTab>
+                <InquiryTab onClick={handleInquiryClick}>
                     <div>
                         <InquiryTabTitle>바리바리에 입점 문의하기</InquiryTabTitle>
                         <InquiryTabSub>바리바리에 입점하고 더 많은 수익 창출해보세요!</InquiryTabSub>

@@ -49,7 +49,7 @@ export default function RandomTabs() {
                             <svg width="20" height="20">
                                 <use xlinkHref="#property-1-map-1" />
                             </svg>
-                            {searchValue}
+                            {searchValue !== '' ? searchValue : '서울 서대문구 이화여대길 52'}
                         </SubHeader>
                     </Text>
                     <img src={FoodPic1} alt="FoodPic1" />
@@ -65,7 +65,7 @@ export default function RandomTabs() {
                             <svg width="20" height="20">
                                 <use xlinkHref="#property-1-map-1" />
                             </svg>
-                            {searchValue}
+                            {searchValue !== '' ? searchValue : '서울 서대문구 이화여대길 52'}
                         </SubHeader>
                     </Text>
                     <img src={FoodPic2} alt="FoodPic2" />

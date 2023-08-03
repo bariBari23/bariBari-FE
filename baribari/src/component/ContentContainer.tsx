@@ -7,13 +7,18 @@ import defaultImg from '../assets/defaultImg.jpg';
 import { ReactComponent as FloatingRefreshBtn } from '../assets/RefreshBtn.svg';
 import { ContentContainerProps, DosirakItem } from '../utils/interface';
 import { useQuery } from '@tanstack/react-query';
+import HeartSkeleton from '../assets/3dHeart.png';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 export default function ContentContainer({ keyword, filterLiked, sort, setRefresh }: ContentContainerProps) {
     const navigate = useNavigate();
     const handleCardClick = (id: number) => {
         navigate(`/detail/${id}`);
     };
-
+    const handleClickNavButton = () => {
+        navigate(`/home`);
+    };
     // React Query를 사용하여 API 데이터 가져오기
     const {
         status,
@@ -30,25 +35,48 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
         },
     );
     if (status === 'loading') {
-        return <span>Loading...</span>;
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
     }
-    console.log('ddd', dosirakList);
+
     return (
         <Container>
-            {dosirakList?.data?.dosirakList?.length === 0 ? (
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                    <p
+            {dosirakList?.data?.dosirakList?.length === 0 && filterLiked === true ? (
+                <div
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <div
                         style={{
-                            fontSize: '14px',
-                            fontStyle: 'normal',
-                            fontWeight: '700',
-                            lineHeight: '16px',
-                            color: '#504E5F',
-                            margin: 'auto',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         }}
                     >
-                        아직 찜한 가게가 없어요!
-                    </p>
+                        <img src={HeartSkeleton} alt="하트" style={{ width: '210px', height: '210px' }} />
+                        <span
+                            style={{
+                                fontSize: '14px',
+                                fontStyle: 'normal',
+                                fontWeight: '700',
+                                lineHeight: '16px',
+                                color: '#D3D3D3',
+                            }}
+                        >
+                            즐겨찾는 가게가 없어요
+                        </span>
+                        <NavButton onClick={handleClickNavButton}>반찬박스 구경하러 가기</NavButton>
+                    </div>
                 </div>
             ) : (
                 dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
@@ -210,4 +238,25 @@ const RotateFloatingRefreshBtn = styled(FloatingRefreshBtn)`
     &:hover {
         transform: rotate(75deg);
     }
+`;
+const NavButton = styled.button`
+    border: none;
+    width: 208px;
+    height: 40px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #ff7455;
+    color: #fff;
+    font-family: Pretendard Variable;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+    margin-top: 40px;
 `;

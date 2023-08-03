@@ -46,6 +46,12 @@ export default function LogIn() {
     const handleRegisterClick = () => {
         navigate('/join');
     };
+    const handleFindEmail = () => {
+        alert('서비스 개발 중입니다.');
+    };
+    const handleFindPassword = () => {
+        alert('서비스 개발 중입니다.');
+    };
 
     const handleLoginNavigate = async () => {
         try {
@@ -99,9 +105,9 @@ export default function LogIn() {
                 <OptionWrapper>
                     <span onClick={handleRegisterClick}>회원가입</span>
                     <VerticalLine />
-                    <span>아이디 찾기</span>
+                    <span onClick={handleFindEmail}>아이디 찾기</span>
                     <VerticalLine />
-                    <span>비밀번호 찾기</span>
+                    <span onClick={handleFindPassword}>비밀번호 찾기</span>
                 </OptionWrapper>
                 {/* sns 로그인은 mvp 단계에서 구현 보류 */}
                 {/* <GoogleLoginWrapper>

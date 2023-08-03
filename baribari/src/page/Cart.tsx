@@ -88,14 +88,13 @@ export default function Cart() {
                         backgroundColor: '#F9F9F9',
                         width: '100vw',
                         height: '100%',
-
                         flexDirection: 'column',
                         alignContent: 'center',
                         justifyContent: 'center',
                         alignItems: 'center',
                         position: 'absolute',
                         left: '50%',
-                        top: '50%',
+                        top: '45%',
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
@@ -325,5 +324,5 @@ const NavButton = styled.button`
     font-style: normal;
     font-weight: 700;
     line-height: 16px;
-    margin-top: 20px;
+    margin-top: 40px;
 `;

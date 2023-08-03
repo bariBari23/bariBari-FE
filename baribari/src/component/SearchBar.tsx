@@ -3,7 +3,7 @@ import { SearchIcon } from './IconFin';
 import { debounce } from 'lodash';
 import { useRecoilState } from 'recoil';
 import { keywordsState } from '../utils/atom';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import useDebounce from '../utils/useDebounce';
 
 export default function SearchBar({ onKeywordChange }: { onKeywordChange: (keyword: string) => void }) {
@@ -21,7 +21,7 @@ export default function SearchBar({ onKeywordChange }: { onKeywordChange: (keywo
         <SearchTab>
             <SearchInput
                 placeholder="반찬 메뉴를 검색해보세요"
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setKeyword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
                 value={keyword}
             />
             <SearchIcon />
@@ -39,7 +39,7 @@ const SearchTab = styled.div`
     background-color: #efefef;
     gap: 4px;
 `;
-const SearchInput = styled.textarea`
+const SearchInput = styled.input`
     width: calc(100vw - 112px);
     display: flex;
     color: #504e5f;
