@@ -3,14 +3,19 @@ import Header from '../component/Header';
 import { useState, useEffect } from 'react';
 import Photo from '../assets/photo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { postReview } from '../apis/api/review';
+import { getFileUrl } from '../apis/api/util';
+import { axiosInstance } from '../apis';
+import { format, parseISO } from 'date-fns';
+import ko from 'date-fns/locale/ko';
 
 type SelectedValue = [quantity: string, flavor: string, wrap: string];
 
 export default function UploadReview() {
     const location = useLocation();
     const orderItem = location.state.item;
+    console.log('orderItem : ' + orderItem);
     let isSelected = false;
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);
@@ -18,9 +23,15 @@ export default function UploadReview() {
     const [ratingText, setRatingText] = useState<string>('');
 
     const [image, setImage] = useState<File | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [imageFileUrl, setImageUrl] = useState<string | null>(null);
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
+    const [imageUrl, setUrl] = useState('');
+
+    function convertDate(dateString: string) {
+        const date = parseISO(dateString);
+        return format(date, 'yyyy. MM. dd', { locale: ko });
+    }
 
     const Star = ({
         starNumber,
@@ -94,25 +105,57 @@ export default function UploadReview() {
         setRating(newRating);
     };
     const selectedValue = [quantity, flavor, wrap];
-    const onSubmitReview = async () => {
+    const onRealSubmit = async (rawUrl: string) => {
+        const url = new URL(rawUrl);
+        url.search = '';
         try {
-            const cleanUrl = imageUrl!.replace('blob:', '');
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,
                 rating: rating,
                 photoList: [],
-                mainImageUrl: cleanUrl,
+                mainImageUrl: url.toString(),
                 tags: selectedValue,
             };
             console.log(reviewData.mainImageUrl);
             const response = await postReview(reviewData);
             console.log(response);
+            alert('리뷰가 성공적으로 작성되었습니다.');
             navigate('/orderlist'); // If the mutation succeeds, navigate to the order list page.
         } catch (error) {
             // Handle the error here
             console.error('Failed to submit review:', error);
         }
+    };
+
+    const onSubmitReview = async () => {
+        const reader = new FileReader();
+        var myHeaders = new Headers();
+
+        reader.onload = async function (event: ProgressEvent<FileReader>) {
+            const data = await axiosInstance.get(`/v1/file/presign`);
+            setUrl(data?.data.data);
+            console.log('url: ' + data?.data.data);
+            const binaryData = event.target?.result as ArrayBuffer;
+            let mimeType = image!.type; // this can be image.type in your case
+            let fileType = mimeType.split('/')[1];
+            console.log('type: ' + fileType);
+
+            // Use the file type as the Content-Type
+            myHeaders.append('Content-Type', fileType);
+
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: binaryData,
+                redirect: 'follow' as RequestRedirect,
+            };
+            fetch(`${data?.data.data}`, requestOptions);
+
+            onRealSubmit(data?.data.data);
+        };
+
+        reader.readAsArrayBuffer(image!);
     };
 
     function ClickBox({ name, value, children }: { name: string; value: string; children: string }) {
@@ -144,7 +187,7 @@ export default function UploadReview() {
             <Header showPageName={true} pageTitle={'리뷰 쓰기'} showSearchBar={false} />
             <InsideBox>
                 <StoreBox>
-                    <StoreImageBox />
+                    <StoreImageBox src={orderItem.dosirakImage} />
                     <StoreNameBox style={{ marginRight: 'auto' }}>
                         <div style={{ fontSize: '16px', fontWeight: '700', fontStyle: 'normal', lineHeight: '23px' }}>
                             {orderItem.storeName}
@@ -158,7 +201,7 @@ export default function UploadReview() {
                                 color: '#949494',
                             }}
                         >
-                            주문일자: 2023. 05. 14
+                            주문일자: {convertDate(orderItem.orderCreatedAt)}
                         </div>
                     </StoreNameBox>
                     <StoreNameBox style={{ alignItems: 'flex-end' }}>
@@ -233,7 +276,7 @@ export default function UploadReview() {
                 </div>
                 <SubText>주문하신 반찬은 어떠셨나요?</SubText>
                 <TextReviewBox placeholder="후기를 입력해주세요." onChange={handleReviewTextChange}></TextReviewBox>
-                <UploadPhoto htmlFor="upload" image={imageUrl}>
+                <UploadPhoto htmlFor="upload" image={imageFileUrl}>
                     <input type="file" id="upload" onChange={handleFileChange} style={{ display: 'none' }} />
                 </UploadPhoto>
             </InsideBox>
@@ -265,7 +308,7 @@ const StoreBox = styled.div`
     border-radius: 12px;
 `;
 
-const StoreImageBox = styled.div`
+const StoreImageBox = styled.img`
     width: 65px;
     height: 65px;
     margin-right: 18px;
@@ -337,6 +380,7 @@ const TextReviewBox = styled.textarea`
     color: #212121;
     font-size: 16px;
     font-weight: 600;
+    font-family: Pretendard Variable;
     line-height: 28px;
     &::placeholder {
         color: #aaa;
@@ -362,7 +406,7 @@ const AddBtn = styled.div`
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;

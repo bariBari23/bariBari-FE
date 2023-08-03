@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
 import { useReducer, useState } from 'react';
+import { useEffect } from 'react';
 import { registerUser } from '../apis/api/user';
 
 interface JoinData {
@@ -89,8 +90,14 @@ export default function Join() {
         },
     );
 
+    useEffect(() => {
+        if (!state.service || !state.usage || !state.third) {
+            dispatch({ type: 'all' });
+        }
+    }, [state.service, state.usage, state.third]);
+
     return (
-        <div style={{ padding: '110px 16px 0px 16px', width: '100vw' }}>
+        <div style={{ padding: '110px 16px 0px 16px', width: '100%' }}>
             <Header showPageName={true} pageTitle="회원가입" showSearchBar={false} />
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <InputWrapper>
@@ -178,6 +185,7 @@ export default function Join() {
                         <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
                     </SubAgree>
                 </AgreeBox>
+                <BackSquare />
             </Form>
         </div>
     );
@@ -267,6 +275,8 @@ const AllAgree = styled.div`
     flex-direction: row;
     width: 100%;
     border-bottom: solid 1px #ececec;
+    align-items: center;
+    justify-content: center;
 `;
 
 const SubAgree = styled.div`
@@ -288,4 +298,15 @@ const TextBox = styled.div`
     font-weight: 400;
     line-height: 20px;
     padding-right: 12px;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 600px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;

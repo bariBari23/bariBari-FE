@@ -61,7 +61,8 @@ export async function addCartItem(itemId: number): Promise<void> {
 // 카트에 아이템을 변경할 수 있는 api
 export async function updateCartItem(itemId: number, quantity: number, updatedItem: CartItem): Promise<void> {
     try {
-        await axiosInstance.put(`/v1/cart/${itemId}/${quantity}`, updatedItem);
+        const response = await axiosInstance.put(`/v1/cart/${itemId}/${quantity}`, updatedItem);
+        return response.data.data.quantity;
     } catch (error) {
         console.log('Error:', error);
         throw error;

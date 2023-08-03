@@ -2,16 +2,14 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { searchById } from '../../apis/api/search';
 import { getStoreInfo } from '../../apis/api/store';
-
+import MapCapture from '../../assets/MapCapture.png';
 import MapContainer from '../Map/MapContainer';
 import { useState } from 'react';
-
 import Star from '../../assets/plainStar';
 
 export default function StoreDetailBox({ isSelected, storeData }: { isSelected: boolean; storeData: any }) {
     const storeAddress = '';
     const userPosition = { latitude: storeData.data.position.latitude, longitude: storeData.data.position.longitude };
-
     const onCall = () => {
         document.location.href = `tel:${storeData.data.phoneNumber}`;
     };
@@ -115,6 +113,7 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                     isSearched={false}
                     isStoreLocation={true}
                 />
+                {/* <img src={MapCapture} style={{ height: '180px', borderRadius: '12px', objectFit: 'cover' }} /> */}
             </SubBox>
             <SubBox style={{ height: '250px' }}>
                 <InfoBox>

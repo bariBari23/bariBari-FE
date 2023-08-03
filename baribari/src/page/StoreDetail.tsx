@@ -125,13 +125,13 @@ const InformBtn = styled.button<{ isSelected: boolean }>`
 const AddBtn = styled.div`
     display: flex;
     height: 64px;
-    width: calc(100% - 32px);
+    width: calc(100% - 48px);
     max-width: 568px;
     border-radius: 12px;
     background: #ff7455;
     color: #fff;
     font-size: 24px;
-    font-family: Pretendard;
+    font-family: Pretendard Variable;
     font-weight: 700;
     border: none;
     align-items: center;

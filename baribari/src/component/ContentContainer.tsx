@@ -16,7 +16,11 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
     };
 
     // React Query를 사용하여 API 데이터 가져오기
-    const { data: dosirakList, refetch } = useQuery(
+    const {
+        status,
+        data: dosirakList,
+        refetch,
+    } = useQuery(
         ['dosirakList', keyword, filterLiked, sort],
         () => searchByQuery(keyword ?? '', filterLiked, sort ?? ''),
         {
@@ -26,7 +30,9 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
             enabled: keyword !== undefined || filterLiked !== undefined || sort !== undefined, // 키워드, 필터, 정렬 값이 있을 때에만 API 호출
         },
     );
-
+    if (status === 'loading') {
+        return <span>Loading...</span>;
+    }
     return (
         <Container>
             {dosirakList?.data?.dosirakList?.length === 0 ? (
