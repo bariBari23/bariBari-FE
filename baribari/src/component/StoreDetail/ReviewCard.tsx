@@ -8,7 +8,7 @@ import ko from 'date-fns/locale/ko';
 import { ReactComponent as Profile } from '../../assets/img-profile.svg';
 
 export default function ReviewCard({ id }: { id: number | null }) {
-    const textRef = useRef<HTMLTextAreaElement | null>(null);
+    const refs = useRef<(HTMLTextAreaElement | null)[]>([]);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
     console.log(reviewData);
 
@@ -18,11 +18,13 @@ export default function ReviewCard({ id }: { id: number | null }) {
     }
 
     useEffect(() => {
-        if (textRef.current) {
-            textRef.current.style.height = 'inherit';
-            textRef.current.style.height = `${textRef.current.scrollHeight}px`;
-        }
-    }, []);
+        refs.current.forEach((ref) => {
+            if (ref) {
+                ref.style.height = 'auto';
+                ref.style.height = `${ref.scrollHeight}px`;
+            }
+        });
+    }, [reviewData]);
     const tagMap: { [key: string]: string } = {
         smallAmount: '양이 적어요',
         averageAmount: '충분해요',
@@ -37,7 +39,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
 
     return (
         <Container>
-            {reviewData?.data?.reviewList.map((review: any) => (
+            {reviewData?.data?.reviewList.map((review: any, i: number) => (
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <Profile style={{ width: '44px', height: '44px', marginRight: '12px' }} />
                     <SubReviewCard key={review.reviewId}>
@@ -94,7 +96,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
                             <EvaluationTile style={{ marginRight: '0px' }}>{tagMap[review.tags[2]]}</EvaluationTile>
                         </div>
                         <ImageBox src={review.mainImageUrl} />
-                        <ReviewText ref={textRef}>{review.content}</ReviewText>
+                        <ReviewText ref={(ref) => (refs.current[i] = ref)} value={review.content} readOnly />
                     </SubReviewCard>
                 </div>
             ))}
@@ -143,20 +145,22 @@ const ImageBox = styled.img`
     margin: 14px 0;
     display: flex;
     height: 282px;
-    width: 100%;
+    width: calc(100vw - 88px);
     border-radius: 12px;
     background-color: grey;
+    object-fit: cover;
 `;
 
 const ReviewText = styled.textarea`
     display: flex;
     width: 100%;
+    font-family: Pretendard-Variable;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: 16px;
     border: none;
     color: black;
-    overflow: auto;
+    overflow: hidden;
     resize: none;
 `;
