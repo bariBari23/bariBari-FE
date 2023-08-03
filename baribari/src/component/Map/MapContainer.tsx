@@ -84,19 +84,32 @@ export default function MapContainer(props: {
 
         script.onload = () => {
             kakao.maps.load(() => {
-                const center = new kakao.maps.LatLng(37.556735973773996, 126.93661051346454);
-                const options = {
-                    center,
-                    level: 5,
-                };
+                // userPosition이 0이 아닐 경우에만 지도의 중심을 userPosition으로 설정
+                if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+                    const center = new kakao.maps.LatLng(userPosition.latitude, userPosition.longitude);
+                    const options = {
+                        center,
+                        level: 5,
+                    };
 
-                const map = new kakao.maps.Map(container, options);
-                setKakaoMap(map);
-                kakaoMapRef.current = map; // map 인스턴스를 kakaoMapRef.current에 할당
+                    const map = new kakao.maps.Map(container, options);
+                    setKakaoMap(map);
+                    kakaoMapRef.current = map; // map 인스턴스를 kakaoMapRef.current에 할당
+                } else {
+                    // userPosition이 0일 경우 기본 중심 좌표로 설정
+                    const center = new kakao.maps.LatLng(37.556735973773996, 126.93661051346454);
+                    const options = {
+                        center,
+                        level: 7,
+                    };
+
+                    const map = new kakao.maps.Map(container, options);
+                    setKakaoMap(map);
+                    kakaoMapRef.current = map; // map 인스턴스를 kakaoMapRef.current에 할당
+                }
             });
         };
-    }, []);
-
+    }, [userPosition]);
     const map = kakaoMapRef.current;
     if (map) {
         map.relayout();
@@ -135,7 +148,6 @@ export default function MapContainer(props: {
                     image: isStoreLocation ? customMarkerImage?.iconTwo : customMarkerImage?.icon,
                 });
                 setMarkers(newMarker);
-                console.log(result);
             } else {
                 // 주소가 아예 존재하지 않을 때
                 setMarkers(null);

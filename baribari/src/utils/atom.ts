@@ -6,7 +6,7 @@ export const keywordsState = atom({
 });
 export const userAddressState = atom({
     key: 'userAddressState',
-    default: '',
+    default: '서울 서대문구 이화여대길 52',
 });
 export const storeAddressState = atom({
     key: 'storeAddressState',

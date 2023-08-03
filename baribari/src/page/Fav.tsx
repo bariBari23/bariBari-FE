@@ -36,7 +36,6 @@ export default function Fav() {
     const handleLikeToggle = (storeId: number) => {
         // 해당 storeId가 이미 즐겨찾기에 있는지 확인
         const isLiked = data.likeList.some((item: any) => item.storeId === storeId);
-
         if (isLiked) {
             // 이미 즐겨찾기에 있는 경우, 취소
             unlikeStore(storeId);
