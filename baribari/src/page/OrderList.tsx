@@ -204,7 +204,7 @@ const ReviewButtonFirst = styled.button<{ isReviewed: boolean }>`
     margin: 24px 0px 20px 0px;
     // font
     font-size: 14px;
-    font-family: Pretendard-Regular;
+    font-family: Pretendard Variable;
     font-style: normal;
     font-weight: 700;
     line-height: 20px;

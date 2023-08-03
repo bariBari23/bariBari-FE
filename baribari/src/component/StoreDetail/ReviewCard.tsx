@@ -155,7 +155,7 @@ const ReviewText = styled.textarea`
     display: flex;
     width: 100%;
     min-height: 36px;
-    font-family: Pretendard-Variable;
+    font-family: Pretendard Variable;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
