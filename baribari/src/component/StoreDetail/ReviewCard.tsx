@@ -123,7 +123,7 @@ const CircleProfile = styled.div`
 
 const SubReviewCard = styled.div`
     display: flex;
-    width: calc(100% - 56px);
+    width: calc(100% - 88px);
     flex-direction: column;
     padding-top: 8px;
     align-items: flex-start;
@@ -145,7 +145,8 @@ const ImageBox = styled.img`
     margin: 14px 0;
     display: flex;
     height: 282px;
-    width: calc(100vw - 88px);
+
+    width: 100%;
     border-radius: 12px;
     background-color: grey;
     object-fit: cover;
