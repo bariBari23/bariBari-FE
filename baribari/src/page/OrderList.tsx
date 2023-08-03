@@ -92,6 +92,8 @@ export default function OrderList() {
                                         ? '준비 완료'
                                         : item.status === 'PICKED_UP'
                                         ? '수령 완료'
+                                        : item.status === 'ORDERED'
+                                        ? '주문 완료'
                                         : item.status}
                                 </div>
                             </OrderStatus>
