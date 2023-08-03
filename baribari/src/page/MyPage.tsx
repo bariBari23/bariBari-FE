@@ -34,9 +34,10 @@ export default function MyPage() {
         try {
             const storeLocationData = await allStoreDistance();
             const storeAddressData = storeLocationData.data.distanceList.map(
-                (item: { storeId: number; storeAddress: any }) => ({
+                (item: { storeId: number; storeAddress: any; storeName: string }) => ({
                     address: item.storeAddress,
                     id: item.storeId,
+                    name: item.storeName,
                 }),
             );
             setStoreAddress(storeAddressData); // Recoil 상태 업데이트

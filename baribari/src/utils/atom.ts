@@ -10,7 +10,7 @@ export const userAddressState = atom({
 });
 export const storeAddressState = atom({
     key: 'storeAddressState',
-    default: [] as { id: string; address: string }[],
+    default: [] as { id: string; address: string; name: string }[],
 });
 
 export const currentPageState = atom<string>({
