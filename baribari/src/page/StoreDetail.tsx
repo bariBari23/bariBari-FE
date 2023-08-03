@@ -107,6 +107,7 @@ const FoodImgBox = styled.img`
     width: 100%;
     height: 240px;
     background-color: #efefef;
+    object-fit: cover;
 `;
 const DetailNav = styled.div`
     display: flex;

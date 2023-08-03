@@ -63,6 +63,9 @@ export default function Fav() {
                     <div
                         style={{
                             display: 'flex',
+                            backgroundColor: '#F9F9F9',
+                            width: '100vw',
+                            height: '100%',
                             flexDirection: 'column',
                             alignContent: 'center',
                             justifyContent: 'center',
