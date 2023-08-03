@@ -75,7 +75,7 @@ export default function LogIn() {
                     <InputWrapper>
                         <Input
                             type="text"
-                            placeholder="이메일을 입력해주세요."
+                            placeholder="이메일을 입력해주세요"
                             aria-invalid={!!errors.email}
                             {...register('email')}
                             className={`form-control ${errors.email ? 'is-invalid' : ''} ${
