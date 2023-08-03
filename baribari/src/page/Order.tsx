@@ -61,6 +61,7 @@ export default function Order() {
             const response = await createOrder(orderData);
             await deleteAllCartItem();
             console.log(response);
+            alert('예약이 완료되었습니다.');
             navigate('/orderlist');
         } catch (error) {
             console.log('Order failed: ', error);
@@ -210,6 +211,7 @@ const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 91px;
+    margin-bottom: 40px;
     justify-content: flex-start;
     background-color: #f9f9f9;
 `;
@@ -279,7 +281,7 @@ const AddBtn = styled.div`
 
 const BackSquare = styled.div`
     width: 100%;
-    max-width: 568px;
+    max-width: 600px;
     height: 96px;
     background-color: white;
 
