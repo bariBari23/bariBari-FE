@@ -34,7 +34,7 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                             }}
                         >
                             {isNaN(parseFloat(storeData.data.reviewMean))
-                                ? '정보 없음'
+                                ? '0.0'
                                 : parseFloat(storeData.data.reviewMean).toFixed(1)}
                             <div
                                 style={{

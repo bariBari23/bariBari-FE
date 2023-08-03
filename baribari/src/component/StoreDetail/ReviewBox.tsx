@@ -28,7 +28,7 @@ export default function ReviewBox({
                         gap: '18px',
                     }}
                 >
-                    {isNaN(parseFloat(rating)) ? '정보 없음' : parseFloat(rating).toFixed(1)}
+                    {isNaN(parseFloat(rating)) ? '0.0' : parseFloat(rating).toFixed(1)}
                     <div style={{ display: 'flex', width: '137px', justifyContent: 'space-between' }}>
                         {[1, 2, 3, 4, 5].map((starNumber) => (
                             <Star
