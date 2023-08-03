@@ -7,11 +7,12 @@ import defaultImg from '../assets/defaultImg.jpg';
 import { ReactComponent as FloatingRefreshBtn } from '../assets/RefreshBtn.svg';
 import { ContentContainerProps, DosirakItem } from '../utils/interface';
 import { useQuery } from '@tanstack/react-query';
+import HeartSkeleton from '../assets/3dHeart.png';
 
 export default function ContentContainer({ keyword, filterLiked, sort, setRefresh }: ContentContainerProps) {
     const navigate = useNavigate();
     const handleCardClick = (id: number) => {
-        navigate(`/detail/${id}`); // 일단 detail로 넘어가는 걸로! 나중에 수정 예정.
+        navigate(`/detail/${id}`);
     };
 
     // React Query를 사용하여 API 데이터 가져오기
@@ -25,40 +26,58 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
             enabled: keyword !== undefined || filterLiked !== undefined || sort !== undefined, // 키워드, 필터, 정렬 값이 있을 때에만 API 호출
         },
     );
+
     return (
         <Container>
-            {dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
-                <FoodCard key={dosirak.id} onClick={() => handleCardClick(dosirak.id)}>
-                    <ImgWrapper>
-                        <div style={{ width: '100%', height: '206px' }}>
-                            {!dosirak.mainImageUrl || dosirak.mainImageUrl === ' ' || dosirak.mainImageUrl === '  ' ? (
-                                <FoodImg src={defaultImg} alt="Default Food" />
-                            ) : (
-                                <FoodImg src={dosirak.mainImageUrl} alt={dosirak.name} />
-                            )}
-                        </div>
-                        <StockTag>{dosirak.stock}개</StockTag>
-                    </ImgWrapper>
-                    <NameWrapper>
-                        <FoodStoreName>{dosirak.storeName}</FoodStoreName>
-                        {dosirak.likedStore && <FilledHeartIcon />}
-                    </NameWrapper>
-                    <FoodName>{dosirak.name}</FoodName>
-                    <TagWrapper>
-                        {dosirak.banchanList.map((banchan, index) => (
-                            <FoodTag key={index}>{banchan}</FoodTag>
-                        ))}
-                    </TagWrapper>
-                    <Price>{dosirak.price.toLocaleString()}원</Price>
-                </FoodCard>
-            ))}
-            {setRefresh ? (
+            {dosirakList?.data?.dosirakList?.length === 0 ? (
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    <p
+                        style={{
+                            fontSize: '14px',
+                            fontStyle: 'normal',
+                            fontWeight: '700',
+                            lineHeight: '16px',
+                            color: '#504E5F',
+                            margin: 'auto',
+                        }}
+                    >
+                        아직 찜한 가게가 없어요!
+                    </p>
+                </div>
+            ) : (
+                dosirakList?.data?.dosirakList?.map((dosirak: DosirakItem) => (
+                    <FoodCard key={dosirak.id} onClick={() => handleCardClick(dosirak.id)}>
+                        <ImgWrapper>
+                            <div style={{ width: '100%', height: '206px' }}>
+                                {!dosirak.mainImageUrl ||
+                                dosirak.mainImageUrl === ' ' ||
+                                dosirak.mainImageUrl === '  ' ? (
+                                    <FoodImg src={defaultImg} alt="Default Food" />
+                                ) : (
+                                    <FoodImg src={dosirak.mainImageUrl} alt={dosirak.name} />
+                                )}
+                            </div>
+                            <StockTag>{dosirak.stock}개</StockTag>
+                        </ImgWrapper>
+                        <NameWrapper>
+                            <FoodStoreName>{dosirak.storeName}</FoodStoreName>
+                            {dosirak.likedStore && <FilledHeartIcon />}
+                        </NameWrapper>
+                        <FoodName>{dosirak.name}</FoodName>
+                        <TagWrapper>
+                            {dosirak.banchanList.map((banchan, index) => (
+                                <FoodTag key={index}>{banchan}</FoodTag>
+                            ))}
+                        </TagWrapper>
+                        <Price>{dosirak.price.toLocaleString()}원</Price>
+                    </FoodCard>
+                ))
+            )}
+            {setRefresh && (
                 <RotateFloatingRefreshBtn
                     style={{ position: 'fixed', bottom: '100px', right: '12px' }}
                     onClick={() => refetch()}
                 />
-            ) : (
-                ''
             )}
         </Container>
     );
