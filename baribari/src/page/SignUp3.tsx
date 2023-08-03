@@ -1,29 +1,30 @@
-import { useRef, useState } from 'react';
-
+import { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Header from '../component/Header';
 import { SearchIcon } from '../component/Icon';
 import { useNavigate } from 'react-router-dom';
 import MapContainer from '../component/Map/MapContainer';
+import { useRecoilState } from 'recoil';
+import { userAddressState } from '../utils/atom';
 
 export default function SignUp3() {
     const navigate = useNavigate();
     const insideBoxRef = useRef<HTMLDivElement>(null);
     const containerBoxRef = useRef<HTMLDivElement>(null);
     const [userPosition, setUserPosition] = useState({ latitude: 0, longitude: 0 });
-
     const onSubmit = () => {
         navigate('/home');
     };
     const [isSearched, setIsSearched] = useState(false);
     const [userAddress, setUserAddress] = useState('');
+    const [searchValue, setSearchValue] = useRecoilState(userAddressState);
 
     // Function to handle address input change
-    const handleAddressChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserAddress(event.target.value);
+    const handleAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value);
     };
 
-    const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             setIsSearched(!isSearched);
@@ -35,12 +36,14 @@ export default function SignUp3() {
             <Header showPageName={true} pageTitle={'위치 설정'} showSearchBar={false} />
             <InsideBox ref={insideBoxRef}>
                 <SearchTab>
-                    <SearchInput
-                        placeholder="도로명 주소로 집 주소를 설정하면, 주변 가게를 알려드려요."
-                        value={userAddress}
-                        onChange={handleAddressChange}
-                        onKeyDown={handleEnterKeyPress}
-                    />
+                    <div style={{ position: 'relative', width: '465px' }}>
+                        <SearchInput
+                            placeholder="도로명 주소로 집 주소를 설정해주세요."
+                            value={searchValue}
+                            onChange={handleAddressChange}
+                            onKeyDown={handleEnterKeyPress}
+                        />
+                    </div>
                     <SearchIcon
                         onClick={() => setIsSearched(!isSearched)}
                         style={{ border: 'none', backgroundColor: '#ff000000' }}
@@ -48,12 +51,26 @@ export default function SignUp3() {
                 </SearchTab>
                 <MapContainer
                     size={['100vw', '70vh']}
-                    userAddress={userAddress}
+                    userAddress={searchValue}
                     userPosition={userPosition}
                     isSearched={isSearched}
                     isStoreLocation={false}
                 />
-                <AddBtn onClick={onSubmit}>다음</AddBtn>
+                <div
+                    style={{
+                        position: 'fixed',
+                        height: '86px',
+                        bottom: '0px',
+                        width: '100%',
+                        maxWidth: '564px',
+                        background: '#fff',
+                        zIndex: '9000',
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <AddBtn onClick={onSubmit}>다음</AddBtn>
+                </div>
             </InsideBox>
         </Container>
     );
@@ -92,9 +109,9 @@ const SearchTab = styled.button`
     line-height: 28px;
 `;
 
-const SearchInput = styled.textarea`
+const SearchInput = styled.input`
     color: #504e5f;
-    width: 465px;
+    width: 100%;
     font-size: 16px;
     font-family: Pretendard Variable;
     font-style: normal;
@@ -102,7 +119,6 @@ const SearchInput = styled.textarea`
     line-height: 28px;
     border: none;
     background-color: #efefef;
-    resize: none;
     height: 32px;
     outline: none;
     &::placeholder {
