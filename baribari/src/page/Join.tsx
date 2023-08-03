@@ -23,7 +23,10 @@ const validationSchema = yup.object({
         .string()
         .required('비밀번호를 입력해주세요!')
         .min(6, '비밀번호는 6글자 이상이여야 합니다.')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, '비밀번호는 영어 대소문자와 숫자를 포함해야 합니다.'),
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+            '비밀번호는 영어 대소문자, 숫자, 특수문자(@$!%*#?&)를 포함해야 합니다.',
+        ),
     phone: yup.string().required('전화번호를 입력해주세요!'),
     email: yup.string().required('이메일을 입력해주세요!').email('@를 포함한 유효한 이메일 주소를 작성해주세요.'),
 });
@@ -97,96 +100,102 @@ export default function Join() {
     // }, [state.service, state.usage, state.third]);
 
     return (
-        <div style={{ padding: '110px 16px 0px 16px', width: '100%' }}>
+        <div style={{ width: '100%' }}>
             <Header showPageName={true} pageTitle="회원가입" showSearchBar={false} />
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <InputWrapper>
-                    <Label>이메일</Label>
-                    <Input
-                        type="text"
-                        placeholder="이메일 주소를 입력해주세요"
-                        aria-invalid={!!errors.email}
-                        {...register('email')}
-                        className={`form-control ${errors.email ? 'is-invalid' : ''} ${
-                            !errors.email && getValues('email') ? 'is-valid' : ''
-                        }`}
-                    />
-                    {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-                    <Label>비밀번호</Label>
-                    <Input
-                        type="password"
-                        placeholder="영어 대소문자, 숫자를 포함해 6글자 이상을 작성해주세요"
-                        aria-invalid={!!errors.password}
-                        {...register('password')}
-                        className={`form-control ${errors.password ? 'is-invalid' : ''} ${
-                            !errors.password && getValues('password') ? 'is-valid' : ''
-                        }`}
-                    />
-                    {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-                    <Label>이름</Label>
-                    <Input
-                        type="text"
-                        placeholder="성명을 입력해주세요"
-                        aria-invalid={!!errors.name}
-                        {...register('name')}
-                        className={`form-control ${errors.name ? 'is-invalid' : ''} ${
-                            !errors.name && getValues('name') ? 'is-valid' : ''
-                        }`}
-                    />
-                    {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
-                    <Label>휴대폰 번호</Label>
-                    <Input
-                        type="text"
-                        placeholder="'-'구분없이 입력해주세요"
-                        aria-invalid={!!errors.phone}
-                        {...register('phone')}
-                        className={`form-control ${errors.phone ? 'is-invalid' : ''} ${
-                            !errors.phone && getValues('phone') ? 'is-valid' : ''
-                        }`}
-                    />
-                    {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
-                </InputWrapper>
-                <div
-                    style={{
-                        position: 'fixed',
-                        height: '86px',
-                        bottom: '0px',
-                        width: 'calc(100% - 16px)',
-                        maxWidth: '564px',
-                        background: '#fff',
-                        zIndex: '9000',
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <SubmitButton type="submit">다음</SubmitButton>
-                </div>
-                <AgreeBox>
-                    <AllAgree>
-                        <BigTextBox>전체 동의</BigTextBox>
-                        <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={false} />
-                    </AllAgree>
-                    <SubAgree>
-                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
-                        <TextBox>서비스 이용약관</TextBox>
-                        <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <CheckIcon onClick={() => dispatch({ type: 'service' })} active={state.service} isAll={false} />
-                    </SubAgree>
-                    <SubAgree>
-                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
-                        <TextBox>개인정보 수집 및 이용동의</TextBox>
-                        <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <CheckIcon onClick={() => dispatch({ type: 'usage' })} active={state.usage} isAll={false} />
-                    </SubAgree>
-                    <SubAgree>
-                        <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
-                        <TextBox>개인정보 제 3자 제공동의</TextBox>
-                        <RPointerIcon style={{ marginRight: 'auto' }} />
-                        <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
-                    </SubAgree>
-                </AgreeBox>
-                <BackSquare />
-            </Form>
+            <div style={{ padding: '110px 16px 0px 16px', width: '100%' }}>
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <InputWrapper>
+                        <Label>이메일</Label>
+                        <Input
+                            type="text"
+                            placeholder="이메일 주소를 입력해주세요"
+                            aria-invalid={!!errors.email}
+                            {...register('email')}
+                            className={`form-control ${errors.email ? 'is-invalid' : ''} ${
+                                !errors.email && getValues('email') ? 'is-valid' : ''
+                            }`}
+                        />
+                        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+                        <Label>비밀번호</Label>
+                        <Input
+                            type="password"
+                            placeholder="영어 대소문자, 숫자, 특수기호를 포함한 6글자 이상이에요"
+                            aria-invalid={!!errors.password}
+                            {...register('password')}
+                            className={`form-control ${errors.password ? 'is-invalid' : ''} ${
+                                !errors.password && getValues('password') ? 'is-valid' : ''
+                            }`}
+                        />
+                        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+                        <Label>이름</Label>
+                        <Input
+                            type="text"
+                            placeholder="성명을 입력해주세요"
+                            aria-invalid={!!errors.name}
+                            {...register('name')}
+                            className={`form-control ${errors.name ? 'is-invalid' : ''} ${
+                                !errors.name && getValues('name') ? 'is-valid' : ''
+                            }`}
+                        />
+                        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+                        <Label>휴대폰 번호</Label>
+                        <Input
+                            type="text"
+                            placeholder="'-'구분없이 입력해주세요"
+                            aria-invalid={!!errors.phone}
+                            {...register('phone')}
+                            className={`form-control ${errors.phone ? 'is-invalid' : ''} ${
+                                !errors.phone && getValues('phone') ? 'is-valid' : ''
+                            }`}
+                        />
+                        {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
+                    </InputWrapper>
+                    <div
+                        style={{
+                            position: 'fixed',
+                            height: '86px',
+                            bottom: '0px',
+                            width: 'calc(100% - 16px)',
+                            maxWidth: '564px',
+                            background: '#fff',
+                            zIndex: '9000',
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <SubmitButton type="submit">다음</SubmitButton>
+                    </div>
+                    <AgreeBox>
+                        <AllAgree>
+                            <BigTextBox>전체 동의</BigTextBox>
+                            <CheckIcon onClick={() => dispatch({ type: 'all' })} active={state.all} isAll={false} />
+                        </AllAgree>
+                        <SubAgree>
+                            <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                            <TextBox>서비스 이용약관</TextBox>
+                            <RPointerIcon style={{ marginRight: 'auto' }} />
+                            <CheckIcon
+                                onClick={() => dispatch({ type: 'service' })}
+                                active={state.service}
+                                isAll={false}
+                            />
+                        </SubAgree>
+                        <SubAgree>
+                            <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                            <TextBox>개인정보 수집 및 이용동의</TextBox>
+                            <RPointerIcon style={{ marginRight: 'auto' }} />
+                            <CheckIcon onClick={() => dispatch({ type: 'usage' })} active={state.usage} isAll={false} />
+                        </SubAgree>
+                        <SubAgree>
+                            <TextBox style={{ color: '#FF7455', paddingRight: '26px' }}>필수</TextBox>
+                            <TextBox>개인정보 제 3자 제공동의</TextBox>
+                            <RPointerIcon style={{ marginRight: 'auto' }} />
+                            <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
+                        </SubAgree>
+                    </AgreeBox>
+                    <BackSquare />
+                </Form>
+            </div>
         </div>
     );
 }
@@ -206,7 +215,7 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
     height: 28px;
-    padding: 8px 16px;
+    padding: 8px 15px;
     margin-bottom: 5px;
     border-radius: 8px;
     border: 0.75px solid #aaa;
