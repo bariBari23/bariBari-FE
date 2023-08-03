@@ -6,7 +6,8 @@ import Header from '../component/Header';
 import { useNavigate } from 'react-router';
 import CheckIcon from '../component/CheckIcon';
 import { ReactComponent as RPointerIcon } from '../assets/rpointerIcon.svg';
-import { useEffect, useReducer } from 'react';
+import { useReducer, useState } from 'react';
+import { useEffect } from 'react';
 import { registerUser } from '../apis/api/user';
 
 interface JoinData {
@@ -51,7 +52,7 @@ export default function Join() {
                 const response = await registerUser(data.name, data.email, data.password, data.phone);
                 // 회원가입 성공 시 처리
                 alert('회원가입이 완료되었습니다:)');
-                navigate('/signUp3'); // 회원가입 완료 후 이동할 페이지 설정
+                navigate('/signUp4'); // 회원가입 완료 후 이동할 페이지 설정
             } catch (error) {
                 // 실패 처리
                 // 회원가입 실패 시 처리
@@ -71,7 +72,12 @@ export default function Join() {
                 case 'service':
                 case 'usage':
                 case 'third':
-                    return { ...state, [action.type]: !state[action.type] };
+                    const newState = { ...state, [action.type]: !state[action.type] };
+                    // "service", "usage", "third" 중 하나라도 false인 경우 "all"도 false로 설정
+                    if (!newState.service || !newState.usage || !newState.third) {
+                        newState.all = false;
+                    }
+                    return newState;
                 default:
                     return state;
             }
@@ -109,7 +115,7 @@ export default function Join() {
                     <Label>비밀번호</Label>
                     <Input
                         type="password"
-                        placeholder="비밀번호를 입력해주세요"
+                        placeholder="영어 대소문자, 숫자를 포함해 6글자 이상을 작성해주세요"
                         aria-invalid={!!errors.password}
                         {...register('password')}
                         className={`form-control ${errors.password ? 'is-invalid' : ''} ${
@@ -140,7 +146,21 @@ export default function Join() {
                     />
                     {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
                 </InputWrapper>
-                <SubmitButton type="submit">다음</SubmitButton>
+                <div
+                    style={{
+                        position: 'fixed',
+                        height: '86px',
+                        bottom: '0px',
+                        width: 'calc(100% - 16px)',
+                        maxWidth: '564px',
+                        background: '#fff',
+                        zIndex: '9000',
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <SubmitButton type="submit">다음</SubmitButton>
+                </div>
                 <AgreeBox>
                     <AllAgree>
                         <BigTextBox>전체 동의</BigTextBox>

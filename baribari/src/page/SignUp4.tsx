@@ -7,7 +7,7 @@ export default function SignUp4() {
     const navigate = useNavigate();
 
     const onClickButton = () => {
-        navigate('/home');
+        navigate('/');
     };
 
     return (

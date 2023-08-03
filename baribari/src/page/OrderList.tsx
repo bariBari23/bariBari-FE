@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import Header from '../component/Header';
 import Navigator from '../component/Navigator';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
@@ -40,8 +39,8 @@ export default function OrderList() {
     };
 
     return (
-        <div style={{ marginTop: '85px' }}>
-            <Header showPageName={true} pageTitle="주문 내역" showSearchBar={false} />
+        <div style={{ marginTop: '70px', width: '100vw' }}>
+            <Header>주문 내역</Header>
             {orderItems.data.orderItems.length === 0 ? (
                 <div
                     style={{
@@ -115,7 +114,6 @@ export default function OrderList() {
                     </Wrapper>
                 ))
             )}
-
             <Navigator />
         </div>
     );
@@ -189,41 +187,6 @@ const ReviewButtonFirst = styled.button<{ isReviewed: boolean }>`
     line-height: 20px;
     letter-spacing: 0.1px;
 `;
-const ReviewButtonSecond = styled.button`
-    width: 100%;
-    height: 40px;
-    border-radius: 12px;
-    background: #efefef;
-    border: none;
-    color: #504e5f;
-    text-align: center;
-    margin: 24px 0px 20px 0px;
-    // font
-    font-size: 14px;
-    font-family: Pretendard-Regular;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-`;
-
-const ReviewButtonLast = styled.button`
-    width: 100%;
-    height: 40px;
-    border-radius: 12px;
-    background: #ffe3dd;
-    border: none;
-    color: #ff7455;
-    text-align: center;
-    margin: 24px 0px 20px 0px;
-    // font
-    font-size: 14px;
-    font-family: Pretendard Variable;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px;
-    letter-spacing: 0.1px;
-`;
 
 const NavButton = styled.button`
     border: none;
@@ -245,4 +208,19 @@ const NavButton = styled.button`
     font-weight: 700;
     line-height: 16px;
     margin-top: 40px;
+`;
+
+const Header = styled.div`
+    height: 32px;
+    width: 100%;
+    padding: 25px 8px 8px 16px;
+    background-color: white;
+    position: fixed;
+    margin: auto;
+    top: 0;
+    z-index: 10000;
+    font-family: Pretendard Variable;
+    color: #212121;
+    font-size: 22px;
+    font-weight: 700;
 `;

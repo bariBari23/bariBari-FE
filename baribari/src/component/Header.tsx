@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { keywordsState } from '../utils/atom';
+import { currentPageState, keywordsState } from '../utils/atom';
 
 const Header = ({
     showPageName,
@@ -17,20 +17,22 @@ const Header = ({
 }) => {
     const navigate = useNavigate();
 
-    const handleGoBack = () => {
-        navigate(-1); // 이전 페이지로 이동
-    };
     const [searchKeyword, setSearchKeyword] = useRecoilState(keywordsState); // 검색어 상태 추가
-    const resetSearchKeyword = useResetRecoilState(keywordsState);
+    // const resetSearchKeyword = useResetRecoilState(keywordsState);
+    const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+
     const handleSearchKeywordChange = (keyword: string) => {
         setSearchKeyword(keyword);
     };
-    useEffect(() => {
-        // 다른 페이지로 이동할 때 Recoil 상태 초기화
-        return () => {
-            resetSearchKeyword();
-        };
-    }, [resetSearchKeyword]);
+    const handleGoBack = () => {
+        navigate(`/${currentPage}`); // 이전 페이지로 이동
+    };
+    // useEffect(() => {
+    //     // 다른 페이지로 이동할 때 Recoil 상태 초기화
+    //     return () => {
+    //         resetSearchKeyword();
+    //     };
+    // }, [resetSearchKeyword]);
     return (
         <Container>
             <IconBox>

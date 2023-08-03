@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router';
-import { loginUser } from '../apis/api/user';
+import { getUserInfo, loginUser } from '../apis/api/user';
 import { LoginData } from '../utils/interface';
 
 const validationSchema = yup.object({
@@ -31,9 +31,11 @@ export default function LogIn() {
         try {
             // 로그인 API 호출
             const response = await loginUser(data.email, data.password);
+            // console.log('주소있냐', userInfo);
             // 로그인 성공 시 처리
             alert('바리바리에 무사히 로그인하셨습니다:)');
-            navigate('/home');
+            //만약에 위치 설정을 하지 않은 유저이면 위치 등록 페이지로 이동
+            handleLoginNavigate();
         } catch (error) {
             // 로그인실패 처리
             alert('로그인 실패!');
@@ -43,6 +45,25 @@ export default function LogIn() {
     const navigate = useNavigate();
     const handleRegisterClick = () => {
         navigate('/join');
+    };
+
+    const handleLoginNavigate = async () => {
+        try {
+            const userInfo = await getUserInfo();
+            console.log(userInfo.data.position.latitude);
+            if (userInfo) {
+                if (userInfo.data.position.latitude === 0) {
+                    navigate('/signup3');
+                } else {
+                    navigate('/home');
+                }
+            } else {
+                alert('사용자 정보를 가져오는데 실패하였습니다.');
+            }
+        } catch (error) {
+            alert('사용자 정보를 가져오는데 실패하였습니다.');
+            console.log('Error:', error);
+        }
     };
 
     return (

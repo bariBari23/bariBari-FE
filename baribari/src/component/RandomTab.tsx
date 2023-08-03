@@ -4,22 +4,24 @@ import FoodPic1 from '../assets/FoodPic1.svg';
 import FoodPic2 from '../assets/FoodPic2.svg';
 import SvgSprite from './Sprite';
 import { getUserLocation } from '../apis/api/location';
+import { useRecoilValue } from 'recoil';
+import { userAddressState } from '../utils/atom';
 
 export default function RandomTabs() {
     const [randomTab, setRandomTab] = useState(0);
     const [userLocation, setUserLocation] = useState<[number, number]>([0, 0]);
+    const searchValue = useRecoilValue(userAddressState);
 
     useEffect(() => {
         const showUserLocation = async () => {
             try {
-                const { latitude, longitude } = await getUserLocation(); // getUserLocation() 함수로 경도와 위도 정보를 얻어옴
-                setUserLocation([latitude, longitude]);
+                const response = await getUserLocation();
+                setUserLocation([response.data.latitude, response.data.longitude]);
             } catch (error) {
                 console.log('Error', error);
             }
         };
 
-        // showUserLocation 함수 호출
         showUserLocation();
     }, []);
 
@@ -32,6 +34,7 @@ export default function RandomTabs() {
             clearTimeout(intervalId);
         };
     }, [randomTab]);
+
     return (
         <div>
             <SvgSprite />
@@ -46,8 +49,7 @@ export default function RandomTabs() {
                             <svg width="20" height="20">
                                 <use xlinkHref="#property-1-map-1" />
                             </svg>
-                            {/* <CoordinateToAddressConverter latitude={userLocation[0]} longitude={userLocation[1]} /> */}
-                            서울 서대문구 이화여대길 52
+                            {searchValue}
                         </SubHeader>
                     </Text>
                     <img src={FoodPic1} alt="FoodPic1" />
@@ -63,8 +65,7 @@ export default function RandomTabs() {
                             <svg width="20" height="20">
                                 <use xlinkHref="#property-1-map-1" />
                             </svg>
-                            {/* <CoordinateToAddressConverter latitude={userLocation[0]} longitude={userLocation[1]} /> */}
-                            서울 서대문구 이화여대길 52
+                            {searchValue}
                         </SubHeader>
                     </Text>
                     <img src={FoodPic2} alt="FoodPic2" />
@@ -73,7 +74,6 @@ export default function RandomTabs() {
         </div>
     );
 }
-
 const Container = styled.div`
     display: flex;
     justify-content: space-between;

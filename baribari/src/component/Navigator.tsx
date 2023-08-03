@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router';
 import { atom, useRecoilState } from 'recoil';
 import { currentPageState } from '../utils/atom';
 
-export default function Navigator() {
+const Navigator = () => {
     const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+    // const [currentPage, setCurrentPage] = useState('home');
 
     const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ export default function Navigator() {
             </NavCard>
         </NavContainer>
     );
-}
+};
 
 const NavContainer = styled.div`
     display: flex;
@@ -71,3 +72,5 @@ const NavText = styled.div<{ $isactive: boolean }>`
     font-weight: 600;
     line-height: 16px;
 `;
+
+export default Navigator;

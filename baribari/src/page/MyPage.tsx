@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Header from '../component/Header';
 import { ReactComponent as Pencil } from '../assets/pencil.svg';
 import { ReactComponent as Profile } from '../assets/img-profile.svg';
 import { RPointerMedIcon } from '../component/IconFin';
@@ -49,7 +48,7 @@ export default function MyPage() {
 
     return (
         <Container>
-            <Header showPageName={true} pageTitle={'마이페이지'} showSearchBar={false} />
+            <Header>마이페이지</Header>
             <InsideBox>
                 <ProfileBox>
                     <Profile />
@@ -93,14 +92,14 @@ export default function MyPage() {
 const Container = styled.div`
     width: 100%;
     height: auto;
-
     display: flex;
     flex-direction: column;
 `;
+
 const InsideBox = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 99px;
+    margin-top: 70px;
     justify-content: flex-start;
     align-items: center;
     padding: 0 12px;
@@ -132,9 +131,17 @@ const TextBox = styled.div`
     align-items: center;
 `;
 
-const MapImage = styled.div`
+const Header = styled.div`
+    height: 32px;
     width: 100%;
-    height: 219px;
-    border-radius: 12px;
-    background-color: grey;
+    padding: 25px 8px 8px 16px;
+    background-color: white;
+    position: fixed;
+    margin: auto;
+    top: 0;
+    z-index: 10000;
+    font-family: Pretendard Variable;
+    color: #212121;
+    font-size: 22px;
+    font-weight: 700;
 `;

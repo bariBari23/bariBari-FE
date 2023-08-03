@@ -52,6 +52,3 @@ export async function getUserInfo() {
         throw error;
     }
 }
-function getExpirationTimeFromToken(accessToken: any): any {
-    throw new Error('Function not implemented.');
-}
