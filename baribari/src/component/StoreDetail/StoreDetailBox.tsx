@@ -56,7 +56,10 @@ export default function StoreDetailBox({ isSelected, storeData }: { isSelected: 
                         </div>
                     </div>
                 </TitleBox>
-                <CallBtn style={{ marginRight: '12px' }} onClick={onCall}>
+                <CallBtn
+                    style={{ margin: 'auto 12px auto auto', display: 'flex', alignItems: 'center' }}
+                    onClick={onCall}
+                >
                     연락하기
                 </CallBtn>
             </MainBox>

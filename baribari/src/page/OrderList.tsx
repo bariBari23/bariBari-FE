@@ -21,7 +21,7 @@ export default function OrderList() {
         if (item.isReviewed) {
             alert('이미 작성한 리뷰입니다.');
         } else if (item.status != 'PICKED_UP') {
-            alert('반찬 수령 완료 후 리뷰 ₩작성이 가능합니다.');
+            alert('반찬 수령 완료 후 리뷰 작성이 가능합니다.');
         } else {
             navigate('/uploadReview', { state: { item } });
         }
@@ -39,81 +39,102 @@ export default function OrderList() {
     };
 
     return (
-        <div style={{ marginTop: '70px', width: '100vw' }}>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '70px',
+                width: '100vw',
+            }}
+        >
             <Header>주문 내역</Header>
-            {orderItems.data.orderItems.length === 0 ? (
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                >
-                    <img src={SearchSkeleton} alt="돋보기" style={{ width: '210px', height: '210px' }} />
-                    <span
+            <div style={{ marginBottom: '100px' }}>
+                {orderItems.data.orderItems.length === 0 ? (
+                    <div
                         style={{
-                            fontSize: '14px',
-                            fontStyle: 'normal',
-                            fontWeight: '700',
-                            lineHeight: '16px',
-                            color: '#D3D3D3',
+                            display: 'flex',
+                            backgroundColor: '#F9F9F9',
+                            width: '100vw',
+                            height: '100%',
+                            flexDirection: 'column',
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
                         }}
                     >
-                        주문 내역이 없어요
-                    </span>
-                    <NavButton onClick={handleClickNavButton}>반찬박스 주문하러 가기</NavButton>
-                </div>
-            ) : (
-                orderItems.data.orderItems.map((item: any, index: number) => (
-                    <Wrapper>
-                        <OrderStatus>
-                            {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
-                            <div style={{ marginBottom: '8px' }}>{convertDate(item.orderCreatedAt)}</div>
-                            <div style={{ marginBottom: '8px' }}>|</div>
-                            <div style={{ marginBottom: '8px' }}>{item.status}</div>
-                        </OrderStatus>
+                        <img src={SearchSkeleton} alt="돋보기" style={{ width: '210px', height: '210px' }} />
+                        <span
+                            style={{
+                                fontSize: '14px',
+                                fontStyle: 'normal',
+                                fontWeight: '700',
+                                lineHeight: '16px',
+                                color: '#D3D3D3',
+                            }}
+                        >
+                            주문 내역이 없어요
+                        </span>
+                        <NavButton onClick={handleClickNavButton}>반찬박스 주문하러 가기</NavButton>
+                    </div>
+                ) : (
+                    orderItems.data.orderItems.map((item: any, index: number) => (
+                        <Wrapper>
+                            <OrderStatus>
+                                {/* 백으로부터 받은 data의 주문 날짜랑 픽업 status */}
+                                <div style={{ marginBottom: '8px' }}>{convertDate(item.orderCreatedAt)}</div>
+                                <div style={{ marginBottom: '8px' }}>|</div>
+                                <div style={{ marginBottom: '8px' }}>
+                                    {item.status === 'READY'
+                                        ? '준비 완료'
+                                        : item.status === 'PICKED_UP'
+                                        ? '수령 완료'
+                                        : item.status}
+                                </div>
+                            </OrderStatus>
 
-                        <>
-                            <Separator />
-                            <FoodItem>
-                                <FoodImg src={item.dosirakImage} />
-                                <FoodInfo>
-                                    {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
-                                    <p
-                                        style={{
-                                            margin: '0px',
-                                            fontSize: '16px',
-                                            fontWeight: '400',
-                                            lineHeight: '28px',
-                                            fontStyle: 'normal',
-                                        }}
-                                    >
-                                        {item.storeName}
-                                    </p>
-                                    <FoodOrderInfo>
-                                        <p style={{ margin: '0px' }}>{item.dosirakName}</p>
-                                        <p style={{ margin: '0px' }}>{item.count}개</p>
-                                        <p style={{ margin: '0px' }}>{item.total.toLocaleString()}원</p>
-                                    </FoodOrderInfo>
-                                </FoodInfo>
-                            </FoodItem>
-                        </>
-                        <ReviewButtonFirst isReviewed={item.isReviewed} onClick={() => handleUploadReviewClick(item)}>
-                            {item.status !== 'picked_up'
-                                ? `${item.estimatedPickUpTime} 수령 예정`
-                                : item.isReviewed
-                                ? '리뷰 작성 완료'
-                                : '리뷰 쓰기'}
-                        </ReviewButtonFirst>
-                    </Wrapper>
-                ))
-            )}
+                            <>
+                                <Separator />
+                                <FoodItem>
+                                    <FoodImg src={item.dosirakImage} />
+                                    <FoodInfo>
+                                        {/* 백으로부터 받은 data의 반찬가게 이름, 반찬 이름, count, 가격*/}
+                                        <p
+                                            style={{
+                                                margin: '0px',
+                                                fontSize: '16px',
+                                                fontWeight: '400',
+                                                lineHeight: '28px',
+                                                fontStyle: 'normal',
+                                            }}
+                                        >
+                                            {item.storeName}
+                                        </p>
+                                        <FoodOrderInfo>
+                                            <p style={{ margin: '0px' }}>{item.dosirakName}</p>
+                                            <p style={{ margin: '0px' }}>{item.count}개</p>
+                                            <p style={{ margin: '0px' }}>{item.total.toLocaleString()}원</p>
+                                        </FoodOrderInfo>
+                                    </FoodInfo>
+                                </FoodItem>
+                            </>
+                            <ReviewButtonFirst
+                                isReviewed={item.isReviewed}
+                                onClick={() => handleUploadReviewClick(item)}
+                            >
+                                {item.status !== 'PICKED_UP'
+                                    ? `${item.estimatedPickUpTime} 수령 예정`
+                                    : item.isReviewed
+                                    ? '리뷰 작성 완료'
+                                    : '리뷰 쓰기'}
+                            </ReviewButtonFirst>
+                        </Wrapper>
+                    ))
+                )}
+            </div>
             <Navigator />
         </div>
     );
@@ -176,7 +197,7 @@ const ReviewButtonFirst = styled.button<{ isReviewed: boolean }>`
     border-radius: 12px;
     background: ${(props) => (props.isReviewed ? '#efefef' : '#ff7455')};
     border: none;
-    color: #fff;
+    color: ${(props) => (props.isReviewed ? '#949494' : '#fff')};
     text-align: center;
     margin: 24px 0px 20px 0px;
     // font
