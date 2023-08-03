@@ -54,7 +54,7 @@ export default function Join() {
                 // 회원가입 API 호출
                 const response = await registerUser(data.name, data.email, data.password, data.phone);
                 // 회원가입 성공 시 처리
-                alert('회원가입이 완료되었습니다:)');
+
                 navigate('/signUp4'); // 회원가입 완료 후 이동할 페이지 설정
             } catch (error) {
                 // 실패 처리

@@ -14,7 +14,10 @@ const validationSchema = yup.object({
         .string()
         .required('비밀번호를 입력해주세요!')
         .min(6, '비밀번호는 6글자 이상이여야 합니다.')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, '비밀번호는 영어 대소문자와 숫자를 포함해야 합니다.'),
+        .matches(
+            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+            '비밀번호는 영어 대소문자, 숫자, 특수문자(@$!%*#?&)를 포함해야 합니다.',
+        ),
 });
 
 export default function LogIn() {
