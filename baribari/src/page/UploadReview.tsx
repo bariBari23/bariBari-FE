@@ -18,9 +18,9 @@ export default function UploadReview() {
     const orderItem = location.state.item;
     console.log('orderItem : ' + orderItem);
     let isSelected = false;
-    const [quantity, setQuantity] = useState<string | null>('averageAmount');
-    const [flavor, setFlavor] = useState<string | null>('plainTaste');
-    const [wrap, setWrap] = useState<string | null>('plainStatus');
+    const [quantity, setQuantity] = useState<string | null>(null);
+    const [flavor, setFlavor] = useState<string | null>(null);
+    const [wrap, setWrap] = useState<string | null>(null);
     const [ratingText, setRatingText] = useState<string>('');
 
     const [image, setImage] = useState<File | null>(null);
@@ -112,6 +112,7 @@ export default function UploadReview() {
         url.search = '';
         setSubmitImgUrl(url.toString());
         try {
+            console.log(submitImgUrl);
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,

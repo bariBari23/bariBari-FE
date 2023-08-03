@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { createUserLocation, getUserLocation } from '../../apis/api/location';
 import { useRecoilValue } from 'recoil';
 import { storeAddressState } from '../../utils/atom';
+import { useNavigate } from 'react-router-dom';
 
 declare global {
     interface Window {
@@ -52,6 +53,8 @@ export default function MapContainer(props: {
             });
         }
     };
+
+    const navigate = useNavigate();
 
     // 마커 이미지 커스텀
     const createCustomMarkerImage = () => {
@@ -201,9 +204,10 @@ export default function MapContainer(props: {
             });
             setMarkers(newMarker);
             console.log(newMarker);
+            console.log(storeAddress);
             // 상점 위치들 띄우기
-            storeAddress.forEach((address) => {
-                geocoder.addressSearch(address, (result: any, status: any) => {
+            storeAddress.forEach((store) => {
+                geocoder.addressSearch(store.address, (result: any, status: any) => {
                     if (status === kakao.maps.services.Status.OK) {
                         const latitude = result[0].y;
                         const longitude = result[0].x;
@@ -213,6 +217,9 @@ export default function MapContainer(props: {
                             map: kakaoMap,
                             position: new kakao.maps.LatLng(latitude, longitude),
                             image: customMarkerImage?.iconTwo, // iconTwo를 사용하여 상점 위치에 대한 마커 생성
+                        });
+                        kakao.maps.event.addListener(newMarker, 'click', function () {
+                            navigate(`/detail/${store.id}`);
                         });
                         setStoreMarkers((prevMarkers) => [...prevMarkers, newMarker]);
                     }
