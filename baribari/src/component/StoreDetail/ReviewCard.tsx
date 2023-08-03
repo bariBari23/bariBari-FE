@@ -38,8 +38,8 @@ export default function ReviewCard({ id }: { id: number | null }) {
     return (
         <Container>
             {reviewData?.data?.reviewList.map((review: any) => (
-                <>
-                    <Profile style={{ width: '44px', height: '44px' }} />
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Profile style={{ width: '44px', height: '44px', marginRight: '12px' }} />
                     <SubReviewCard key={review.reviewId}>
                         <div
                             style={{
@@ -96,7 +96,7 @@ export default function ReviewCard({ id }: { id: number | null }) {
                         <ImageBox src={review.mainImageUrl} />
                         <ReviewText ref={textRef}>{review.content}</ReviewText>
                     </SubReviewCard>
-                </>
+                </div>
             ))}
         </Container>
     );
