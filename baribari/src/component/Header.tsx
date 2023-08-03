@@ -56,9 +56,8 @@ const Container = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 25px 8px 8px 0px;
+    padding: 25px 8px 8px 8px;
     background-color: white;
-
     position: fixed;
     margin: auto;
     top: 0;
