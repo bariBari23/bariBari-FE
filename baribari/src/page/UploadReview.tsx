@@ -42,7 +42,7 @@ export default function UploadReview() {
         handleRatingChange: any;
         selected: boolean;
     }) => (
-        <div style={{ paddingRight: '4px' }}>
+        <div style={{ padding: '0 2px' }}>
             <svg
                 width="26px"
                 height="26px"
@@ -62,9 +62,9 @@ export default function UploadReview() {
         let displayText;
 
         if (rating >= 1 && rating <= 2) {
-            displayText = '별로';
+            displayText = '별로예요';
         } else if (rating === 3) {
-            displayText = '보통';
+            displayText = '보통이에요';
         } else if (rating >= 4 && rating <= 5) {
             displayText = '좋아요';
         } else {
@@ -225,7 +225,15 @@ export default function UploadReview() {
                 <SubText>주문하신 반찬에 별점을 남겨주세요.</SubText>
                 <ScoreBox>
                     <ScoreStar>
-                        <div style={{ width: '160px', height: '26px', display: 'flex' }}>
+                        <div
+                            style={{
+                                width: '160px',
+                                height: '26px',
+                                display: 'flex',
+                                margin: 'auto',
+                                justifyContent: 'center',
+                            }}
+                        >
                             {[1, 2, 3, 4, 5].map((starNumber) => (
                                 <Star
                                     key={starNumber}
