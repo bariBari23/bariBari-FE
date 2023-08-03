@@ -6,11 +6,17 @@ import SvgSprite from './Sprite';
 import { getUserLocation } from '../apis/api/location';
 import { useRecoilValue } from 'recoil';
 import { userAddressState } from '../utils/atom';
+import { Cookies } from 'typescript-cookie';
 
 export default function RandomTabs() {
     const [randomTab, setRandomTab] = useState(0);
     const [userLocation, setUserLocation] = useState<[number, number]>([0, 0]);
-    const searchValue = useRecoilValue(userAddressState);
+    // const searchValue = useRecoilValue(userAddressState);
+    const searchValue = Cookies.get('userAddress')
+        ? JSON.stringify(Cookies.get('userAddress')).replace(/\"/g, '')
+        : '서울 서대문구 이화여대길 52';
+
+    console.log('도로명: ' + searchValue);
 
     useEffect(() => {
         const showUserLocation = async () => {
@@ -49,7 +55,7 @@ export default function RandomTabs() {
                             <svg width="20" height="20">
                                 <use xlinkHref="#property-1-map-1" />
                             </svg>
-                            {searchValue !== '' ? searchValue : '서울 서대문구 이화여대길 52'}
+                            {searchValue}
                         </SubHeader>
                     </Text>
                     <img src={FoodPic1} alt="FoodPic1" />

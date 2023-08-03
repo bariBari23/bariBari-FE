@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { createUserLocation, getUserLocation } from '../../apis/api/location';
-import { useRecoilValue } from 'recoil';
-import { storeAddressState } from '../../utils/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { storeAddressState, userAddressState } from '../../utils/atom';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { Cookies } from 'typescript-cookie';
 
 declare global {
     interface Window {
@@ -29,30 +31,78 @@ export default function MapContainer(props: {
     const [storeMarkers, setStoreMarkers] = useState<any[]>([]);
     const storeAddress = useRecoilValue(storeAddressState);
     // 도로명 주소 저장해주는 userStringAddress
-    const [userStringAddress, setUserStringAddress] = useState<string>('');
+    const [userStringAddress, setUserStringAddress] = useRecoilState(userAddressState);
     // 유저의 위치 정보를 createUserLocation api 활용해 보냄
+    const [activeStore, setActiveStore] = useState<{ id: string; address: string; name: string } | null>(null);
     const callCreateUserLocation = async () => {
         if (isSearched) {
-            const geocoder = new kakao.maps.services.Geocoder();
+            const userGeocoder = new kakao.maps.services.Geocoder();
             // 주소를 검색하여 위도와 경도를 얻음
-            geocoder.addressSearch(userAddress, async (result: any, status: any) => {
+            userGeocoder.addressSearch(userAddress, async (result: any, status: any) => {
                 if (status === kakao.maps.services.Status.OK) {
                     const latitude = result[0].y;
                     const longitude = result[0].x;
+                    const coord = new kakao.maps.LatLng(latitude, longitude);
+
+                    const translateToAddress = async () => {
+                        userGeocoder.coord2RegionCode(
+                            coord.getLng(),
+                            coord.getLat(),
+                            function (result: string | any[], status: any) {
+                                if (status === kakao.maps.services.Status.OK) {
+                                    for (let i = 0; i < result.length; i++) {
+                                        if (result[i].region_type === 'H') {
+                                            setUserStringAddress(result[i].address_name);
+                                            Cookies.set('userAddress', result[i].address_name);
+                                            // Assuming you have a recoil setter
+                                        }
+                                    }
+                                }
+                            },
+                        );
+                    };
 
                     try {
                         // 위도와 경도를 서버로 전송하여 createUserLocation api를 호출
+
                         const response = await createUserLocation(latitude, longitude);
                         console.log('API 호출 결과는', response);
+                        translateToAddress();
                     } catch (error) {
                         console.log('에러 발생', error);
                     }
                 } else {
                     console.log('주소를 찾을 수 없습니다.');
+                    alert('주소를 찾을 수 없습니다.');
                 }
             });
         }
     };
+
+    // useEffect(() => {
+    //     if (userPosition.latitude !== 0 && userPosition.longitude !== 0) {
+    //         const addressGeocoder = new kakao.maps.services.Geocoder();
+    //         const coord = new kakao.maps.LatLng(userPosition.latitude, userPosition.longitude);
+
+    //         const translateToAddress = async () => {
+    //             addressGeocoder.coord2RegionCode(
+    //                 coord.getLng(),
+    //                 coord.getLat(),
+    //                 function (result: string | any[], status: any) {
+    //                     if (status === kakao.maps.services.Status.OK) {
+    //                         for (let i = 0; i < result.length; i++) {
+    //                             if (result[i].region_type === 'H') {
+    //                                 setUserStringAddress(result[i].address_name);
+    //                                 // Assuming you have a recoil setter
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //             );
+    //         };
+    //         translateToAddress();
+    //     }
+    // }, [userPosition]);
 
     const navigate = useNavigate();
 
@@ -218,9 +268,26 @@ export default function MapContainer(props: {
                             position: new kakao.maps.LatLng(latitude, longitude),
                             image: customMarkerImage?.iconTwo, // iconTwo를 사용하여 상점 위치에 대한 마커 생성
                         });
-                        kakao.maps.event.addListener(newMarker, 'click', function () {
-                            navigate(`/detail/${store.id}`);
+                        const overlay = new kakao.maps.CustomOverlay({
+                            position: new kakao.maps.LatLng(latitude, longitude),
+                            content: `<div style="border: solid 2px #ff7455; border-radius: 4px; text-align: center; width: 70px; font-family: Pretendard Variable; font-size: 12px; background-color: white; padding: 3px; ">${store.name}</div>`,
+                            xAnchor: 0.5,
+                            yAnchor: 2.5,
                         });
+
+                        kakao.maps.event.addListener(newMarker, 'mouseover', function () {
+                            // setActiveStore(store);
+                            overlay.setMap(kakaoMap);
+                            console.log('mouseOver');
+                        });
+
+                        kakao.maps.event.addListener(newMarker, 'mouseout', function () {
+                            overlay.setMap(null);
+                        });
+                        // kakao.maps.event.addListener(newMarker, 'click', function () {
+                        //     navigate(`/detail/${store.id}`);
+                        // });
+
                         setStoreMarkers((prevMarkers) => [...prevMarkers, newMarker]);
                     }
                 });
@@ -228,5 +295,9 @@ export default function MapContainer(props: {
         }
     }, [kakaoMap, userPosition]);
 
-    return <div id="container" style={{ width: '100%', height: size[1], borderRadius: '12px' }} />;
+    return (
+        <div id="container" style={{ width: '100%', height: size[1], borderRadius: '12px' }}>
+            {/* {activeStore && <InfoWindow>{activeStore.name}</InfoWindow>} */}
+        </div>
+    );
 }
