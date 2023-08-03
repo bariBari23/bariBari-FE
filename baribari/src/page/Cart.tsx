@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { deleteSingleCartItem, getCartItems, updateCartItem } from '../apis/api/cart';
 import { useState, useEffect } from 'react';
 import { CartItem } from '../utils/interface';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 import CartSkeleton from '../assets/3dCart.png';
 
@@ -26,7 +28,11 @@ export default function Cart() {
         return <div>An error has occurred</div>;
     }
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
     }
 
     const increaseQuantity = (id: number) => {

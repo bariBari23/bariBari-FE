@@ -9,7 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
 import { getStoreInfo } from '../apis/api/store';
 import { addCartItem } from '../apis/api/cart';
-import { axiosInstance } from '../apis';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 export default function StoreDetail() {
     const navigate = useNavigate();
@@ -43,7 +44,11 @@ export default function StoreDetail() {
         return <div>An error has occurred</div>;
     }
     if (isLoading || storeIsLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
     }
     console.log('dosirakdata' + dosirakData);
     console.log('storeData' + storeData);

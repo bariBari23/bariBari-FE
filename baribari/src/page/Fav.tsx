@@ -9,6 +9,8 @@ import StoreImage from '../assets/storeImg.png';
 import SvgSprite from '../component/Sprite';
 import HeartSkeleton from '../assets/3dHeart.png';
 import { useNavigate } from 'react-router-dom';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 export default function Fav() {
     const { status, data, refetch } = useQuery(['likedStoreInfo'], getLikedStoreInfo);
@@ -26,7 +28,11 @@ export default function Fav() {
     });
 
     if (status === 'loading') {
-        return <span>Loading...</span>;
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
     }
 
     if (status === 'error') {
