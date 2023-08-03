@@ -55,6 +55,7 @@ export default function SignUp3() {
                 />
                 <AddBtn onClick={onSubmit}>다음</AddBtn>
             </InsideBox>
+            <BackSquare />
         </Container>
     );
 }

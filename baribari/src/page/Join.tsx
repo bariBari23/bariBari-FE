@@ -165,6 +165,7 @@ export default function Join() {
                         <CheckIcon onClick={() => dispatch({ type: 'third' })} active={state.third} isAll={false} />
                     </SubAgree>
                 </AgreeBox>
+                <BackSquare />
             </Form>
         </div>
     );
@@ -277,4 +278,15 @@ const TextBox = styled.div`
     font-weight: 400;
     line-height: 20px;
     padding-right: 12px;
+`;
+
+const BackSquare = styled.div`
+    width: 100%;
+    max-width: 600px;
+    height: 96px;
+    background-color: white;
+
+    position: fixed;
+    bottom: 0;
+    z-index: 5000;
 `;
