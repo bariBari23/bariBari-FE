@@ -9,6 +9,7 @@ import { getFileUrl } from '../apis/api/util';
 import { axiosInstance } from '../apis';
 import { format, parseISO } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import noImageUrl from '../assets/noImage.png';
 
 type SelectedValue = [quantity: string, flavor: string, wrap: string];
 
@@ -17,15 +18,16 @@ export default function UploadReview() {
     const orderItem = location.state.item;
     console.log('orderItem : ' + orderItem);
     let isSelected = false;
-    const [quantity, setQuantity] = useState<string | null>(null);
-    const [flavor, setFlavor] = useState<string | null>(null);
-    const [wrap, setWrap] = useState<string | null>(null);
+    const [quantity, setQuantity] = useState<string | null>('averageAmount');
+    const [flavor, setFlavor] = useState<string | null>('plainTaste');
+    const [wrap, setWrap] = useState<string | null>('plainStatus');
     const [ratingText, setRatingText] = useState<string>('');
 
     const [image, setImage] = useState<File | null>(null);
     const [imageFileUrl, setImageUrl] = useState<string | null>(null);
+    const [submitImgUrl, setSubmitImgUrl] = useState<string | null>(noImageUrl);
     const [rating, setRating] = useState(0);
-    const [reviewText, setReviewText] = useState('');
+    const [reviewText, setReviewText] = useState('작성한 리뷰가 없습니다.');
     const [imageUrl, setUrl] = useState('');
 
     function convertDate(dateString: string) {
@@ -108,13 +110,14 @@ export default function UploadReview() {
     const onRealSubmit = async (rawUrl: string) => {
         const url = new URL(rawUrl);
         url.search = '';
+        setSubmitImgUrl(url.toString());
         try {
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,
                 rating: rating,
                 photoList: [],
-                mainImageUrl: url.toString(),
+                mainImageUrl: submitImgUrl,
                 tags: selectedValue,
             };
             console.log(reviewData.mainImageUrl);
