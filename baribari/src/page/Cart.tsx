@@ -32,8 +32,12 @@ export default function Cart() {
     const increaseQuantity = (id: number) => {
         setCartItemsState((prevState) =>
             prevState.map((item) => {
-                if (item.id === id && item.quantity < 3) {
-                    return { ...item, quantity: item.quantity + 1 };
+                if (item.id === id) {
+                    if (item.quantity < 3) {
+                        return { ...item, quantity: item.quantity + 1 };
+                    } else {
+                        alert('한 상품을 3개 이상 주문하실 수 없습니다.');
+                    }
                 }
                 return item;
             }),
@@ -81,14 +85,16 @@ export default function Cart() {
                 <div
                     style={{
                         display: 'flex',
-
+                        backgroundColor: '#F9F9F9',
+                        width: '100vw',
+                        height: '100%',
                         flexDirection: 'column',
                         alignContent: 'center',
                         justifyContent: 'center',
                         alignItems: 'center',
                         position: 'absolute',
                         left: '50%',
-                        top: '50%',
+                        top: '45%',
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
@@ -191,7 +197,12 @@ export default function Cart() {
                     ))}
                 </CartList>
             )}
-            <SubmitButton onClick={handleGoOrder}>구매하기</SubmitButton>
+            <SubmitButton
+                onClick={cartItemsState.length === 0 ? () => alert('장바구니가 비어 있습니다.') : handleGoOrder}
+                disabled={cartItemsState.length === 0}
+            >
+                구매하기
+            </SubmitButton>
             <BackSquare />
         </div>
     );
@@ -264,14 +275,14 @@ const CountButton = styled.button`
     font-weight: 400;
     line-height: 20px;
 `;
-const SubmitButton = styled.div`
+const SubmitButton = styled.div<{ disabled: boolean }>`
     display: flex;
     height: 64px;
     width: calc(100% - 32px);
     max-width: 564px;
     border-radius: 12px;
-    background: #ff7455;
-    color: #fff;
+    background: ${(props) => (props.disabled ? '#efefef' : '#ff7455')};
+    color: ${(props) => (props.disabled ? '#949494' : '#fff')};
     font-size: 24px;
     font-family: Pretendard Variable;
     font-weight: 700;
@@ -313,5 +324,5 @@ const NavButton = styled.button`
     font-style: normal;
     font-weight: 700;
     line-height: 16px;
-    margin-top: 20px;
+    margin-top: 40px;
 `;
