@@ -90,11 +90,11 @@ export default function Join() {
         },
     );
 
-    useEffect(() => {
-        if (!state.service || !state.usage || !state.third) {
-            dispatch({ type: 'all' });
-        }
-    }, [state.service, state.usage, state.third]);
+    // useEffect(() => {
+    //     if (!state.service || !state.usage || !state.third) {
+    //         dispatch({ type: 'all' });
+    //     }
+    // }, [state.service, state.usage, state.third]);
 
     return (
         <div style={{ padding: '110px 16px 0px 16px', width: '100%' }}>

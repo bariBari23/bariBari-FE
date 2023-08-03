@@ -16,7 +16,7 @@ export default function SignUp4() {
             <InsideBox>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                     <Text>가입이 완료되었어요!</Text>
-                    <Text>이제부터 건강한 한끼를 전해드릴게요</Text>
+                    <Text>이제부터 건강한 한끼를 전해드릴게요.</Text>
                 </div>
                 <SignUpFinish />
                 <Button onClick={onClickButton}>완료</Button>

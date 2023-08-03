@@ -7,7 +7,6 @@ import defaultImg from '../assets/defaultImg.jpg';
 import { ReactComponent as FloatingRefreshBtn } from '../assets/RefreshBtn.svg';
 import { ContentContainerProps, DosirakItem } from '../utils/interface';
 import { useQuery } from '@tanstack/react-query';
-import HeartSkeleton from '../assets/3dHeart.png';
 
 export default function ContentContainer({ keyword, filterLiked, sort, setRefresh }: ContentContainerProps) {
     const navigate = useNavigate();
@@ -33,6 +32,7 @@ export default function ContentContainer({ keyword, filterLiked, sort, setRefres
     if (status === 'loading') {
         return <span>Loading...</span>;
     }
+    console.log('ddd', dosirakList);
     return (
         <Container>
             {dosirakList?.data?.dosirakList?.length === 0 ? (
