@@ -27,7 +27,6 @@ export default function StoreDetail() {
         error,
     } = useQuery(['dosirakData', id], () => searchById(id), {
         onSuccess: (data) => {
-            console.log(data.data.storeId);
             setStoreId(data.data.storeId);
         },
     });

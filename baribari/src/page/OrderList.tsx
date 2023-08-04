@@ -39,7 +39,7 @@ export default function OrderList() {
             </div>
         );
     }
-    console.log(orderItems);
+
     const handleClickNavButton = () => {
         navigate(`/cart`);
     };

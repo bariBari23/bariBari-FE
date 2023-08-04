@@ -14,7 +14,6 @@ export async function getCartItems(cartItems: object) {
         const response = await axiosInstance.get('/v1/cart', cartItems);
         return response.data;
     } catch (error) {
-        console.log('Error:', error);
         throw error;
     }
 }
@@ -33,9 +32,7 @@ export async function deleteAllCartItem(): Promise<void> {
 export async function deleteSingleCartItem(itemId: number): Promise<void> {
     try {
         await axiosInstance.delete(`/v1/cart/${itemId}`);
-        console.log(itemId);
     } catch (error) {
-        console.log('Error:', error);
         throw error;
     }
 }

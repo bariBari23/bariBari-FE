@@ -34,7 +34,7 @@ export default function LogIn() {
         try {
             // 로그인 API 호출
             const response = await loginUser(data.email, data.password);
-            // console.log('주소있냐', userInfo);
+
             // 로그인 성공 시 처리
             alert('바리바리에 무사히 로그인하셨습니다:)');
             //만약에 위치 설정을 하지 않은 유저이면 위치 등록 페이지로 이동
@@ -59,7 +59,7 @@ export default function LogIn() {
     const handleLoginNavigate = async () => {
         try {
             const userInfo = await getUserInfo();
-            console.log(userInfo.data.position.latitude);
+
             if (userInfo) {
                 if (userInfo.data.position.latitude === 0) {
                     navigate('/signup3');

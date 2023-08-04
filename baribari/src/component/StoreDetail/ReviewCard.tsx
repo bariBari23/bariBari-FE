@@ -10,7 +10,6 @@ import { ReactComponent as Profile } from '../../assets/img-profile.svg';
 export default function ReviewCard({ id }: { id: number | null }) {
     const refs = useRef<(HTMLTextAreaElement | null)[]>([]);
     const { data: reviewData, isLoading, error } = useQuery(['review', id], () => getReview(id));
-    console.log(reviewData);
 
     function convertDate(dateString: string) {
         const date = parseISO(dateString);

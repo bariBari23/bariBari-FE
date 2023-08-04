@@ -36,7 +36,7 @@ export default function Order() {
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [sum, setSum] = useState(0);
-    console.log('여기' + preCartItems);
+
     const cartItems = preCartItems.map((item: CartItem) => {
         const total = item.quantity * item.price;
         return { ...item, total };
@@ -60,7 +60,7 @@ export default function Order() {
 
             const response = await createOrder(orderData);
             await deleteAllCartItem();
-            console.log(response);
+
             alert('예약이 완료되었습니다.');
             navigate('/orderlist');
         } catch (error) {

@@ -16,7 +16,7 @@ type SelectedValue = [quantity: string, flavor: string, wrap: string];
 export default function UploadReview() {
     const location = useLocation();
     const orderItem = location.state.item;
-    console.log('orderItem : ' + orderItem);
+
     let isSelected = false;
     const [quantity, setQuantity] = useState<string | null>(null);
     const [flavor, setFlavor] = useState<string | null>(null);
@@ -112,7 +112,6 @@ export default function UploadReview() {
         url.search = '';
         setSubmitImgUrl(url.toString());
         try {
-            console.log(submitImgUrl);
             const reviewData = {
                 orderItemId: orderItem.orderItemId,
                 content: reviewText,
@@ -121,9 +120,9 @@ export default function UploadReview() {
                 mainImageUrl: submitImgUrl,
                 tags: selectedValue,
             };
-            console.log(reviewData.mainImageUrl);
+
             const response = await postReview(reviewData);
-            console.log(response);
+
             alert('리뷰가 성공적으로 작성되었습니다.');
             navigate('/orderlist'); // If the mutation succeeds, navigate to the order list page.
         } catch (error) {
@@ -139,11 +138,10 @@ export default function UploadReview() {
         reader.onload = async function (event: ProgressEvent<FileReader>) {
             const data = await axiosInstance.get(`/v1/file/presign`);
             setUrl(data?.data.data);
-            console.log('url: ' + data?.data.data);
+
             const binaryData = event.target?.result as ArrayBuffer;
             let mimeType = image!.type; // this can be image.type in your case
             let fileType = mimeType.split('/')[1];
-            console.log('type: ' + fileType);
 
             // Use the file type as the Content-Type
             myHeaders.append('Content-Type', fileType);

@@ -18,7 +18,7 @@ export default function Cart() {
     useEffect(() => {
         if (cartItems?.data?.items) {
             const updatedItems = cartItems.data.items.map((item: CartItem) => ({ ...item, quantity: 1 }));
-            console.log(updatedItems);
+
             setCartItemsState(updatedItems);
         }
     }, [cartItems]);
@@ -62,14 +62,12 @@ export default function Cart() {
     const handleGoOrder = () => {
         const promises = cartItemsState.map(async (item) => {
             const response = await updateCartItem(item.id, item.quantity, item);
-            console.log(response);
-            console.log('item: ' + item.quantity * item.price);
+
             return { ...item, quantity: response, total: item.quantity * item.price };
         });
 
         Promise.all(promises)
             .then(() => {
-                console.log(cartItemsState);
                 navigate('/order', { state: { preCartItems: cartItemsState } });
             })
             .catch((error) => {

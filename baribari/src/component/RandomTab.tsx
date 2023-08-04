@@ -16,8 +16,6 @@ export default function RandomTabs() {
         ? JSON.stringify(Cookies.get('userAddress')).replace(/\"/g, '')
         : '서울 서대문구 이화여대길 52';
 
-    console.log('도로명: ' + searchValue);
-
     useEffect(() => {
         const showUserLocation = async () => {
             try {
