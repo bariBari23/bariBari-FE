@@ -9,7 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import { searchById } from '../apis/api/search';
 import { getStoreInfo } from '../apis/api/store';
 import { addCartItem } from '../apis/api/cart';
-import { axiosInstance } from '../apis';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 export default function StoreDetail() {
     const navigate = useNavigate();
@@ -38,16 +39,6 @@ export default function StoreDetail() {
     } = useQuery(['storeData', storeId], () => getStoreInfo(storeId), {
         enabled: !!storeId,
     });
-    console.log('바로 여기에요' + storeId);
-    if (error || storeError) {
-        return <div>An error has occurred</div>;
-    }
-    if (isLoading || storeIsLoading) {
-        return <div>Loading...</div>;
-    }
-    console.log('dosirakdata' + dosirakData);
-    console.log('storeData' + storeData);
-
     const addToCart = () => {
         addCartItem(dosirakData.data.id)
             .then(() => {
@@ -56,6 +47,17 @@ export default function StoreDetail() {
             })
             .catch((error) => console.log('Error:', error));
     };
+    if (error || storeError) {
+        return <div>An error has occurred</div>;
+    }
+    if (isLoading || storeIsLoading) {
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
+    }
+
     return (
         <Container>
             <Header showPageName={true} pageTitle={'반찬박스 이름'} showSearchBar={false} />
