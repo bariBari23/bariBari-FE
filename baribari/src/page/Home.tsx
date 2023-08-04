@@ -22,7 +22,7 @@ export default function Home() {
         alert('아직 알림이 온 게 없어요!');
     };
     const handleInquiryClick = () => {
-        const url = 'https://towering-porch-7d9.notion.site/045d3fc7c49d4cddb2eaed7f64b59f44?pvs=4';
+        const url = 'https://decisive-fahrenheit-52b.notion.site/cfbed6717e864f30a487fc616b3ddbe9?pvs=4';
         window.open(url, '_blank');
     };
     return (
