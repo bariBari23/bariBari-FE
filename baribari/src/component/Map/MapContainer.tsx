@@ -270,7 +270,7 @@ export default function MapContainer(props: {
                         });
                         const overlay = new kakao.maps.CustomOverlay({
                             position: new kakao.maps.LatLng(latitude, longitude),
-                            content: `<div style="border: solid 2px #ff7455; border-radius: 4px; text-align: center; width: 70px; font-family: Pretendard Variable; font-size: 12px; background-color: white; padding: 3px; ">${store.name}</div>`,
+                            content: `<div style="border: solid 2px #ff7455; border-radius: 100px; text-align: center; font-family: Pretendard Variable; font-size: 12px; background-color: #FF7455; padding: 3px 4px; color: white; font-weight: 600;">${store.name}</div>`,
                             xAnchor: 0.5,
                             yAnchor: 2.5,
                         });

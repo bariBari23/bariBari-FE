@@ -91,7 +91,18 @@ export default function FoodDetailBox({
                             </div>
                         </div>
                     </StoreNameBox>
-                    <div style={{ padding: '3px', marginRight: '0' }} onClick={handleClick}>
+                    <div
+                        style={{
+                            padding: '3px',
+                            marginRight: '0',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}
+                        onClick={handleClick}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 22">
                             <path
                                 d="M8.99999 3.24742C8.99999 3.24742 7.99999 0.75 4.50024 0.75C1.5 0.75 0 3.23794 0 5.73536C0 11.565 8.99999 16.6731 8.99999 16.6731C8.99999 16.6731 18 11.565 18 5.73536C18 3.23794 16.5 0.75 13.4997 0.75C9.99999 0.75 8.99999 3.24742 8.99999 3.24742Z"
