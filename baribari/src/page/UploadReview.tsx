@@ -111,6 +111,7 @@ export default function UploadReview() {
         const url = new URL(rawUrl);
         url.search = '';
         setSubmitImgUrl(url.toString());
+        console.log(submitImgUrl);
         try {
             const reviewData = {
                 orderItemId: orderItem.orderItemId,

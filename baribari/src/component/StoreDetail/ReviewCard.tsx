@@ -154,7 +154,7 @@ const ImageBox = styled.img`
 const ReviewText = styled.textarea`
     display: flex;
     width: 100%;
-    min-height: 36px;
+    min-height: 60px;
     font-family: Pretendard Variable;
     font-size: 12px;
     font-style: normal;
