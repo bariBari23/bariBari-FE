@@ -5,6 +5,8 @@ import { useQuery } from 'react-query';
 import { getOrderItems } from '../apis/api/order';
 import { format, parseISO } from 'date-fns';
 import ko from 'date-fns/locale/ko';
+import Lottie from 'lottie-react';
+import { lottie } from '../assets/lotti/index';
 
 import SearchSkeleton from '../assets/3dSearch.png';
 import { Key } from 'react';
@@ -31,7 +33,11 @@ export default function OrderList() {
         return <div>An error has occurred</div>;
     }
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Lottie animationData={lottie} />
+            </div>
+        );
     }
     console.log(orderItems);
     const handleClickNavButton = () => {
