@@ -19,7 +19,7 @@ import SignUp3 from './page/SignUp3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import SignUp4 from './page/SignUp4';
 import { getAccessToken } from './apis/cookie';
-
+import NotFound from './page/NotFound';
 
 const queryClient = new QueryClient();
 
@@ -114,6 +114,7 @@ export default function App() {
                         />
                         <Route path="/signUp3" element={<SignUp3 />} />
                         <Route path="/signUp4" element={<SignUp4 />} />
+                        <Route path="/*" element={<NotFound />} />
                     </Routes>
                 </InsideContainer>
             </Container>
