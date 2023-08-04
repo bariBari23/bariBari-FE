@@ -284,9 +284,9 @@ export default function MapContainer(props: {
                         kakao.maps.event.addListener(newMarker, 'mouseout', function () {
                             overlay.setMap(null);
                         });
-                        // kakao.maps.event.addListener(newMarker, 'click', function () {
-                        //     navigate(`/detail/${store.id}`);
-                        // });
+                        kakao.maps.event.addListener(newMarker, 'click', function () {
+                            navigate(`/detail/${store.id}`);
+                        });
 
                         setStoreMarkers((prevMarkers) => [...prevMarkers, newMarker]);
                     }
